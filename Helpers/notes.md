@@ -59,3 +59,68 @@
     projectId: ObjectId // ID des favorisierten Projekts
     }
     ```
+
+# lock/unlock nach BEZAHLUNG
+
+1. User Model anpassen:
+
+Füge ein neues Feld unlockKey und ein Feld isActivated hinzu:
+
+```javascript
+const usersSchema = new Schema(
+  {
+    // ...
+    unlockKey: { type: String, required: true, unique: true }, // Eindeutiger Schlüssel für Freischaltung
+    isActivated: { type: Boolean, default: false }, // Gibt an, ob der Benutzer freigeschaltet ist
+    // ...
+  },
+  { timestamps: true }
+);
+```
+
+2. Freischaltung und Zahlung überprüfen:
+
+Nachdem ein Benutzer registriert ist, generiere einen eindeutigen unlockKey (z. B. mit einem Paket wie nanoid oder uuid) und speichere ihn im Benutzerdokument. Dann sende dem Benutzer den unlockKey und die Anweisungen für die Zahlung von 10 Euro. 3. Zahlung bestätigen:
+
+Sobald die Zahlung bestätigt wurde (zum Beispiel über einen Zahlungsdienst), aktualisiere das Benutzerdokument und setze isActivated auf true:
+
+```javascript
+// Beispiel: Annahme, dass der unlockKey vom Benutzer eingereicht wurde
+const submittedUnlockKey = req.body.unlockKey;
+
+const user = await User.findOne({
+  email: userEmail,
+  unlockKey: submittedUnlockKey,
+});
+
+if (user) {
+  // Benutzer gefunden, Zahlung bestätigt
+  user.isActivated = true;
+  await user.save();
+
+  res
+    .status(200)
+    .json({ message: 'Zahlung bestätigt, Benutzer freigeschaltet.' });
+} else {
+  // Benutzer nicht gefunden oder unlockKey falsch
+  res
+    .status(400)
+    .json({ message: 'Ungültiger unlockKey oder Benutzer nicht gefunden.' });
+}
+```
+
+4. Anmeldevorgang anpassen:
+
+Beim Anmeldevorgang solltest du überprüfen, ob der Benutzer freigeschaltet ist, bevor du ihm den Zugriff auf die Anwendung gewährst:
+
+```javascript
+const user = await User.findOne({ email: userEmail });
+
+if (user && user.isActivated) {
+  // Benutzer ist freigeschaltet, ermögliche Anmeldung
+  // ...
+} else {
+  // Benutzer ist nicht freigeschaltet oder nicht gefunden
+  // ...
+}
+```

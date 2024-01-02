@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 import router from './routes/router.js';
 
-import HttpError from './models/http-errors.js';
+import HttpError from './common/http-errors.js';
 // import { User } from './models/users.js';
 // import { Project } from './models/projects.js';
 
@@ -29,6 +29,7 @@ app.use(
 );
 
 // verhindert CORS Probleme im Browser bei API-Aufruf
+// um mit JS von einer Webseite aus auf eine API zuzugreifen, die auf einer anderen Domain gehostet ist
 app.use(cors());
 
 // Form body parser
@@ -46,11 +47,13 @@ app.get('/', (req, res) => {
 // 3. Verteilt alle Anfragen die mit /api beginnen an die Routen:
 app.use('/api', router);
 
-// 4. zentrale Fehlerbehanldung
+// 4. wenn keine passende Route für die eingehende Anfrage gefunden wird:
 app.use((req) => {
-  throw new HttpError('Could not found route: ' + req.originalUrl, 404);
+  throw new HttpError('Could not find route: ' + req.originalUrl, 404);
 });
 
+// 5. zentrale Fehlerbehanldung (In Express wird eine Middleware zu einer zentralen Fehlerbehandlung, wenn sie 4 Parameter in ihrer Signatur hat)
+// wenn es zu einem Fehler während der Anfrage-Verarbeitung kommt
 app.use((error, req, res, next) => {
   // wenn bereits ein Header gesetzt wurde, keinen response senden sondern einfach weiterschalten
   if (res.headerSent) {
@@ -62,7 +65,7 @@ app.use((error, req, res, next) => {
     .json({ message: error.message || 'Unknow error' });
 });
 
-// 5. Verbinde den Server mit der MongoDB-Datenbank:
+// 6. Verbinde den Server mit der MongoDB-Datenbank:
 const CONNECTION_STRING = `mongodb+srv://benediktervalentina:${process.env.MONGODB_PASSWORD}@wienergenossenschaften.tprp5yt.mongodb.net/WGDatabase?retryWrites=true&w=majority`;
 
 mongoose

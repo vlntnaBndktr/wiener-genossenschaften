@@ -3,13 +3,28 @@
 ## Working hours
 
 - 21.12. 17:00-19:30
-- 22.12. 11:00-12:30 + 16:20-17:40 + 18.00-
+- 22.12. 11:00-12:30 + 16:20-17:40 + 18.00-19:00
+- 27.12. 11:00-13:30 + 17:00-19:00
+- 28.12. 09:00-14:00
+- 29.12. 09:00-11:30
+- 30.12. 16:30-19:00
+
+## Milestones
+
+1. until 12.01.2024:
+
+- MongoDb Setup + Models
+- Create React-Project (with Vite, MUI etc)
+- Backend: set up Routes for Users
 
 ## Questions
 
+- zentrale Fehlerbehandlung???
+- muss ich zusätzlich zu email = unique in der Datenbank noch prüfen ob die email schon existiert??
+
 ## Description
 
-Web-App für Desktop und Mobile Geräte, die Wohnungsangebote von diversen Genossenschaften sammelt, anzeigt und regelmäßig aktualisiert. Kernstück ist eine Liste im Mitgliederbereich mit Sortier- und Filterfunktionen und Alarm/Deadlines. Die Liste soll von den Usern angepasst/individualisiert werden können.
+Web-App für Desktop und Mobile Geräte, die Wohnungsangebote von diversen Genossenschaften sammelt, anzeigt und regelmäßig aktualisiert. Kernstück sind der Scraper um die Daten zu sammeln und eine Liste im Mitgliederbereich mit Sortier- und Filterfunktionen und Alarm/Deadlines. Die Liste soll von den Usern angepasst/individualisiert werden können.
 Durch die Web-App sollen User
 
 - den Überblick während der Wohnungssuche behalten
