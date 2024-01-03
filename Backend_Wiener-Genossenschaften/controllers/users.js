@@ -162,7 +162,7 @@ const deleteUser = async (req, res, next) => {
     console.log(deletedUser);
 
     // Erfolgsmessage
-    res.status(200).json({ message: 'User successfully deleted' });
+    res.status(204).json({ message: 'User successfully deleted' });
   } catch (error) {
     return next(new HttpError('Internal Server Error', 500));
   }

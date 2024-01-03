@@ -15,7 +15,14 @@ import {
 
 import { signupValidation, signup } from '../controllers/users-signup.js';
 import { login } from '../controllers/users-login.js';
-import { createProject } from '../controllers/projects.js';
+import {
+  projectValidation,
+  createProject,
+  getAllProjects,
+  getOneProject,
+  updateProject,
+  deleteProject,
+} from '../controllers/projects.js';
 
 const router = new Router();
 
@@ -31,10 +38,14 @@ router.patch(
   changePassword
 );
 router.patch('/user/update', checkToken, updateValidation, updateUser);
-router.delete('/user', checkToken, deleteValidation, deleteUser);
+router.delete('/user/delete', checkToken, deleteValidation, deleteUser);
 
 //Projects Routen
-router.post('/project', createProject);
+router.post('/project', projectValidation, createProject);
+router.get('/projects', getAllProjects);
+router.get('/project/:_id', getOneProject);
+router.post('/project/update/:_id', projectValidation, updateProject);
+router.delete('/project/delete/:_id', deleteProject);
 
 //Favorites Routen
 // router.post('/favorites/:userId/:projectId', createFavorite);
