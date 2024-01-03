@@ -8,6 +8,9 @@
 - 28.12. 09:00-14:00
 - 29.12. 09:00-11:30
 - 30.12. 16:30-19:00
+- 31.12. 10:00-13:30
+- 02.01. 10:30-13:30
+- 03.01. 09:00-11:30 + 12:30-
 
 ## Milestones
 
@@ -106,8 +109,3 @@ _Userbereich:_
   - Suchfilter reduzieren auf 2 (dann evtl. mehr)
 
 ## Contributing
-
-Ich würde mich beim Scrapper zuerst mal auf ein bis zwei Webseiten konzentrieren.
-
-Vielleicht wäre ein Backend zum Einrichten von dem Scrapper eine Idee.
-Dazu ein Frontend wo man die ersten Ergebnisse sieht.Mit vielleicht Filterfunktionen, einem Userbereich, mit Suchprofilen usw. usw....
