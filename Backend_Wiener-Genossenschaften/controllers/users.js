@@ -22,7 +22,10 @@ const getAllUsers = async (req, res, next) => {
 const getOneUser = async (req, res, next) => {
   try {
     const userId = req.params.userId; // aus den URL-Parametern holen
-    const user = await User.findById(userId);
+    const user = await User.findById(userId, '-password').populate(
+      'favorites',
+      '-userId'
+    );
     res.send(user);
   } catch (error) {
     return next(new HttpError('Cant find User', 404));
@@ -39,9 +42,8 @@ const changePassword = async (req, res, next) => {
     // Passwort syntaktische Validierung prüfen, sonst early return
     const result = validationResult(req);
     if (result.errors.length > 0) {
-      return next(
-        new HttpError('Syntaxfehler bei Eingabe der Passwörter', 422)
-      );
+      console.log('result.errors:', result.array());
+      return next(new HttpError('Syntaktische Fehler in der Anfrage', 422));
     }
     // neues + altes Passwort aus matchedData holen
     const validatedData = matchedData(req);
@@ -90,7 +92,8 @@ const updateUser = async (req, res, next) => {
     // neue Daten syntaktisch checken durch updateValidation
     const result = validationResult(req);
     if (result.errors.length > 0) {
-      return next(new HttpError('Syntaxfehler bei Eingabe', 422));
+      console.log('result.errors:', result.array());
+      return next(new HttpError('Syntaktische Fehler in der Anfrage', 422));
     }
     const validatedData = matchedData(req);
 

@@ -24,7 +24,18 @@ import {
   deleteProject,
 } from '../controllers/projects.js';
 
+import {
+  favoriteValidation,
+  createFavorite,
+  updateFavorite,
+  deleteFavorite,
+  getAllFavorites,
+  getOneFavorite,
+} from '../controllers/favorites.js';
+
 const router = new Router();
+
+// TODO Admin-Zugriff für Routen!
 
 //User Routen:
 router.get('/users', getAllUsers);
@@ -48,6 +59,20 @@ router.post('/project/update/:_id', projectValidation, updateProject);
 router.delete('/project/delete/:_id', deleteProject);
 
 //Favorites Routen
-// router.post('/favorites/:userId/:projectId', createFavorite);
+router.post(
+  '/favorite/:_projectId',
+  checkToken,
+  favoriteValidation,
+  createFavorite
+);
+router.patch(
+  '/favorite/update/:_id',
+  checkToken,
+  favoriteValidation,
+  updateFavorite
+);
+router.delete('/favorite/delete/:_id', checkToken, deleteFavorite);
+router.get('/favorites', checkToken, getAllFavorites);
+router.get('/favorite/:_id', checkToken, getOneFavorite);
 
 export default router;

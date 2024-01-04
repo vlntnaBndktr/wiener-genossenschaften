@@ -40,7 +40,8 @@ const createProject = async (req, res, next) => {
 
   // wenn Fehler -> Fehlermeldung an Client senden
   if (result.errors.length > 0) {
-    return next(new HttpError(JSON.stringify(result), 422));
+    console.log('result.errors:', result.array());
+    return next(new HttpError('Syntaktische Fehler in der Anfrage', 422));
     // eine HttpError-Instanz mit dem Code 422 erstellen
     // und an den nächsten Middleware-Handler weitergeleitet.
   }
@@ -86,7 +87,7 @@ const getOneProject = async (req, res, next) => {
 
     // Überprüfen, ob die ID die erforderliche Länge hat (24 Zeichen)
     if (projectId.length !== 24) {
-      return next(new HttpError('Ungültige Projekt-ID', 400)); // Bad Request
+      return next(new HttpError('Ungültige Request-Parameter', 400)); // Bad Request
     }
 
     const project = await Project.findById(projectId);
@@ -106,7 +107,7 @@ const updateProject = async (req, res, next) => {
     if (!result.isEmpty()) {
       // = result.errors.length > 0
       console.log('result.errors:', result.array());
-      return next(new HttpError('Fehler bei Eingabe', 422));
+      return next(new HttpError('Syntaktische Fehler in der Anfrage', 422));
     }
     const validatedData = matchedData(req);
     console.log('validatedData:', validatedData);
@@ -153,7 +154,7 @@ const deleteProject = async (req, res, next) => {
     if (!deletedProject) {
       return next(new HttpError('Project not found', 404)); // falls Project nicht in DB gefunden wird
     }
-    res.status(204).send('Projekt erfolgreich gelöscht');
+    res.status(200).send('Projekt erfolgreich gelöscht'); //oder 204 ohne Message
   } catch (error) {
     console.error('Fehler beim Löschen des Projekts:', error.message);
     return next(new HttpError('Internal Server Error', 500));
