@@ -97,3 +97,17 @@ console.log(newProject);
 }
 
 ```;
+
+// Beispiel für Admin Middleware in checkToken integriert
+
+const checkAdminAccess = (req, res, next) => {
+  const user = req.foundUser; // Annahme: Du speicherst den Benutzerdatensatz in req.foundUser in der checkToken-Middleware.
+
+  if (!user || user.role !== 'admin') {
+    return next(new HttpError('Unauthorized', 403));
+  }
+
+  // Der Benutzer ist ein Administrator, setze ihn in req.isAdmin, falls du später darauf zugreifen möchtest.
+  req.isAdmin = true;
+  next();
+};

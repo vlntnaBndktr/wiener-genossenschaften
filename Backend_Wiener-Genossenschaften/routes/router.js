@@ -14,7 +14,7 @@ import {
 } from '../controllers/users.js';
 
 import { signupValidation, signup } from '../controllers/users-signup.js';
-import { login } from '../controllers/users-login.js';
+import { login, logout } from '../controllers/authentication.js';
 import {
   projectValidation,
   createProject,
@@ -42,6 +42,7 @@ router.get('/users', getAllUsers);
 router.get('/user/:userId', getOneUser);
 router.post('/user/signup', signupValidation, signup);
 router.post('/user/login', login);
+router.post('/user/logout', checkToken, logout);
 router.patch(
   '/user/change-password',
   checkToken,

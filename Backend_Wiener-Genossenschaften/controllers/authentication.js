@@ -41,4 +41,17 @@ const login = async (req, res, next) => {
   }
 };
 
-export { login };
+const logout = async (req, res, next) => {
+  try {
+    // Löschen des Cookies um Benutzer auszuloggen
+    // (Token selbst bleibt gültig, aber ohne passenden Cookie im Browser hat User keinen authentifizierten Status mehr)
+    // zB: res.clearCookie('token');
+    res.status(200).send('Logout erfogreich');
+  } catch (error) {
+    console.error('Logout failed:', error.message);
+    // Fehler an die Fehler-Middleware weiterleiten
+    return next(new HttpError('Internal Server Error', 404));
+  }
+};
+
+export { login, logout };
