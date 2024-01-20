@@ -71,7 +71,7 @@ const updateFavorite = async (req, res, next) => {
   // Nur eigene Favorites können geupdated werden!
   const authorizedFavorite = await Favorite.findOne({
     _id: favoriteId,
-    userId: userId,
+    userId,
   });
   if (!authorizedFavorite) {
     return next(

@@ -10,15 +10,40 @@
 - 30.12. 16:30-19:00
 - 31.12. 10:00-13:30
 - 02.01. 10:30-13:30
-- 03.01. 09:00-11:30 + 12:30-
+- 03.01. 09:00-11:30 + 12:30-14:00
+- 08.-17.1. ca 20 Arbeitsstunden
 
 ## Milestones
 
-1. until 12.01.2024:
+1. bis 22.12.2023:
 
-- MongoDb Setup + Models
-- Create React-Project (with Vite, MUI etc)
-- Backend: set up Routes for Users
+- Projektbeschreibung
+- grobe Roadmap
+- Projekt Infrastruktur
+- Ablaufdiagramme
+
+2. bis 12.01.2024:
+
+- MongoDb anlegen + Models erstellen (Mongoose)
+- Datenmodellierung + Beziehung zwischen den Models erarbeiten
+- React-Project einrichten (with Vite + MUI)
+- Backend: alle Routen + Controller
+- Routen mit Postman testen
+
+3. bis 19.01.2024
+
+- Router für public- und private Routes
+- Statische Seiten(views) erstellen und den Routen zuordnen
+- MUI-Customizing: eigenes Farbschema implementieren
+- State Management Store mit 'Zustand' erstellen
+
+4. bis 26.01.2024
+
+- Scraper fertigstellen
+- Kacheln mit echten Daten befüllen
+- Login-Prozess (soweit wie möglich Authentication)
+
+5. bis 2.2.2024
 
 ## Questions
 
@@ -27,7 +52,7 @@
 
 ## Description
 
-Web-App für Desktop und Mobile Geräte, die Wohnungsangebote von diversen Genossenschaften sammelt, anzeigt und regelmäßig aktualisiert. Kernstück sind der Scraper um die Daten zu sammeln und eine Liste im Mitgliederbereich mit Sortier- und Filterfunktionen und Alarm/Deadlines. Die Liste soll von den Usern angepasst/individualisiert werden können.
+Web-App für Desktop und Mobile Geräte, die Wohnungsangebote von diversen Genossenschaften sammelt, anzeigt und regelmäßig aktualisiert. Kernstück sind der Scraper um die Daten zu sammeln und eine Liste im Mitgliederbereich mit Sortier-/Filterfunktionen und Alarm/Deadlines. Die Liste soll von den Usern angepasst/individualisiert werden können.
 Durch die Web-App sollen User
 
 - den Überblick während der Wohnungssuche behalten
@@ -109,3 +134,5 @@ _Userbereich:_
   - Suchfilter reduzieren auf 2 (dann evtl. mehr)
 
 ## Contributing
+
+Peter Pruzina (Wifi-Wien)
