@@ -14,6 +14,7 @@ const myTheme = createTheme({
       main: '#E8473D',
       dark: '#992211',
       contrastText: '#000',
+      special: '#8B4F80',
     },
   },
 });

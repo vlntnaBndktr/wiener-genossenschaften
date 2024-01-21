@@ -14,24 +14,6 @@ import Typography from '@mui/material/Typography';
 Die linke Seite kann für Dinge wie Logo, Namen, Navigation und Footer verwendet werden, 
 die rechte Seite ist für das Login-Formular reserviert */
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -55,7 +37,7 @@ const Login = () => {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h3">
+        <Typography component="h1" variant="h4">
           Login
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -64,7 +46,7 @@ const Login = () => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="E-mail Adresse"
             name="email"
             autoComplete="email"
             autoFocus
@@ -74,14 +56,14 @@ const Login = () => {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Passwort"
             type="password"
             id="password"
             autoComplete="current-password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            label="Angemeldet bleiben"
           />
           <Button
             type="submit"
@@ -89,21 +71,20 @@ const Login = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Login
           </Button>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
-                Forgot password?
+                Passwort vergessen?
               </Link>
             </Grid>
             <Grid item>
               <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+                {'Sie haben noch kein Konto? Zur Registrierung'}
               </Link>
             </Grid>
           </Grid>
-          <Copyright sx={{ mt: 5 }} />
         </Box>
       </Box>
     </>

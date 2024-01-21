@@ -3,10 +3,9 @@ import Grid from '@mui/material/Grid';
 import { Outlet } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import PrivateStatic from '../views/PrivateStatic';
 import myTheme from '../styles/theme';
 import ResponsiveAppBar from '../components/ResponsiveAppBar';
-import PrivateStatic2 from '../views/PrivateStatic2';
+import PrivateStatic from '../views/PrivateStatic';
 
 /*LayoutMain = eine Layout-Komponente, die meinen Content in zwei Teile teilt: links und rechts. 
 Sie nimmt zwei Props entgegen (leftContent und rightContent), 
@@ -33,7 +32,7 @@ const LayoutPrivate = () => {
             // overflow: 'hidden',
           }}
         >
-          <PrivateStatic2 />
+          <PrivateStatic />
         </Grid>
         {/* End*/}
         {/* Right Content */}

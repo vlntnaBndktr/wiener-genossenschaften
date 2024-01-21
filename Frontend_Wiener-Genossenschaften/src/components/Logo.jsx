@@ -4,18 +4,11 @@ import Box from '@mui/material/Box';
 
 export default function Logo() {
   return (
-    <Box
-    // sx={{
-    //   height: '60vh',
-    //   textAlign: 'left',
-    //   padding: '1rem',
-    //   // border: '1px solid black',
-    // }}
-    >
+    <Box py={4}>
       <img
         src={'cityscape-town-svgrepo-com.png'}
         alt="Cityscape"
-        // style={{ width: '100%', height: 'auto' }}
+        style={{ height: '40vh', width: 'auto' }}
       />
     </Box>
   );
