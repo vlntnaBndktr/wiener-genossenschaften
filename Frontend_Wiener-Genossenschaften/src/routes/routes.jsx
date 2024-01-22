@@ -30,6 +30,10 @@ const routesPublic = [
         path: '/signup',
         element: <SignUp />,
       },
+      {
+        path: '/test',
+        element: <TestComponent />,
+      },
       // Default Route:
       {
         path: '*',
@@ -45,6 +49,10 @@ const routesPrivate = [
     path: '',
     element: <LayoutPrivate />,
     children: [
+      {
+        path: '/',
+        element: <User />,
+      },
       {
         path: '/user',
         element: <User />,

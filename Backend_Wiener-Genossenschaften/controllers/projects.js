@@ -138,6 +138,7 @@ const updateProject = async (req, res, next) => {
 };
 
 const deleteProject = async (req, res, next) => {
+  //TODO Wenn ein Projekt gelöscht wird auch aus den Favorites löschen und User aktualisieren
   try {
     // ID kommt aus der URL
     const projectId = req.params._id;

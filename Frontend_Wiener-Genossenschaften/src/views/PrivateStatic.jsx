@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Logo from '../components/Logo';
+import { Box } from '@mui/material';
 
 const PrivateStatic = () => {
   return (

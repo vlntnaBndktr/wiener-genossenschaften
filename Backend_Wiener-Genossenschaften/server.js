@@ -10,6 +10,8 @@ import HttpError from './common/http-errors.js';
 // import { User } from './models/users.js';
 // import { Project } from './models/projects.js';
 
+import extractLinks from './scraper/scraper.js';
+
 dotenv.config();
 
 // Entweder / oder ||
@@ -80,3 +82,8 @@ mongoose
   .catch((error) => {
     console.log('Verbindung MongoDB nicht möglich!', error);
   });
+
+// const URL = 'https://www.wbv-gpa.at/wohnungen/bestehende-objekte/';
+const URL = 'https://www.wbv-gpa.at/wohnungen/neue-projekte/';
+
+// await extractLinks(URL);

@@ -18,7 +18,7 @@ const createFavorite = async (req, res, next) => {
     const userId = req.foundUser._id;
 
     // in req.params ist die favoriteId
-    const favoriteId = req.params._favoriteId;
+    const projectId = req.params._projectId;
 
     // Datenqualität der Zusatzinfos prüfen (syntaktisch)
     const result = validationResult(req); // = das Resultatobjekt d. Validierung inkl. Array mit Fehlern
@@ -34,7 +34,7 @@ const createFavorite = async (req, res, next) => {
     // Überprüfen, ob Favorite bereits in der Datenbank vorhanden ist
     const existingFavorite = await Favorite.findOne({
       userId: userId,
-      favoriteId: favoriteId,
+      projectId: projectId,
     });
     if (existingFavorite) {
       return next(new HttpError('Favorite ist bereits angelegt', 422));
@@ -43,7 +43,7 @@ const createFavorite = async (req, res, next) => {
     // Favorite in DB speichern
     const newFavorite = await Favorite.create({
       userId,
-      favoriteId,
+      projectId,
       ...validatedData,
     });
 

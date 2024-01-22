@@ -39,6 +39,7 @@ const signup = async (req, res, next) => {
     const newUser = await User.create({
       ...validatedData,
       password: hashedPassword,
+      favorites: [],
     });
     res.send(newUser);
   } catch (error) {

@@ -14,8 +14,7 @@ const usersSchema = new Schema(
     favorites: [
       {
         type: mongoose.Types.ObjectId,
-        required: true,
-        unique: true,
+        // unique: true,
         ref: 'Favorite',
       },
     ],
