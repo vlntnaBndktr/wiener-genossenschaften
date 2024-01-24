@@ -12,11 +12,13 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import ApartmentRoundedIcon from '@mui/icons-material/ApartmentRounded';
+import AddHomeWorkRoundedIcon from '@mui/icons-material/AddHomeWorkRounded';
 import { ThemeProvider } from '@mui/material/styles';
 import myTheme from '../styles/theme';
 
 const pages = ['Alle Angebote', 'Merkliste', 'Kartenansicht'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profil', 'Hilfe & Kontakt', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -49,7 +51,9 @@ function ResponsiveAppBar() {
       >
         <Container maxWidth="xl" sx={{ color: (t) => t.palette.primary.dark }}>
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <AddHomeWorkRoundedIcon
+              sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}
+            />
             <Typography
               variant="h6"
               noWrap
@@ -65,7 +69,7 @@ function ResponsiveAppBar() {
                 textDecoration: 'none',
               }}
             >
-              LOGO
+              meine WG
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -104,7 +108,9 @@ function ResponsiveAppBar() {
                 ))}
               </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <AddHomeWorkRoundedIcon
+              sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
+            />
             <Typography
               variant="h5"
               noWrap
@@ -121,7 +127,7 @@ function ResponsiveAppBar() {
                 textDecoration: 'none',
               }}
             >
-              LOGO
+              meine WG
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
@@ -142,7 +148,10 @@ function ResponsiveAppBar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar
+                    alt="Valentina Benedikter"
+                    src="/static/images/avatar/2.jpg"
+                  />
                 </IconButton>
               </Tooltip>
               <Menu

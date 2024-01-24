@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -8,21 +9,37 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import KeyRoundedIcon from '@mui/icons-material/KeyRounded';
 import Typography from '@mui/material/Typography';
+import useStore from '../stores/useStore';
 
-/* Login.jsx = eine spezifische Seite (Login-Seite) wird erstellt und in LayoutMain eingefügt. 
-Die linke Seite kann für Dinge wie Logo, Namen, Navigation und Footer verwendet werden, 
-die rechte Seite ist für das Login-Formular reserviert */
+import { Link as RouterLink } from 'react-router-dom';
 
 const Login = () => {
+  const { login } = useStore();
+  // react-State erstellen mit useState-Hook
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target; //name + value kommen aus den Attributen des <input> Elements
+    setFormData({
+      ...formData, //Instanz des aktuellen State
+      [name]: value,
+    });
+    // bei jeder Tastatur-Eigabe verändert sich das formData-Objekt
+    // event.target: in diesem DOM-Element hat der Change stattgefunden
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // login-Funktion aus dem useStore aufrufen + aktuelle Werte übergeben
+    login(formData.email, formData.password);
+    console.log(formData);
   };
+
   return (
     <>
       <Box
@@ -35,7 +52,7 @@ const Login = () => {
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
+          <KeyRoundedIcon />
         </Avatar>
         <Typography component="h1" variant="h4">
           Login
@@ -50,6 +67,8 @@ const Login = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            value={formData.email}
+            onChange={handleChange}
           />
           <TextField
             margin="normal"
@@ -60,6 +79,8 @@ const Login = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={formData.password}
+            onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -80,8 +101,8 @@ const Login = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {'Sie haben noch kein Konto? Zur Registrierung'}
+              <Link component={RouterLink} to="/signup" variant="body2">
+                {'Sie haben noch kein Konto? Registrierung'}
               </Link>
             </Grid>
           </Grid>

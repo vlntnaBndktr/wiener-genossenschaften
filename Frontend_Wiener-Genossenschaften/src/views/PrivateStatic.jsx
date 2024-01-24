@@ -12,41 +12,31 @@ const PrivateStatic = () => {
     <>
       <Box
         sx={{
-          my: 8,
-          mx: 4,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          alignItems: 'left',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h3">
+        </Avatar> */}
+        <Typography
+          align="left"
+          fontWeight={'bold'}
+          color={(t) => t.palette.primary.light}
+          fontSize={120}
+        >
+          WG
+        </Typography>
+        <Typography variant="h3" align="left">
           Wiener Genossenschaften
         </Typography>
-        <Typography
-          variant="h7"
-          align="center"
-          color="text.secondary"
-          paragraph
-        >
+        <Typography variant="h7" align="left" color="text.secondary" paragraph>
           Alle aktuellen Wohnungsangebote auf einen Blick.
         </Typography>
+
+        <Logo />
       </Box>
-      <Container maxWidth="lg">
-        {/* End hero unit */}
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Logo />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            HALLOOOOOOOOO Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. Qui quos odit dolorem et culpa animi, libero totam enim quas,
-            hic eos aliquam vitae odio quaerat alias? Culpa ipsa qui nisi.
-          </Grid>
-        </Grid>
-      </Container>
     </>
   );
 };

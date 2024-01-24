@@ -47,7 +47,7 @@
 
 ## Questions
 
-- zentrale Fehlerbehandlung???
+- zentrale Fehlerbehandlung?
 - muss ich zusätzlich zu email = unique in der Datenbank noch prüfen ob die email schon existiert??
 
 ## Description
@@ -132,6 +132,10 @@ _Userbereich:_
 
 - FRONTEND:
   - Suchfilter reduzieren auf 2 (dann evtl. mehr)
+  - Empfehlung: KONTROLLIERTE Formulare (nur Login Seite in Lonely Hearts ist unkontrolliert)
+  - Dialog/Overlay fürs Anzeigen eines Projects auf der Map
+  - 'Zur Website' Link öffnet neuen Tab
+  - Passwort-Bestätigung Inputfeld evtl erst mit State einblenden, wenn ein neues Passwort eingegeben wurde
 
 ## Contributing
 

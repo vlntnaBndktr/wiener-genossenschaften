@@ -6,43 +6,49 @@ import * as cheerio from 'cheerio';
 import dataProject from './dataProject.js';
 import { Project } from '../models/projects.js';
 
-// Konstanten für die Basis-URL
-const baseURL = 'https://www.wbv-gpa.at/projekt/';
-
 // Array zum Speichern der extrahierten Daten
 const data = [];
 
+// Konstanten für die Basis-URL der 'Übersichtsseite'
+const baseURL = 'https://www.wbv-gpa.at/projekt/';
+
 // Hauptfunktion zum Extrahieren von Links und Daten
-export default async function extractLinks(url) {
+export default async function extractLinks(URL) {
   try {
     // HTTP-Anfrage, um die HTML-Seite zu erhalten
-    const response = await axios.get(url);
-    const html = response.data;
+    const response = await axios.get(URL);
+    const html = response.data; //gesamtes HTML der Seite
 
     // Cheerio verwenden zum Parsen der HTML-Seite
     const $ = cheerio.load(html);
+    console.log($('.footer__inner__contact').text());
 
     // Array für die Speicherung von Promises für jede gefundenen Projekt-URL
     const promises = [];
 
+    // Elemente aus dem HTML selektieren
+    // $=Cheerio-Object: Alle die mit <a[href] + baseURL beginnen
     $('a[href^="' + baseURL + '"]').each(async (index, element) => {
-      const link = $(element);
-      const href = link.attr('href');
+      const link = $(element); // für jedes Element das so beginnt
+      const href = link.attr('href'); // href Attribut des Elements
 
-      const spanObjects = [];
+      // Infos über 1 Projekt
+      const projectInfos = [];
 
-      // Iterate over each span element within the link
+      // Innerhalb von link: Finde alle span-Elemente die sich im div befinden
       link.find('div > span').each((spanIndex, spanElement) => {
+        // den gesamten Text der sich darin befindet + trimmen
         const spanText = $(spanElement).text().trim();
 
-        // Create a separate object for each span text
+        // Ein Objekt pro span-tag
         const spanObject = {
           spanText: spanText,
         };
 
-        spanObjects.push(spanObject);
+        projectInfos.push(spanObject);
       });
 
+      // ==> dataProject() returned gescrapte Daten von der 'Projekt-Seite'
       const promise = dataProject(href).then(async (object) => {
         const result = {
           name: object.nameProject,
@@ -55,20 +61,21 @@ export default async function extractLinks(url) {
         };
 
         // Ergebnis in der MongoDB speichern
-        try {
-          const project = await Project.create(result);
-          console.log(
-            'Extrahierte Daten erfolgreich in MongoDB gespeichert:',
-            project
-          );
-        } catch (err) {
-          console.error(
-            'Fehler beim Speichern der extrahierten Daten in MongoDB:',
-            err
-          );
-        }
+        // try {
+        //   const project = await Project.create(result);
+        //   console.log(
+        //     'Extrahierte Daten erfolgreich in MongoDB gespeichert:',
+        //     project
+        //   );
+        // } catch (err) {
+        //   console.error(
+        //     'Fehler beim Speichern der extrahierten Daten in MongoDB:',
+        //     err
+        //   );
+        // }
 
         data.push(result);
+        // console.log('data:', data);
       });
 
       promises.push(promise);
@@ -79,12 +86,13 @@ export default async function extractLinks(url) {
 
     // Daten in JSON-Format konvertieren
     const jsonString = JSON.stringify(data, null, 2);
+    // console.log('jsonString:', jsonString);
 
     // JSON-Daten in eine Datei schreiben
-    fs.writeFileSync('outputBestehendeObjekte.json', jsonString);
+    fs.writeFileSync('OutputNeueProjekte.json', jsonString);
 
     console.log('File created successfully.');
   } catch (error) {
-    console.log(error);
+    console.error('Ein Fehler ist aufgetreten:', error);
   }
 }

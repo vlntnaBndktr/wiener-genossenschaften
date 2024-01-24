@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
+// Arbeitet innerhalb des href-Links zu einem bestimmten Projekt (zB: https://www.wbv-gpa.at/projekt/puchsbaumgasse-1/)
 export default async function dataProject(href) {
   // HTTP-Anfrage, um die HTML-Seite der Projektseite zu erhalten
   const response = await axios.get(href);
@@ -8,6 +9,7 @@ export default async function dataProject(href) {
   const $ = cheerio.load(html);
 
   // Variablen erstellen für die extrahierten Infos
+  let constructionAssociation = 'WBV-GPA';
   let imageProject = '';
   let descriptionProject = '';
   let nameProject = '';
