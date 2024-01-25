@@ -1,8 +1,8 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
-// Arbeitet innerhalb des href-Links zu einem bestimmten Projekt (zB: https://www.wbv-gpa.at/projekt/puchsbaumgasse-1/)
-export default async function dataProject(href) {
+// Arbeitet innerhalb des href-Links zu einem bestimmten Projekt (zB: https://www.wbv-gpa.at/wohnung/8053-graz-fruehlingstrasse-33-2-eg-5/)
+export default async function dataFlats(href) {
   // HTTP-Anfrage, um die HTML-Seite der Projektseite zu erhalten
   const response = await axios.get(href);
   const html = response.data;

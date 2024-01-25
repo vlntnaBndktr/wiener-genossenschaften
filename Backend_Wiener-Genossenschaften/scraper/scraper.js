@@ -4,9 +4,11 @@ import * as cheerio from 'cheerio';
 
 // Importieren der Funktion dataProject
 import dataProject from './dataProject.js';
+import { Project } from '../models/projects.js';
 
 // Array zum Speichern der extrahierten Daten
 const data = [];
+
 // Konstanten für die Basis-URL der 'Übersichtsseite'
 const baseURL = 'https://www.wbv-gpa.at/projekt/';
 
@@ -19,7 +21,6 @@ export default async function extractLinks(URL) {
 
     // Cheerio verwenden zum Parsen der HTML-Seite
     const $ = cheerio.load(html);
-    console.log($('.footer__inner__contact').text());
 
     // Array für die Speicherung von Promises für jede gefundenen Projekt-URL
     const promises = [];
@@ -30,54 +31,64 @@ export default async function extractLinks(URL) {
       const link = $(element); // für jedes Element das so beginnt
       const href = link.attr('href'); // href Attribut des Elements
 
-      // Infos über 1 Projekt
-      const projectInfos = [];
-
       // ==> dataProject() returned gescrapte Daten von der 'Projekt-Seite'
-      const promise = dataProject(href).then(async (object) => {
+      const projectPromise = dataProject(href).then(async (scrapedObject) => {
+        const {
+          name,
+          description,
+          constructionAssociation,
+          moveIn,
+          address,
+          image,
+        } = scrapedObject;
+
         const result = {
-          name: object.nameProject,
-          description: object.descriptionProject,
+          name,
+          description,
+          constructionAssociation,
+          moveIn,
           location: {
-            street: object.addressProject,
+            street: address,
           },
-          image: object.imageProject,
+          image,
           website: href,
         };
 
-        // Ergebnis in der MongoDB speichern
-        // try {
-        //   const project = await Project.create(result);
-        //   console.log(
-        //     'Extrahierte Daten erfolgreich in MongoDB gespeichert:',
-        //     project
-        //   );
-        // } catch (err) {
-        //   console.error(
-        //     'Fehler beim Speichern der extrahierten Daten in MongoDB:',
-        //     err
-        //   );
-        // }
-
         data.push(result);
-        // console.log('data:', data);
       });
 
-      promises.push(promise);
+      promises.push(projectPromise);
     });
 
     // Warten bis alle Promises aufgelöst sind
     await Promise.all(promises);
 
-    // Daten in JSON-Format konvertieren
-    const jsonString = JSON.stringify(data, null, 2);
-    // console.log('jsonString:', jsonString);
+    // Alle Daten sind jetzt in der 'data'-Variable gesammel
 
-    // JSON-Daten in eine Datei schreiben
-    fs.writeFileSync('OutputNeueProjekte.json', jsonString);
+    // Daten in die MongoDB schreiben
+    try {
+      // Iteriere durch die gesammelten Daten und speichere sie in der MongoDB
+      for (const result of data) {
+        const project = await Project.create(result);
+        console.log(
+          'Projekt erfolgreich in MongoDB gespeichert:',
+          project.name
+        );
+      }
+    } catch (err) {
+      console.error(
+        'Fehler beim Speichern der extrahierten Daten in MongoDB:',
+        err
+      );
+    }
 
-    console.log('File created successfully.');
+    console.log('Alle Daten erfolgreich in DB gespeichert');
   } catch (error) {
     console.error('Ein Fehler ist aufgetreten:', error);
   }
 }
+
+// // Daten in JSON-Format konvertieren
+// const jsonString = JSON.stringify(data, null, 2);
+// // JSON-Daten in eine Datei schreiben
+// fs.writeFileSync('OutputNeueProjekte.json', jsonString);
