@@ -11,6 +11,7 @@ const initialState = {
   token: null,
   login: null,
   password: null,
+  newUser: null,
   bears: 0,
   projects: [],
 };
@@ -89,6 +90,34 @@ const useStore = create((set) => ({
       })
       .finally(() => {
         set({ loading: false }); // Request an den Server abgeschlossen (egal ob Sucess oder Error)
+      });
+  },
+  signup: (firstName, lastName, email, password) => {
+    // bekommt Daten aus einer Maske über Parameter
+    set({ loading: true, error: null, newUser: null });
+
+    // Neuregistrierung im Backend versuchen
+    myfetchAPI({
+      url: HOST + '/user/signup',
+      method: 'post',
+      data: { firstName, lastName, email, password },
+    })
+      .then((response) => {
+        // reponse.data = der neue User, Statuscode = 201
+        if (response.status === 200) {
+          set({ newUser: response.data });
+          console.log('newUser:', response.data);
+        } else {
+          throw new Error('Vom Server kam was komisches');
+        }
+      })
+      .catch((error) => {
+        // console.log('ich bin in catch', error);
+        set({ error });
+      })
+      .finally(() => {
+        // Laden der Daten beendet
+        set({ loading: false });
       });
   },
 }));

@@ -17,10 +17,13 @@ import AddHomeWorkRoundedIcon from '@mui/icons-material/AddHomeWorkRounded';
 import { ThemeProvider } from '@mui/material/styles';
 import myTheme from '../styles/theme';
 
+import useStore from '../stores/useStore';
+
 const pages = ['Alle Angebote', 'Merkliste', 'Kartenansicht'];
 const settings = ['Profil', 'Hilfe & Kontakt', 'Logout'];
 
 function ResponsiveAppBar() {
+  const { user } = useStore();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -149,7 +152,7 @@ function ResponsiveAppBar() {
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
-                    alt="Valentina Benedikter"
+                    alt={user.firstName}
                     src="/static/images/avatar/2.jpg"
                   />
                 </IconButton>

@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import ProjectCard from './ProjectCard';
 
 const CurrentOffers = () => {
+  const { user } = useStore();
   // states und Funktionen aus dem useStore importieren
   const { projects, loading, error, getAllProjects } = useStore();
   // laden der Projekte einmal beim Mounting
@@ -68,7 +69,7 @@ const CurrentOffers = () => {
           Für jedes Element wird ein Grid-Item erstellt.
           Die key-Prop = project.id */}
           {projects.map((project) => (
-            <Grid item key={project.id} xs={12} sm={6} md={6} lg={4}>
+            <Grid item key={project._id} xs={12} sm={6} md={6} lg={4}>
               {/* Die Projektdaten werden der ProjectCard-Komponente als project-Prop übergeben. */}
               <ProjectCard project={project} />
             </Grid>

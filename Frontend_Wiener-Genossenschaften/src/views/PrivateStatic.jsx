@@ -6,8 +6,10 @@ import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Logo from '../components/Logo';
 import { Box } from '@mui/material';
+import useStore from '../stores/useStore';
 
 const PrivateStatic = () => {
+  const { user } = useStore();
   return (
     <>
       <Box
@@ -24,9 +26,9 @@ const PrivateStatic = () => {
           align="left"
           fontWeight={'bold'}
           color={(t) => t.palette.primary.light}
-          fontSize={120}
+          fontSize={60}
         >
-          WG
+          {user.firstName + 's' + 'WG'}
         </Typography>
         <Typography variant="h3" align="left">
           Wiener Genossenschaften

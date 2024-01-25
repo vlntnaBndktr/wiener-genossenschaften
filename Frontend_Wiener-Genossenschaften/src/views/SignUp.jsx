@@ -9,36 +9,56 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Typography from '@mui/material/Typography';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-import { Link as RouterLink } from 'react-router-dom';
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import useStore from '../stores/useStore';
+import { useState, useEffect } from 'react';
 
 const SignUp = () => {
+  const { signup, newUser, error } = useStore();
+  // react-State erstellen mit useState-Hook
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target; //name + value kommen aus den Attributen des <input> Elements
+    setFormData({
+      ...formData, //Instanz des aktuellen State
+      [name]: value,
+    });
+    // bei jeder Tastatur-Eigabe verändert sich das formData-Objekt
+    // console.log(formData);
+    // event.target: in diesem DOM-Element hat der Change stattgefunden
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    // TODO: Passwort prüfen!
+    // signin-Funktion aus dem useStore aufrufen + aktuelle Werte übergeben
+    console.log('button geklickt!');
+    signup(
+      formData.firstName,
+      formData.lastName,
+      formData.email,
+      formData.password
+    );
+    console.log('formData:', formData);
   };
+
+  const navigate = useNavigate();
+
+  // wenn sich newUser ändert und newUser gültig ist, dann Weiterleitung auf Login-Seite
+  useEffect(() => {
+    console.log('newUser wurde geändert', newUser);
+    if (newUser) {
+      navigate('/login');
+    }
+  }, [newUser]);
 
   return (
     <>
@@ -68,6 +88,8 @@ const SignUp = () => {
                 id="firstName"
                 label="Vorname"
                 autoFocus
+                value={formData.firstName}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -78,6 +100,8 @@ const SignUp = () => {
                 label="Nachname"
                 name="lastName"
                 autoComplete="family-name"
+                value={formData.lastName}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -88,6 +112,8 @@ const SignUp = () => {
                 label="E-mail Adresse"
                 name="email"
                 autoComplete="email"
+                value={formData.email}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -99,6 +125,8 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                value={formData.password}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
