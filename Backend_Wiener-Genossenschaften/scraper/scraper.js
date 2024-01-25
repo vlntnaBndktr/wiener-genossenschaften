@@ -4,11 +4,9 @@ import * as cheerio from 'cheerio';
 
 // Importieren der Funktion dataProject
 import dataProject from './dataProject.js';
-import { Project } from '../models/projects.js';
 
 // Array zum Speichern der extrahierten Daten
 const data = [];
-
 // Konstanten für die Basis-URL der 'Übersichtsseite'
 const baseURL = 'https://www.wbv-gpa.at/projekt/';
 
@@ -34,19 +32,6 @@ export default async function extractLinks(URL) {
 
       // Infos über 1 Projekt
       const projectInfos = [];
-
-      // Innerhalb von link: Finde alle span-Elemente die sich im div befinden
-      link.find('div > span').each((spanIndex, spanElement) => {
-        // den gesamten Text der sich darin befindet + trimmen
-        const spanText = $(spanElement).text().trim();
-
-        // Ein Objekt pro span-tag
-        const spanObject = {
-          spanText: spanText,
-        };
-
-        projectInfos.push(spanObject);
-      });
 
       // ==> dataProject() returned gescrapte Daten von der 'Projekt-Seite'
       const promise = dataProject(href).then(async (object) => {

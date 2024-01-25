@@ -86,4 +86,4 @@ mongoose
 // const URL = 'https://www.wbv-gpa.at/wohnungen/bestehende-objekte/';
 const URL = 'https://www.wbv-gpa.at/wohnungen/neue-projekte/';
 
-// await extractLinks(URL);
+await extractLinks(URL);
