@@ -84,8 +84,8 @@ mongoose
     console.log('Verbindung MongoDB nicht möglich!', error);
   });
 
-const URL = 'https://www.wbv-gpa.at/wohnungen/';
-// const URL = 'https://www.wbv-gpa.at/wohnungen/neue-projekte/';
+// const URL = 'https://www.wbv-gpa.at/wohnungen/';
+const URL = 'https://www.wbv-gpa.at/wohnungen/neue-projekte/';
 
 // await extractLinks(URL);
-await extractFlatLinks(URL);
+// await extractFlatLinks(URL);

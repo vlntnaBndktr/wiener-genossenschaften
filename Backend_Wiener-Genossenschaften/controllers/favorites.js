@@ -47,15 +47,22 @@ const createFavorite = async (req, res, next) => {
       ...validatedData,
     });
 
+    if (!newFavorite) {
+      return next(new HttpError('Favorite konnte nicht angelegt werden', 500));
+    }
+
     // Favorite ID im User-Document speichern:
-    // ID des neuen Favoriten zum Benutzer hinzufügen
-    await User.findByIdAndUpdate(userId, {
-      $push: { favorites: newFavorite._id },
-    });
     //Model.findByIdAndUpdate(id, update); mit $push Operator
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $push: { favorites: newFavorite._id },
+      },
+      { new: true }
+    ); // 'new: true' gibt das aktualisierte Dokument zurück
 
     console.log('newFavorite:', newFavorite);
-    res.status(200).send('Favorite erfolgreich gespeichert');
+    res.status(200).send(updatedUser);
   } catch (error) {
     console.error('Fehler beim Anlegen des Favorites:', error.message);
     return next(new HttpError('Internal Server Error', 500));
@@ -117,17 +124,17 @@ const deleteFavorite = async (req, res, next) => {
   try {
     // favoriteId kommt aus der URL; userId aus dem Token
     const userId = req.foundUser._id;
-    const favoriteId = req.params._id;
+    const projectId = req.params._id;
     console.log('userId:', userId);
 
     // Überprüfen, ob die ID die erforderliche Länge hat (24 Zeichen)
-    if (favoriteId.length !== 24) {
+    if (projectId.length !== 24) {
       return next(new HttpError('Ungültige Favorite-ID', 400)); // Bad Request
     }
 
     // Nur eigene Favorites können gelöscht werden!
     const authorizedFavorite = await Favorite.findOne({
-      _id: favoriteId,
+      projectId: projectId,
       userId: userId,
     });
     if (!authorizedFavorite) {
@@ -141,16 +148,20 @@ const deleteFavorite = async (req, res, next) => {
 
     // Favorite finden + löschen
     const deletedFavorite = await Favorite.findOneAndDelete({
-      _id: favoriteId,
+      _id: authorizedFavorite._id,
     });
     console.log(deletedFavorite);
 
-    // !Auch aus dem Array im User-Dokument löschen:
-    await User.findByIdAndUpdate(userId, {
-      $pull: { favorites: favoriteId },
-    });
+    // Auch aus dem Array im User-Dokument löschen:
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $pull: { favorites: authorizedFavorite._id },
+      },
+      { new: true }
+    ); // 'new: true' gibt das aktualisierte Dokument zurück
 
-    res.status(200).send('Favorite erfolgreich gelöscht');
+    res.status(200).json(updatedUser);
   } catch (error) {
     console.error('Fehler beim Löschen des Favorites:', error.message);
     return next(new HttpError('Internal Server Error', 500));

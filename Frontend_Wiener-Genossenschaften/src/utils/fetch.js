@@ -7,8 +7,16 @@ const myfetchAPI = (options = {}) => {
     url: '/',
     data: {},
   };
+
+  // Falls Token mitgegeben werden muss
+  const headers = options.token
+    ? {
+        Authorization: 'Bearer ' + options.token,
+      }
+    : {};
+
   // Mischen der übergebenen Optionen mit der Standardkonfiguration
-  const fetchConfig = { ...defaultOptions, ...options };
+  const fetchConfig = { ...defaultOptions, ...options, headers };
 
   // Axios Aufruf durchführen und auf die Antwort warten
   return axios(fetchConfig);

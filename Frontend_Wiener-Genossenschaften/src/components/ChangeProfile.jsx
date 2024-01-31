@@ -4,20 +4,48 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 
+import useStore from '../stores/useStore';
+import { useState } from 'react';
+import Alert from '@mui/material/Alert';
+
 const ChangeProfile = () => {
+  // global-States aus dem useStore holen
+  const { user, updateUser, success, error } = useStore();
+  // react-State erstellen mit useState-Hook
+  const [formData, setFormData] = useState({
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    oldPassword: '',
+    newPassword: '',
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target; //name + value kommen aus den Attributen des <input> Elements
+    setFormData({
+      ...formData, //Instanz des aktuellen State
+      [name]: value,
+    });
+    // bei jeder Tastatur-Eigabe verändert sich das formData-Objekt
+    // event.target: in diesem DOM-Element hat der Change stattgefunden
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // updateUser-Funktion aus dem useStore aufrufen + aktuelle Werte übergeben
+    console.log('button geklickt!');
+    updateUser(
+      formData.firstName,
+      formData.lastName,
+      formData.email
+      // formData.oldPassword,
+      // formData.newPassword
+    );
+    console.log(formData);
   };
 
   return (
@@ -31,12 +59,10 @@ const ChangeProfile = () => {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Profildaten
         </Typography>
+
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -48,8 +74,9 @@ const ChangeProfile = () => {
                 id="firstName"
                 // label="First Name"
                 autoFocus
-                value="Valentina"
                 label="Vorname"
+                value={formData.firstName}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -60,8 +87,9 @@ const ChangeProfile = () => {
                 // label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
-                value="Benedikter"
                 label="Nachname"
+                value={formData.lastName}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -72,8 +100,9 @@ const ChangeProfile = () => {
                 // label="Email Address"
                 name="email"
                 autoComplete="email"
-                value="valentina.benedikter@gmx.at"
                 label="E-mail Adresse"
+                value={formData.email}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -85,6 +114,8 @@ const ChangeProfile = () => {
                 type="password"
                 id="oldPassword"
                 autoComplete="password"
+                value={formData.oldPassword}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -96,6 +127,8 @@ const ChangeProfile = () => {
                 type="password"
                 id="newPassword"
                 autoComplete="new-password"
+                value={formData.newPassword}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -105,6 +138,11 @@ const ChangeProfile = () => {
               />
             </Grid>
           </Grid>
+          {/* Conditional Rendering: Alerts */}
+          {success && (
+            <Alert severity="success">Profildaten erfolgreich geändert</Alert>
+          )}
+          {error && <Alert severity="error">Fehler</Alert>}
           <Button
             type="submit"
             fullWidth

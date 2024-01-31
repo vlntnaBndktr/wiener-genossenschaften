@@ -13,15 +13,14 @@ const PrivateStatic = () => {
   return (
     <>
       <Box
+        pt={4}
+        px={4}
         sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'left',
         }}
       >
-        {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar> */}
         <Typography
           align="left"
           fontWeight={'bold'}
@@ -36,7 +35,6 @@ const PrivateStatic = () => {
         <Typography variant="h7" align="left" color="text.secondary" paragraph>
           Alle aktuellen Wohnungsangebote auf einen Blick.
         </Typography>
-
         <Logo />
       </Box>
     </>

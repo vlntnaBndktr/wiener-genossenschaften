@@ -17,13 +17,15 @@ import AddHomeWorkRoundedIcon from '@mui/icons-material/AddHomeWorkRounded';
 import { ThemeProvider } from '@mui/material/styles';
 import myTheme from '../styles/theme';
 
-import useStore from '../stores/useStore';
+import { useNavigate } from 'react-router-dom';
 
-const pages = ['Alle Angebote', 'Merkliste', 'Kartenansicht'];
-const settings = ['Profil', 'Hilfe & Kontakt', 'Logout'];
+import useStore from '../stores/useStore';
 
 function ResponsiveAppBar() {
   const { user } = useStore();
+
+  const navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -42,6 +44,10 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const test = () => {
+    console.log('TEST!!!!!!!!!!!!');
+  };
+
   return (
     <ThemeProvider theme={myTheme}>
       <AppBar
@@ -54,6 +60,7 @@ function ResponsiveAppBar() {
       >
         <Container maxWidth="xl" sx={{ color: (t) => t.palette.primary.dark }}>
           <Toolbar disableGutters>
+            {/* Large-ICON+TYPO: Wird erst ab md-Bilschirmgröße angezeigt: */}
             <AddHomeWorkRoundedIcon
               sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}
             />
@@ -61,7 +68,6 @@ function ResponsiveAppBar() {
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -70,11 +76,14 @@ function ResponsiveAppBar() {
                 letterSpacing: '.3rem',
                 color: (t) => t.palette.secondary.dark,
                 textDecoration: 'none',
+                // cursor: 'pointer',
               }}
             >
               meine WG
             </Typography>
+            {/* Ende Large-ICON+TYPO*/}
 
+            {/* Small-MENU: Wird nur bei xs + sm Bilschirmgröße angezeigt: */}
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
@@ -104,11 +113,30 @@ function ResponsiveAppBar() {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem
+                  onClick={() => {
+                    navigate('/user');
+                    handleCloseNavMenu();
+                  }}
+                >
+                  <Typography textAlign="center">Alle Angebote</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    navigate('/favorites');
+                    handleCloseNavMenu();
+                  }}
+                >
+                  <Typography textAlign="center">Merkliste</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    navigate('/map');
+                    handleCloseNavMenu();
+                  }}
+                >
+                  <Typography textAlign="center">Kartenansicht</Typography>
+                </MenuItem>
               </Menu>
             </Box>
             <AddHomeWorkRoundedIcon
@@ -118,7 +146,6 @@ function ResponsiveAppBar() {
               variant="h5"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
@@ -132,22 +159,52 @@ function ResponsiveAppBar() {
             >
               meine WG
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    my: 2,
-                    color: (t) => t.palette.secondary.dark,
-                    display: 'block',
-                  }}
-                >
-                  {page}
-                </Button>
-              ))}
-            </Box>
+            {/* Small-MENU Ende */}
 
+            {/* Large-MENU: Wird erst ab md-Bilschirmgröße angezeigt: */}
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              <Button
+                onClick={() => {
+                  navigate('/user');
+                  handleCloseNavMenu();
+                }}
+                sx={{
+                  my: 2,
+                  color: (t) => t.palette.secondary.dark,
+                  display: 'block',
+                }}
+              >
+                Alle Angebote
+              </Button>
+              <Button
+                onClick={() => {
+                  navigate('/favorites');
+                  handleCloseNavMenu();
+                }}
+                sx={{
+                  my: 2,
+                  color: (t) => t.palette.secondary.dark,
+                  display: 'block',
+                }}
+              >
+                Merkliste
+              </Button>
+              <Button
+                onClick={() => {
+                  navigate('/map');
+                  handleCloseNavMenu();
+                }}
+                sx={{
+                  my: 2,
+                  color: (t) => t.palette.secondary.dark,
+                  display: 'block',
+                }}
+              >
+                Kartenansicht
+              </Button>
+            </Box>
+            {/* Large-MENU Ende */}
+            {/* User-Menu*/}
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -173,11 +230,25 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem
+                  onClick={() => {
+                    navigate('/profile');
+                    handleCloseUserMenu();
+                  }}
+                >
+                  <Typography textAlign="center">Profil</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Hilfe & Kontakt</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    // logout();
+                    handleCloseUserMenu();
+                  }}
+                >
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>

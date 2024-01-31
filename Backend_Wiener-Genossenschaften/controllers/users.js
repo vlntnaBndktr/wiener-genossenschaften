@@ -126,7 +126,7 @@ const updateUser = async (req, res, next) => {
       return next(new HttpError('Benutzer nicht gefunden', 404));
     }
     console.log(updatedUser);
-    res.send('User-profile updated sucessfully');
+    res.send(updatedUser);
   } catch (error) {
     return next(new HttpError('Internal Server Error', 500));
   }

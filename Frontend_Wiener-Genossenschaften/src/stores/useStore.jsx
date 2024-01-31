@@ -12,13 +12,14 @@ const initialState = {
   login: null,
   password: null,
   newUser: null,
+  success: false,
   bears: 0,
   projects: [],
 };
 
 // benutzerdefinierten Zustandshook erzeugen
 // enthält initialStates
-const useStore = create((set) => ({
+const useStore = create((set, get) => ({
   ...initialState,
 
   //Bärenbeispiel
@@ -43,7 +44,7 @@ const useStore = create((set) => ({
         }
       })
       .catch((error) => {
-        console.error('im catch-Block: ', error);
+        console.error('im catch-Block: ', error.response);
         set({ error }); // = set({ error: error })
       })
       .finally(() => {
@@ -76,7 +77,7 @@ const useStore = create((set) => ({
           // Stammdaten vom angemeldeten User holen
           return myfetchAPI({ url: HOST + '/user/' + decodedToken.id });
         } else {
-          throw new Error('Fehler beim Anmelden');
+          throw new Error('Fehler beim Login');
         }
       })
       .then((response) => {
@@ -85,7 +86,7 @@ const useStore = create((set) => ({
         // console.log('user: ', user);
       })
       .catch((error) => {
-        console.error('im catch-Block: ', error);
+        console.error('im catch-Block: ', error.response);
         set({ error }); // = set({ error: error })
       })
       .finally(() => {
@@ -108,11 +109,98 @@ const useStore = create((set) => ({
           set({ newUser: response.data });
           console.log('newUser:', response.data);
         } else {
-          throw new Error('Vom Server kam was komisches');
+          throw new Error('Fehler bei der Registrierung');
         }
       })
       .catch((error) => {
-        // console.log('ich bin in catch', error);
+        console.log('ich bin in catch', error);
+        set({ error });
+      })
+      .finally(() => {
+        // Laden der Daten beendet
+        set({ loading: false });
+      });
+  },
+  updateUser: (firstName, lastName, email) => {
+    // bekommt Daten aus einer Maske über Parameter
+    set({ loading: true, error: null, success: false });
+
+    // Daten ans Backend senden
+    myfetchAPI({
+      url: HOST + '/user/update',
+      method: 'patch',
+      data: { firstName, lastName, email },
+      token: get().token,
+    })
+      .then((response) => {
+        // reponse.data =
+        if (response.status === 200) {
+          set({ user: response.data, success: true });
+          console.log('updated User:', response.data);
+        } else {
+          throw new Error('Fehler beim User-Update');
+        }
+      })
+      .catch((error) => {
+        console.log('ich bin in updateUser-catch', error);
+        set({ error });
+      })
+      .finally(() => {
+        // Laden der Daten beendet
+        set({ loading: false });
+      });
+  },
+  createFavorite: (projectId) => {
+    // Reset
+    set({ loading: true, error: null, success: false });
+    // im Token wird die userId geschickt
+    console.log('Token:', get().token);
+    // in req.params wird die _projectId übermittelt
+    myfetchAPI({
+      url: HOST + '/favorite/' + projectId,
+      method: 'post',
+      token: get().token,
+    })
+      .then((response) => {
+        // reponse.data =
+        if (response.status === 200) {
+          set({ user: response.data, success: true });
+          console.log('updated User:', response.data);
+        } else {
+          throw new Error('Fehler beim anlegen des Favorites');
+        }
+      })
+      .catch((error) => {
+        console.log('ich bin in createFavorite-catch', error);
+        set({ error });
+      })
+      .finally(() => {
+        // Laden der Daten beendet
+        set({ loading: false });
+      });
+  },
+  deleteFavorite: (projectId) => {
+    // Reset
+    set({ loading: true, error: null, success: false });
+    // im Token wird die userId geschickt
+    console.log('Token:', get().token);
+    // in req.params wird die _projectId übermittelt
+    myfetchAPI({
+      url: HOST + '/favorite/delete/' + projectId,
+      method: 'delete',
+      token: get().token,
+    })
+      .then((response) => {
+        // reponse.data =
+        if (response.status === 200) {
+          set({ user: response.data, success: true });
+          console.log('updated User:', response.data);
+        } else {
+          throw new Error('Fehler beim anlegen des Favorites');
+        }
+      })
+      .catch((error) => {
+        console.log('ich bin in deleteFavorite-catch', error);
         set({ error });
       })
       .finally(() => {

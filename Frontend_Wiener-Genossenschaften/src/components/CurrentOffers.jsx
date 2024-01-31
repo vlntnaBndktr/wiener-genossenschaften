@@ -8,11 +8,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
 import ProjectCard from './ProjectCard';
 
 const CurrentOffers = () => {
-  const { user } = useStore();
   // states und Funktionen aus dem useStore importieren
   const { projects, loading, error, getAllProjects } = useStore();
   // laden der Projekte einmal beim Mounting
@@ -39,10 +38,7 @@ const CurrentOffers = () => {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Alle Angebote
         </Typography>
         <Typography

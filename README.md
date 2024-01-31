@@ -45,6 +45,12 @@
 
 5. bis 2.2.2024
 
+- Immobilienobj. als gemerkt speichern
+- Scraper für freie Wohnungen erweitern
+- Re-Login aus Token realiseren
+
+6. bis 14.2.2024 (Prüfung)
+
 ## Questions
 
 - zentrale Fehlerbehandlung?

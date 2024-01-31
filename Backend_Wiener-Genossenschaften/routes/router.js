@@ -14,7 +14,7 @@ import {
 } from '../controllers/users.js';
 
 import { signupValidation, signup } from '../controllers/users-signup.js';
-import { login, logout } from '../controllers/authentication.js';
+import { login, logout } from '../controllers/login-logout.js';
 import {
   projectValidation,
   createProject,

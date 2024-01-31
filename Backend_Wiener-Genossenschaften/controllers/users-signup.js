@@ -8,7 +8,10 @@ const signupValidation = [
   body('firstName').trim().isLength({ min: 2, max: 50 }),
   body('lastName').trim().isLength({ min: 2, max: 50 }),
   body('email').toLowerCase().normalizeEmail().isEmail(),
-  body('password').trim().isLength({ min: 8, max: 50 }),
+  body('password')
+    .trim()
+    .isLength({ min: 8, max: 50 })
+    .withMessage('Das Passwort muss mindestens 8 Stellen haben'),
 ];
 
 const signup = async (req, res, next) => {
@@ -19,7 +22,7 @@ const signup = async (req, res, next) => {
 
   // wenn Fehler -> Fehlermeldung an Client senden
   if (result.errors.length > 0) {
-    return next(new HttpError(JSON.stringify(result), 422));
+    return next(new HttpError(JSON.stringify(result.errors), 422));
     // eine HttpError-Instanz mit dem Code 422 erstellen
     // und an den nächsten Middleware-Handler weitergeleitet.
   }

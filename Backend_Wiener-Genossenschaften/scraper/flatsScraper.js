@@ -61,4 +61,4 @@ export default async function extractFlatLinks(URL) {
   }
 }
 
-await extractFlatLinks(URL);
+// await extractFlatLinks(URL);

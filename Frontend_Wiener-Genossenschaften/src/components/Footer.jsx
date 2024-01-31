@@ -19,11 +19,7 @@ function Copyright() {
 const Footer = () => {
   return (
     <>
-      <Box
-        sx={{ color: (t) => t.palette.primary.main }}
-        component="footer"
-        // py={4}
-      >
+      <Box sx={{ color: (t) => t.palette.primary.main }}>
         <Typography variant="h6" align="left">
           WIENER GENOSSENSCHAFTEN
         </Typography>

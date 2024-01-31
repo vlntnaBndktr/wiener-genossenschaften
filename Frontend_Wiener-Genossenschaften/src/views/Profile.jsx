@@ -6,7 +6,6 @@ const Profile = () => {
   return (
     <>
       <ChangeProfile />
-      <ChangePassword />
     </>
   );
 };
