@@ -45,7 +45,7 @@
 
 5. bis 2.2.2024
 
-- Immobilienobj. als gemerkt speichern
+- Immobilienobj. als Favorites speichern
 - Scraper für freie Wohnungen erweitern
 - Re-Login aus Token realiseren
 

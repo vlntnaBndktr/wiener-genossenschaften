@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import useStore from '../stores/useStore';
 
 function ResponsiveAppBar() {
-  const { user } = useStore();
+  const { user, logout } = useStore();
 
   const navigate = useNavigate();
 
@@ -243,7 +243,7 @@ function ResponsiveAppBar() {
                 </MenuItem>
                 <MenuItem
                   onClick={() => {
-                    // logout();
+                    logout();
                     handleCloseUserMenu();
                   }}
                 >

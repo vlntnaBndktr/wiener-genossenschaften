@@ -7,13 +7,8 @@ import myTheme from '../styles/theme';
 import Footer from '../components/Footer';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-import Logo from '../components/Logo';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-
-/*Layoutainer';Main = eine Layout-Komponente, die meinen Content in zwei Teile teilt: links und rechts. 
-Sie nimmt zwei Props entgegen (leftContent und rightContent), 
-die dann mit spezifischem Inhalt befüllt werden können.*/
 
 const LayoutPublic = () => {
   return (

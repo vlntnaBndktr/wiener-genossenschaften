@@ -17,7 +17,7 @@ const createFavorite = async (req, res, next) => {
     // im Token ist die userId
     const userId = req.foundUser._id;
 
-    // in req.params ist die favoriteId
+    // in req.params ist die projectId
     const projectId = req.params._projectId;
 
     // Datenqualität der Zusatzinfos prüfen (syntaktisch)
@@ -34,7 +34,7 @@ const createFavorite = async (req, res, next) => {
     // Überprüfen, ob Favorite bereits in der Datenbank vorhanden ist
     const existingFavorite = await Favorite.findOne({
       userId: userId,
-      projectId: projectId,
+      project: projectId,
     });
     if (existingFavorite) {
       return next(new HttpError('Favorite ist bereits angelegt', 422));
@@ -44,6 +44,7 @@ const createFavorite = async (req, res, next) => {
     const newFavorite = await Favorite.create({
       userId,
       projectId,
+      project: projectId, // Setze das `project`-Feld
       ...validatedData,
     });
 
@@ -122,7 +123,7 @@ const updateFavorite = async (req, res, next) => {
 
 const deleteFavorite = async (req, res, next) => {
   try {
-    // favoriteId kommt aus der URL; userId aus dem Token
+    // projectId kommt aus der URL; userId aus dem Token
     const userId = req.foundUser._id;
     const projectId = req.params._id;
     console.log('userId:', userId);
@@ -134,7 +135,7 @@ const deleteFavorite = async (req, res, next) => {
 
     // Nur eigene Favorites können gelöscht werden!
     const authorizedFavorite = await Favorite.findOne({
-      projectId: projectId,
+      project: projectId,
       userId: userId,
     });
     if (!authorizedFavorite) {
@@ -174,7 +175,9 @@ const getAllFavorites = async (req, res, next) => {
     // User identifizieren
     const userId = req.foundUser._id;
     // Daten aus der Datenbank abrufen
-    const favorites = await Favorite.find({ userId: userId });
+    const favorites = await Favorite.find({ userId })
+      .populate('project')
+      .exec();
     // Erfolgreiche Antwort mit den abgerufenen Favorites senden
     res.status(200).json(favorites);
   } catch (error) {
@@ -186,6 +189,7 @@ const getAllFavorites = async (req, res, next) => {
 
 const getOneFavorite = async (req, res, next) => {
   try {
+    // mit favoriteId!!
     const favoriteId = req.params._id; // aus den URL-Parametern holen
     console.log('favoriteId:', favoriteId);
 

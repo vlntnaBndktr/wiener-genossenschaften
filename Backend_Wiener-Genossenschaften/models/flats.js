@@ -8,6 +8,7 @@ const flatsSchema = new Schema(
     description: { type: String },
     constructionAssociation: { type: String },
     moveIn: { type: String },
+    squareMeters: { type: String },
     location: {
       street: { type: String },
       zip: { type: String },

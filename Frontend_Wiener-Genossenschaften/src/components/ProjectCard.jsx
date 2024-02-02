@@ -6,45 +6,39 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CardHeader from '@mui/material/CardHeader';
 import Avatar from '@mui/material/Avatar';
 import PlaylistAddCircleRoundedIcon from '@mui/icons-material/PlaylistAddCircleRounded';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AddHomeIcon from '@mui/icons-material/AddHome';
 import useStore from '../stores/useStore';
 import { useState, useEffect } from 'react';
 
 // Empfängt 'project' als Prop von der Elternkomponente CurrentOffers
-const ProjectCard = ({ project }) => {
-  // States aus dem useStore:
-  const { createFavorite, deleteFavorite, user } = useStore();
-
-  // Favorite-State erzeugen
-  const [isFavorite, setIsFavorite] = useState(false);
-
+const ProjectCard = ({ project, userFavorites }) => {
+  const { createFavorite, deleteFavorite } = useStore();
   // Kürze die Beschreibung auf maximal 250 Zeichen
   const shortDescription = project.description.substring(0, 250) + '...';
 
-  //Wenn das Projekt ein Favorite des Users ist, wird das icon lila
-  // console.log('User:', user.favorites);
-  useEffect(() => {
-    // Überprüfe, ob das Projekt ein Favorit des Benutzers ist
-    setIsFavorite(
-      user.favorites.find((favorite) => favorite.projectId === project._id)
-    );
-  }, [user, project._id]);
+  const openExternalWebsite = () => {
+    const externalLink = project.website;
+    // Öffne den Link in einem neuen Tab
+    window.open(externalLink, '_blank');
+  };
 
-  const handleFavorite = () => {
-    // Abfrage: wenn schon Favorite dann Favorit-Eintrag löschen
+  // Überprüfe, ob das aktuelle Projekt in den Favoriten des Benutzers enthalten ist
+  const isFavorite = userFavorites.some(
+    (favorite) => favorite.project === project._id
+  );
+
+  const handleToggleFavorite = () => {
     if (isFavorite) {
-      console.log('Removing Favorite:', user.favorites);
-      // console.log('key:', project._id);
-
+      // Wenn es bereits ein Favorit ist, entferne es
       deleteFavorite(project._id);
+      console.log(project._id);
     } else {
-      // sonst als Favorite hinzufügen
-      console.log('Adding Favorite:', user.favorites);
+      // Wenn es kein Favorit ist, füge es hinzu
       createFavorite(project._id);
     }
   };
@@ -64,12 +58,18 @@ const ProjectCard = ({ project }) => {
         {' '}
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: 'secondary.main' }} aria-label="recipe">
-              NP
+            <Avatar
+              sx={{
+                bgcolor:
+                  project.type === 'NP' ? 'secondary.main' : 'secondary.dark',
+              }}
+              aria-label="recipe"
+            >
+              {project.type}
             </Avatar>
           }
           title={project.constructionAssociation}
-          subheader="Fertigstellung 2025"
+          subheader={project.moveIn}
         />
         <CardMedia
           component="div"
@@ -88,16 +88,20 @@ const ProjectCard = ({ project }) => {
         </CardContent>
         <CardActions>
           <IconButton
-            aria-label="add to favorites"
-            sx={{ color: isFavorite ? '#a280ff' : 'grey' }}
-            onClick={handleFavorite}
+            aria-label={
+              isFavorite ? 'remove from favorites' : 'add to favorites'
+            }
+            onClick={handleToggleFavorite}
+            sx={{ color: isFavorite ? '#a280ff' : 'inherit' }}
           >
             <PlaylistAddCircleRoundedIcon />
           </IconButton>
           <IconButton aria-label="show on map" sx={{ color: 'black' }}>
             <LocationOnIcon />
           </IconButton>
-          <Button size="small">Zur Website</Button>
+          <Button size="small" onClick={openExternalWebsite}>
+            Zur Website
+          </Button>
         </CardActions>
       </Card>
     </>

@@ -21,7 +21,8 @@ const getAllUsers = async (req, res, next) => {
 
 const getOneUser = async (req, res, next) => {
   try {
-    const userId = req.params.userId; // aus den URL-Parametern holen
+    // userId aus den URL-Parametern holen
+    const userId = req.params.userId;
     const user = await User.findById(userId, '-password').populate(
       'favorites',
       '-userId'

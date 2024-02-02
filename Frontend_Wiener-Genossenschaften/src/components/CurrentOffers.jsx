@@ -13,7 +13,7 @@ import ProjectCard from './ProjectCard';
 
 const CurrentOffers = () => {
   // states und Funktionen aus dem useStore importieren
-  const { projects, loading, error, getAllProjects } = useStore();
+  const { projects, loading, error, getAllProjects, user } = useStore();
   // laden der Projekte einmal beim Mounting
   useEffect(() => {
     getAllProjects();
@@ -67,7 +67,7 @@ const CurrentOffers = () => {
           {projects.map((project) => (
             <Grid item key={project._id} xs={12} sm={6} md={6} lg={4}>
               {/* Die Projektdaten werden der ProjectCard-Komponente als project-Prop übergeben. */}
-              <ProjectCard project={project} />
+              <ProjectCard project={project} userFavorites={user.favorites} />
             </Grid>
           ))}
         </Grid>

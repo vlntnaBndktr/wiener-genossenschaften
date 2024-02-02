@@ -3,15 +3,12 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import mongoose from 'mongoose';
-
 import router from './routes/router.js';
-
 import HttpError from './common/http-errors.js';
-// import { User } from './models/users.js';
-// import { Project } from './models/projects.js';
 
-import extractLinks from './scraper/scraper.js';
-import extractFlatLinks from './scraper/flatsScraper.js';
+//SCRAPER:
+import extractProjects from './scraperNeubauProjekte/scraper.js';
+import extractFlats from './scraperFreieWohnungen/scraper.js';
 
 dotenv.config();
 
@@ -84,8 +81,10 @@ mongoose
     console.log('Verbindung MongoDB nicht möglich!', error);
   });
 
-// const URL = 'https://www.wbv-gpa.at/wohnungen/';
-const URL = 'https://www.wbv-gpa.at/wohnungen/neue-projekte/';
+//SCRAPER Projekte:
+// const URL = 'https://www.wbv-gpa.at/wohnungen/neue-projekte/';
+// await extractProjects(URL);
 
-// await extractLinks(URL);
-// await extractFlatLinks(URL);
+//SCRAPER freie Wohnungen:
+// const URL = 'https://www.wbv-gpa.at/wohnungen/';
+// await extractFlats(URL);

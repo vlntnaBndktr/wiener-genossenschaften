@@ -13,8 +13,8 @@ const initialState = {
   password: null,
   newUser: null,
   success: false,
-  bears: 0,
   projects: [],
+  favorites: [],
 };
 
 // benutzerdefinierten Zustandshook erzeugen
@@ -22,10 +22,41 @@ const initialState = {
 const useStore = create((set, get) => ({
   ...initialState,
 
-  //Bärenbeispiel
-  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-  removeAllBears: () => set({ bears: 0 }),
-  //....//
+  checkToken: () => {
+    // wenn user object vorhanden ist dann prüfen, ob der Token noch gültig ist
+    if (get().user) {
+      if (get().decodedToken.exp - +new Date() / 1000 < SECONDS_TO_RELOGIN) {
+        if (get().login && get().password) {
+          return get().signin(get().login, get().password);
+        }
+        return get().logout();
+      }
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return;
+    }
+
+    const decodedToken = jwtDecode(token);
+    set({ token, decodedToken });
+
+    // Stammdaten vom angemeldeten Benutzer holen
+    myfetchAPI({ url: HOST + '/user/' + decodedToken.id })
+      .then((response) => {
+        // Stammdaten als "user" speichern
+        set({ user: response.data });
+      })
+      .catch((error) => {
+        // console.log('ich bin in catch', error);
+        set({ error });
+      })
+      .finally(() => {
+        // Laden der Daten beendet
+        set({ loading: false });
+      });
+  },
 
   // Funktion um Projekte von der API abzurufen
   // Spezieller Syntax im Statemanagement
@@ -93,6 +124,12 @@ const useStore = create((set, get) => ({
         set({ loading: false }); // Request an den Server abgeschlossen (egal ob Sucess oder Error)
       });
   },
+
+  logout: () => {
+    localStorage.removeItem('token');
+    set({ ...initialState });
+  },
+
   signup: (firstName, lastName, email, password) => {
     // bekommt Daten aus einer Maske über Parameter
     set({ loading: true, error: null, newUser: null });
@@ -121,6 +158,7 @@ const useStore = create((set, get) => ({
         set({ loading: false });
       });
   },
+
   updateUser: (firstName, lastName, email) => {
     // bekommt Daten aus einer Maske über Parameter
     set({ loading: true, error: null, success: false });
@@ -184,7 +222,7 @@ const useStore = create((set, get) => ({
     set({ loading: true, error: null, success: false });
     // im Token wird die userId geschickt
     console.log('Token:', get().token);
-    // in req.params wird die _projectId übermittelt
+    // in req.params wird die projectId übermittelt
     myfetchAPI({
       url: HOST + '/favorite/delete/' + projectId,
       method: 'delete',
@@ -206,6 +244,33 @@ const useStore = create((set, get) => ({
       .finally(() => {
         // Laden der Daten beendet
         set({ loading: false });
+      });
+  },
+  getAllFavorites: () => {
+    // Reset State loading: ein Request wird an den Server gesendet
+    set({ loading: true, error: null });
+
+    // API Aufruf mit vorgefertigter myfetchAPI
+    // Token mit userID wird gebraucht
+    myfetchAPI({
+      url: HOST + '/favorites',
+      token: get().token,
+    })
+      .then((response) => {
+        // in response.data sind meine Favorites
+        if (response.status >= 200 && response.status < 300) {
+          set({ favorites: response.data });
+          // in der response ist unter 'project' das ganze project-Objekt
+        } else {
+          throw new Error('Fehler beim Abrufen der Favorites');
+        }
+      })
+      .catch((error) => {
+        console.error('im catch-Block: ', error.response);
+        set({ error }); // = set({ error: error })
+      })
+      .finally(() => {
+        set({ loading: false }); // Request an den Server abgeschlossen (egal ob Sucess oder Error)
       });
   },
 }));
