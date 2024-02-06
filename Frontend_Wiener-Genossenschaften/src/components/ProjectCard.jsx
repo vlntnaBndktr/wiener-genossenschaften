@@ -14,10 +14,11 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AddHomeIcon from '@mui/icons-material/AddHome';
 import useStore from '../stores/useStore';
 import { useState, useEffect } from 'react';
+import Tooltip from '@mui/material/Tooltip';
 
 // Empfängt 'project' als Prop von der Elternkomponente CurrentOffers
-const ProjectCard = ({ project, userFavorites }) => {
-  const { createFavorite, deleteFavorite } = useStore();
+const ProjectCard = ({ project }) => {
+  const { user, createFavorite, deleteFavorite } = useStore();
   // Kürze die Beschreibung auf maximal 250 Zeichen
   const shortDescription = project.description.substring(0, 250) + '...';
 
@@ -28,7 +29,7 @@ const ProjectCard = ({ project, userFavorites }) => {
   };
 
   // Überprüfe, ob das aktuelle Projekt in den Favoriten des Benutzers enthalten ist
-  const isFavorite = userFavorites.some(
+  const isFavorite = user.favorites.some(
     (favorite) => favorite.project === project._id
   );
 
@@ -87,15 +88,28 @@ const ProjectCard = ({ project, userFavorites }) => {
           <Typography fontWeight="bold">{project.location.street}</Typography>
         </CardContent>
         <CardActions>
-          <IconButton
-            aria-label={
-              isFavorite ? 'remove from favorites' : 'add to favorites'
+          <Avatar
+            alt="Remy Sharp"
+            src="/10.png"
+            sx={{ width: 50, height: 50 }}
+          />
+          <Tooltip
+            title={
+              isFavorite
+                ? 'Aus der Merkliste löschen'
+                : 'Zur Merkliste hinzufügen'
             }
-            onClick={handleToggleFavorite}
-            sx={{ color: isFavorite ? '#a280ff' : 'inherit' }}
           >
-            <PlaylistAddCircleRoundedIcon />
-          </IconButton>
+            <IconButton
+              aria-label={
+                isFavorite ? 'remove from favorites' : 'add to favorites'
+              }
+              onClick={handleToggleFavorite}
+              sx={{ color: isFavorite ? '#a280ff' : 'inherit' }}
+            >
+              <PlaylistAddCircleRoundedIcon />
+            </IconButton>
+          </Tooltip>
           <IconButton aria-label="show on map" sx={{ color: 'black' }}>
             <LocationOnIcon />
           </IconButton>

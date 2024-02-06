@@ -38,7 +38,7 @@ const Login = () => {
     // login-Funktion aus dem useStore aufrufen + aktuelle Werte übergeben
     console.log('button geklickt!');
     login(formData.email, formData.password);
-    console.log(formData);
+    console.log('formData:', formData);
   };
 
   return (

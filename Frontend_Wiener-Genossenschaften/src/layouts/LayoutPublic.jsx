@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 const LayoutPublic = () => {
   return (
     <ThemeProvider theme={myTheme}>
-      <Grid container sx={{ height: '100vh', border: '5px solid blue' }}>
+      <Grid container sx={{ minHeight: '100vh' }}>
         <CssBaseline />
         {/* Left Side: */}
         <Grid
@@ -27,17 +27,12 @@ const LayoutPublic = () => {
           sx={{
             backgroundColor: (t) => t.palette.secondary.main,
             overflow: 'hidden',
-            border: '5px solid yellow',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
           {/* mini-menu */}
-          <Grid
-            item
-            border="10px solid white"
-            py={2}
-            px={2}
-            sx={{ display: { md: 'none' } }}
-          >
+          <Grid item py={2} px={2} sx={{ display: { md: 'none' } }}>
             <Stack direction="row-reverse" spacing={2}>
               <Chip label="Login" clickable variant="filled" />
               <Chip label="Signup" clickable variant="filled" />
@@ -46,17 +41,17 @@ const LayoutPublic = () => {
           {/* mini-menu end */}
 
           {/* LOGO  */}
-          <Grid item border="10px solid white" py={4} px={4}>
+          <Grid item py={4} px={10}>
             <Box>
               <img
-                src={'logo.png'}
+                src={'LogoHaus.png'}
                 alt="Logo"
                 style={{ maxWidth: '100%', height: 'auto' }}
               />
             </Box>
           </Grid>
           {/* LOGO end */}
-          <Grid item border="10px solid white" py={2} px={4}>
+          <Grid item py={2} px={4}>
             <Typography
               variant="h5"
               align="left"
@@ -70,12 +65,12 @@ const LayoutPublic = () => {
 
           <Grid
             item
-            border="10px solid green"
             py={4}
             px={4}
             sx={{
               backgroundColor: (t) => t.palette.primary.dark,
               display: { xs: 'none', md: 'block' },
+              marginTop: 'auto', // Push the footer to the bottom
             }}
           >
             <Footer />
@@ -90,11 +85,12 @@ const LayoutPublic = () => {
           sx={{
             backgroundColor: (t) => t.palette.primary.light,
           }}
+          pt={2}
         >
           <Outlet />
+          {/* Footer bei xs */}
           <Grid
             item
-            border="10px solid green"
             py={4}
             px={4}
             sx={{
@@ -104,6 +100,7 @@ const LayoutPublic = () => {
           >
             <Footer />
           </Grid>
+          {/* Footer Ende */}
         </Grid>
       </Grid>
     </ThemeProvider>

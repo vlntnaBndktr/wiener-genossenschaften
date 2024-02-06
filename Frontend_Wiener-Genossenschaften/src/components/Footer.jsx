@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Typography } from '@mui/material';
 import Link from '@mui/material/Link';
 import { Box } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
 function Copyright() {
   return (
@@ -19,7 +20,7 @@ function Copyright() {
 const Footer = () => {
   return (
     <>
-      <Box sx={{ color: (t) => t.palette.primary.main }}>
+      <Grid item sx={{ color: (t) => t.palette.primary.main }}>
         <Typography variant="h6" align="left">
           WIENER GENOSSENSCHAFTEN
         </Typography>
@@ -27,7 +28,7 @@ const Footer = () => {
           benediktervalentina@gmx.at
         </Typography>
         <Copyright />
-      </Box>
+      </Grid>
     </>
   );
 };

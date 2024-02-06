@@ -74,7 +74,7 @@ const changePassword = async (req, res, next) => {
       return next(new HttpError('Fehler beim Speichern des Passworts', 500));
     }
 
-    res.send('Password changed sucessfully');
+    res.send('Password changed successfully');
   } catch (error) {
     console.error('Internal Server Error:', error);
     return next(new HttpError('Internal Server Error', 500));
@@ -121,7 +121,7 @@ const updateUser = async (req, res, next) => {
       { _id: currentUserId }, // Filter: Finde das Dokument mit der entsprechenden ID
       { $set: validatedData }, // Update: Ersetze nur die übermittelten Daten des Objekts validatedData
       { new: true } // Option: Gib das aktualisierte Dokument zurück
-    );
+    ).populate('favorites');
 
     if (!updatedUser) {
       return next(new HttpError('Benutzer nicht gefunden', 404));
@@ -159,7 +159,7 @@ const deleteUser = async (req, res, next) => {
       return next(new HttpError('Passwörter stimmen nicht überein', 401));
     }
 
-    // TODO Projects löschen; evtl als Session!
+    // TODO Favorites löschen; evtl als Session!
 
     // User aus DB löschen
     const deletedUser = await User.deleteOne({ _id: currentUser._id });

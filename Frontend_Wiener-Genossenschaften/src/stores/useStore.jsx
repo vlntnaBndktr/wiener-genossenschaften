@@ -9,10 +9,11 @@ const initialState = {
   error: null,
   user: null,
   token: null,
-  login: null,
+  email: null,
   password: null,
   newUser: null,
   success: false,
+  errorMessage: null,
   projects: [],
   favorites: [],
 };
@@ -26,8 +27,8 @@ const useStore = create((set, get) => ({
     // wenn user object vorhanden ist dann prüfen, ob der Token noch gültig ist
     if (get().user) {
       if (get().decodedToken.exp - +new Date() / 1000 < SECONDS_TO_RELOGIN) {
-        if (get().login && get().password) {
-          return get().signin(get().login, get().password);
+        if (get().email && get().password) {
+          return get().login(get().email, get().password);
         }
         return get().logout();
       }
@@ -103,7 +104,7 @@ const useStore = create((set, get) => ({
           // Token dekodieren und State aktualisieren
           const decodedToken = jwtDecode(token);
           console.log(decodedToken); //Object { id: "65ad555e5065ea5493d49d79", iat: 1705945828, exp: 1705949428 }
-          set({ token, decodedToken });
+          set({ token, decodedToken, email, password });
 
           // Stammdaten vom angemeldeten User holen
           return myfetchAPI({ url: HOST + '/user/' + decodedToken.id });
@@ -180,8 +181,36 @@ const useStore = create((set, get) => ({
         }
       })
       .catch((error) => {
-        console.log('ich bin in updateUser-catch', error);
-        set({ error });
+        console.log('ich bin in updateUser-catch', error.response.data.message);
+        set({ error, errorMessage: error.response.data.message }); // Error-Message vom Server
+      })
+      .finally(() => {
+        // Laden der Daten beendet
+        set({ loading: false });
+      });
+  },
+  changePassword: (oldPassword, newPassword) => {
+    // bekommt Daten aus einer Maske über Parameter
+    set({ loading: true, error: null, success: false });
+
+    // Passwort ändern im Backend versuchen
+    myfetchAPI({
+      url: HOST + '/user/change-password',
+      method: 'patch',
+      data: { oldPassword, newPassword },
+      token: get().token,
+    })
+      .then((response) => {
+        // reponse.data = 'Password changed successfully'
+        if (response.status === 200) {
+          set({ success: true });
+        } else {
+          throw new Error('Fehler beim Ändern des Passworts');
+        }
+      })
+      .catch((error) => {
+        // console.log('ich bin in catch', error);
+        set({ error, errorMessage: error.response.data.message }); // Error-Message vom Server
       })
       .finally(() => {
         // Laden der Daten beendet

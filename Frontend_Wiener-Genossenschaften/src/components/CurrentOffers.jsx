@@ -13,7 +13,7 @@ import ProjectCard from './ProjectCard';
 
 const CurrentOffers = () => {
   // states und Funktionen aus dem useStore importieren
-  const { projects, loading, error, getAllProjects, user } = useStore();
+  const { projects, loading, error, getAllProjects } = useStore();
   // laden der Projekte einmal beim Mounting
   useEffect(() => {
     getAllProjects();
@@ -38,8 +38,12 @@ const CurrentOffers = () => {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h4">
-          Alle Angebote
+        <Typography
+          component="h1"
+          variant="h4"
+          sx={{ fontFamily: 'quicksand', fontWeight: 600 }}
+        >
+          ALLE ANGEBOTE
         </Typography>
         <Typography
           variant="h7"
@@ -59,15 +63,15 @@ const CurrentOffers = () => {
           <Button variant="outlined">Freie Wohnungen</Button>
         </Stack>
       </Box>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Grid container spacing={4}>
           {/* Array mit allen projects durchlaufen: 
           Für jedes Element wird ein Grid-Item erstellt.
           Die key-Prop = project.id */}
           {projects.map((project) => (
-            <Grid item key={project._id} xs={12} sm={6} md={6} lg={4}>
+            <Grid item key={project._id} xs={12} sm={6} md={4} lg={4} xl={3}>
               {/* Die Projektdaten werden der ProjectCard-Komponente als project-Prop übergeben. */}
-              <ProjectCard project={project} userFavorites={user.favorites} />
+              <ProjectCard project={project} />
             </Grid>
           ))}
         </Grid>

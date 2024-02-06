@@ -44,10 +44,6 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const test = () => {
-    console.log('TEST!!!!!!!!!!!!');
-  };
-
   return (
     <ThemeProvider theme={myTheme}>
       <AppBar
@@ -71,15 +67,15 @@ function ResponsiveAppBar() {
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
+                fontFamily: 'quicksand',
+                fontWeight: 900,
                 letterSpacing: '.3rem',
-                color: (t) => t.palette.secondary.dark,
+                color: (t) => t.palette.primary.dark,
                 textDecoration: 'none',
                 // cursor: 'pointer',
               }}
             >
-              meine WG
+              MEINE WG
             </Typography>
             {/* Ende Large-ICON+TYPO*/}
 
@@ -114,12 +110,18 @@ function ResponsiveAppBar() {
                 }}
               >
                 <MenuItem
+                  sx={{ fontFamily: 'quicksand' }}
                   onClick={() => {
                     navigate('/user');
                     handleCloseNavMenu();
                   }}
                 >
-                  <Typography textAlign="center">Alle Angebote</Typography>
+                  <Typography
+                    textAlign="center"
+                    sx={{ fontFamily: 'quicksand', fontWeight: 600 }}
+                  >
+                    Alle Angebote
+                  </Typography>
                 </MenuItem>
                 <MenuItem
                   onClick={() => {
@@ -127,7 +129,12 @@ function ResponsiveAppBar() {
                     handleCloseNavMenu();
                   }}
                 >
-                  <Typography textAlign="center">Merkliste</Typography>
+                  <Typography
+                    textAlign="center"
+                    sx={{ fontFamily: 'quicksand', fontWeight: 600 }}
+                  >
+                    Merkliste
+                  </Typography>
                 </MenuItem>
                 <MenuItem
                   onClick={() => {
@@ -135,7 +142,12 @@ function ResponsiveAppBar() {
                     handleCloseNavMenu();
                   }}
                 >
-                  <Typography textAlign="center">Kartenansicht</Typography>
+                  <Typography
+                    textAlign="center"
+                    sx={{ fontFamily: 'quicksand', fontWeight: 600 }}
+                  >
+                    Kartenansicht
+                  </Typography>
                 </MenuItem>
               </Menu>
             </Box>
@@ -150,14 +162,14 @@ function ResponsiveAppBar() {
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
+                fontFamily: 'quicksand',
+                fontWeight: 900,
                 letterSpacing: '.3rem',
                 color: 'inherit',
                 textDecoration: 'none',
               }}
             >
-              meine WG
+              MEINE WG
             </Typography>
             {/* Small-MENU Ende */}
 
@@ -172,6 +184,8 @@ function ResponsiveAppBar() {
                   my: 2,
                   color: (t) => t.palette.secondary.dark,
                   display: 'block',
+                  fontFamily: 'quicksand',
+                  fontWeight: 600,
                 }}
               >
                 Alle Angebote
@@ -185,6 +199,8 @@ function ResponsiveAppBar() {
                   my: 2,
                   color: (t) => t.palette.secondary.dark,
                   display: 'block',
+                  fontFamily: 'quicksand',
+                  fontWeight: 600,
                 }}
               >
                 Merkliste
@@ -198,6 +214,8 @@ function ResponsiveAppBar() {
                   my: 2,
                   color: (t) => t.palette.secondary.dark,
                   display: 'block',
+                  fontFamily: 'quicksand',
+                  fontWeight: 600,
                 }}
               >
                 Kartenansicht
@@ -211,6 +229,7 @@ function ResponsiveAppBar() {
                   <Avatar
                     alt={user.firstName}
                     src="/static/images/avatar/2.jpg"
+                    sx={{ backgroundColor: (t) => t.palette.secondary.dark }}
                   />
                 </IconButton>
               </Tooltip>

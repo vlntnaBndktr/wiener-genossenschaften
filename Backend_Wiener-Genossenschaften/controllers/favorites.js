@@ -59,8 +59,8 @@ const createFavorite = async (req, res, next) => {
       {
         $push: { favorites: newFavorite._id },
       },
-      { new: true }
-    ); // 'new: true' gibt das aktualisierte Dokument zurück
+      { new: true } // 'new: true' gibt das aktualisierte Dokument zurück
+    ).populate('favorites'); //Vor dem zurückschicken populate mit Favorites updatedUser!!!!
 
     console.log('newFavorite:', newFavorite);
     res.status(200).send(updatedUser);
@@ -160,7 +160,8 @@ const deleteFavorite = async (req, res, next) => {
         $pull: { favorites: authorizedFavorite._id },
       },
       { new: true }
-    ); // 'new: true' gibt das aktualisierte Dokument zurück
+    ).populate('favorites'); //Vor dem zurückschicken populate mit Favorites updatedUser!!!!
+    // 'new: true' gibt das aktualisierte Dokument zurück
 
     res.status(200).json(updatedUser);
   } catch (error) {

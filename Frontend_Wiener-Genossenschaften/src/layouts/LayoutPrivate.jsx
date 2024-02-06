@@ -28,7 +28,8 @@ const LayoutPrivate = () => {
           sx={{
             backgroundColor: (t) => t.palette.secondary.main,
             overflow: 'hidden',
-            // height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
           {/* mini-menu */}
@@ -44,7 +45,7 @@ const LayoutPrivate = () => {
           <Grid item py={4} px={4}>
             <Box>
               <img
-                src={'logo.png'}
+                src={'LogoHaus.png'}
                 alt="Logo"
                 style={{ maxWidth: '100%', height: 'auto' }}
               />
@@ -55,17 +56,19 @@ const LayoutPrivate = () => {
             <Typography
               variant="h5"
               align="left"
-              color="text.secondary"
+              color={(t) => t.palette.primary.dark}
               paragraph
             >
               Alle aktuellen Wohnungsangebote und Planungsprojekte
-              gemeinnütziger Bauvereinigungen in Wien. Auf einen Blick.
+              gemeinnütziger Bauvereinigungen in Wien.{' '}
+              <span style={{ fontWeight: 'bold' }}>Auf einen Blick.</span>
             </Typography>
           </Grid>
-
+          {/* Footer */}
           <Grid
             item
-            py={4}
+            pt={8}
+            pb={8}
             px={4}
             sx={{
               backgroundColor: (t) => t.palette.primary.dark,
@@ -74,6 +77,15 @@ const LayoutPrivate = () => {
           >
             <Footer />
           </Grid>
+          {/* Footer Ende */}
+          <Grid
+            item
+            sx={{
+              backgroundColor: (t) => t.palette.primary.dark,
+              display: { lg: 'none', xl: 'block' },
+              flexGrow: 1, // Take up remaining space
+            }}
+          ></Grid>
         </Grid>
         {/* End*/}
         {/* Right Content */}
@@ -86,6 +98,7 @@ const LayoutPrivate = () => {
           lg={12}
           xl={10}
           sx={{ backgroundColor: (t) => t.palette.primary.light }}
+          pt={2}
         >
           <ResponsiveAppBar />
           <Outlet />
