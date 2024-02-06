@@ -1,9 +1,6 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -11,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import useStore from '../stores/useStore';
 import { useState } from 'react';
 import Alert from '@mui/material/Alert';
+import { Snackbar } from '@mui/material';
+import InfoSnackbar from './Snackbar';
 
 const ChangeProfile = () => {
   // global-States aus dem useStore holen
@@ -23,6 +22,8 @@ const ChangeProfile = () => {
     oldPassword: '',
     newPassword: '',
   });
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target; //name + value kommen aus den Attributen des <input> Elements
@@ -37,14 +38,13 @@ const ChangeProfile = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // updateUser-Funktion aus dem useStore aufrufen + aktuelle Werte übergeben
-    updateUser(
-      formData.firstName,
-      formData.lastName,
-      formData.email
-      // formData.oldPassword,
-      // formData.newPassword
-    );
+    updateUser(formData.firstName, formData.lastName, formData.email);
+    setOpenSnackbar(true); // Snackbar anzeigen
     console.log(formData);
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false); // Snackbar schließen
   };
 
   return (
@@ -52,7 +52,7 @@ const ChangeProfile = () => {
       <Typography component="h1" variant="h4">
         Profildaten
       </Typography>
-
+      <InfoSnackbar></InfoSnackbar>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
@@ -96,12 +96,25 @@ const ChangeProfile = () => {
             />
           </Grid>
         </Grid>
+        {/* Snackbar für Fehlermeldung */}
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity="error"
+            sx={{ width: '100%' }}
+          >
+            {errorMessage}
+          </Alert>
+        </Snackbar>
         {/* Conditional Rendering: Alerts */}
         {success && (
           <Alert severity="success">Profildaten erfolgreich geändert</Alert>
         )}
-        {/* {error && <Alert severity="error">Fehler</Alert>} */}
-        {error && <p>Error: {error.message}</p>}
         {errorMessage && <p>{errorMessage}</p>}
         <Button
           type="submit"

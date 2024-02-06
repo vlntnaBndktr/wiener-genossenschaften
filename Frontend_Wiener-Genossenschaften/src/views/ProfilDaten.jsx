@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import ChangeProfile from './ChangeProfile';
-import ChangePassword from './ChangePassword';
+import ChangeProfile from '../components/ChangeProfile';
+import ChangePassword from '../components/ChangePassword';
 
 const ProfilDaten = () => {
   return (
