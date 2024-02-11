@@ -129,12 +129,6 @@ const SignUp = () => {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="Ich stimme der Verarbeitung meiner personenbezogenen Daten zu."
-              />
-            </Grid>
           </Grid>
           <Button
             type="submit"

@@ -119,7 +119,8 @@ const useStore = create((set, get) => ({
       })
       .catch((error) => {
         console.error('im catch-Block: ', error.response);
-        set({ error }); // = set({ error: error })
+        set({ error, errorMessage: error.response.data.message }); // Error-Message vom Server
+        // = set({ error: error })
       })
       .finally(() => {
         set({ loading: false }); // Request an den Server abgeschlossen (egal ob Sucess oder Error)

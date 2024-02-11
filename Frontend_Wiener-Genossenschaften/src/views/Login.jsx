@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -14,14 +14,18 @@ import Typography from '@mui/material/Typography';
 import useStore from '../stores/useStore';
 
 import { Link as RouterLink } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import { Snackbar } from '@mui/material';
 
 const Login = () => {
-  const { login } = useStore();
+  const { login, success, error, errorMessage, user } = useStore();
   // react-State erstellen mit useState-Hook
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target; //name + value kommen aus den Attributen des <input> Elements
@@ -36,13 +40,40 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // login-Funktion aus dem useStore aufrufen + aktuelle Werte übergeben
-    console.log('button geklickt!');
     login(formData.email, formData.password);
+    // setOpenSnackbar(true); // Snackbar anzeigen
     console.log('formData:', formData);
+    console.log('errorMessage:', errorMessage);
   };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false); // Snackbar schließen
+  };
+
+  useEffect(() => {
+    // Wenn ein Fehler auftritt oder der Login erfolgreich ist, die Snackbar anzeigen
+    if (error !== null) {
+      setOpenSnackbar(true);
+    }
+  }, [error]);
 
   return (
     <>
+      {/* Snackbar für Fehlermeldung*/}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="error"
+          sx={{ width: '100%' }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
       <Box
         sx={{
           my: 8,
@@ -82,10 +113,6 @@ const Login = () => {
             autoComplete="current-password"
             value={formData.password}
             onChange={handleChange}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Angemeldet bleiben"
           />
           <Button
             type="submit"

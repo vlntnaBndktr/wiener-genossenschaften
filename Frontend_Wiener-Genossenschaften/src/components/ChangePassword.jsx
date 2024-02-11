@@ -6,19 +6,32 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import useStore from '../stores/useStore';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Alert from '@mui/material/Alert';
+import { Snackbar } from '@mui/material';
 
 const ChangePassword = () => {
   // global-States aus dem useStore holen
-  const { changePassword, errorMessage, password } = useStore();
+  const { changePassword, errorMessage, password, success, error } = useStore(
+    (state) => state
+  );
   // local State für Warning
-  const [warning, setWarning] = useState();
+  const [warning, setWarning] = useState(false);
+
+  useEffect(() => {
+    if (success) {
+      setWarning(false);
+    }
+  }, [success === true]);
+
   // react-State erstellen mit useState-Hook
   const [formData, setFormData] = useState({
     oldPassword: '',
     newPassword: '',
     confirmPassword: '',
   });
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleChanges = (event) => {
     const { name, value } = event.target; //name + value kommen aus den Attributen des <input> Elements
@@ -35,15 +48,36 @@ const ChangePassword = () => {
     console.log(password);
     if (formData.newPassword !== formData.confirmPassword) {
       console.log('Passwörter stimmen nicht überein');
-
-      return setWarning(true); // Beende die Funktion frühzeitig, wenn das Passwort nicht korrekt bestätigt wurde
+      setWarning(true);
+      // Warning setzen
+      return;
     }
     changePassword(formData.oldPassword, formData.newPassword);
+    setOpenSnackbar(true); // Snackbar anzeigen
     console.log(formData);
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false); // Snackbar schließen
   };
 
   return (
     <>
+      {/* Snackbar für Fehlermeldung und Erfolgsmeldung */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={error ? 'error' : 'success'}
+          sx={{ width: '100%' }}
+        >
+          {error ? errorMessage : 'Profildaten erfolgreich geändert'}
+        </Alert>
+      </Snackbar>
       <Typography component="h1" variant="h4" mt={3}>
         Passwort ändern
       </Typography>
@@ -102,21 +136,6 @@ const ChangePassword = () => {
             />
           </Grid>
         </Grid>
-        {/* Conditional Rendering: Alerts */}
-        {warning && (
-          <Grid
-            item
-            xs={12}
-            sx={
-              {
-                // textAlign: 'center',
-              }
-            }
-          >
-            Passwörter stimmen nicht überein
-          </Grid>
-        )}
-        {errorMessage && <p>{errorMessage}</p>}
         <Button
           type="submit"
           fullWidth

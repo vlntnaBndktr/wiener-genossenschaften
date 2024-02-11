@@ -11,14 +11,23 @@ import useStore from '../stores/useStore';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import Avatar from '@mui/material/Avatar';
 import AccessAlarmsRoundedIcon from '@mui/icons-material/AccessAlarmsRounded';
+import Tooltip from '@mui/material/Tooltip';
+import { useNavigate } from 'react-router-dom';
 
 export default function WhatchList() {
   // states und Funktionen aus dem useStore importieren
-  const { favorites, getAllFavorites } = useStore();
+  const { favorites, getAllFavorites, getOneFavorite } = useStore();
   // laden der Projekte einmal beim Mounting
   useEffect(() => {
     getAllFavorites();
   }, []);
+
+  const navigate = useNavigate();
+
+  const handleAvatarClick = (favoriteId) => {
+    // Hier navigierst du zur Route '/oneFavorite' und übergibst den Favoriten-ID als Parameter
+    navigate(`/favorite/${favoriteId}`);
+  };
 
   return (
     <TableContainer
@@ -49,11 +58,15 @@ export default function WhatchList() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                <Avatar
-                  alt="Remy Sharp"
-                  src={favorite.project.image}
-                  sx={{ width: 56, height: 56 }}
-                />
+                <Tooltip title={'Eintrag bearbeiten'} arrow>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={favorite.project.image}
+                    sx={{ width: 56, height: 56 }}
+                    onClick={() => handleAvatarClick(favorite._id)}
+                    // diesen Favorite in der Komponente OneFavorite anzeigen (route: '/oneFavorite')
+                  />{' '}
+                </Tooltip>
               </TableCell>
               <TableCell component="th" scope="row">
                 {favorite.project.name}

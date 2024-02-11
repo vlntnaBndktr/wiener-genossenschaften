@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import ChangeProfile from '../components/ChangeProfile';
 import ChangePassword from '../components/ChangePassword';
 

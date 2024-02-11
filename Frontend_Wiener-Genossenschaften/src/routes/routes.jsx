@@ -8,6 +8,7 @@ import Favorites from '../views/Favorites';
 import Profile from '../components/ChangeProfile';
 import MyMap from '../views/Map';
 import ProfilDaten from '../views/ProfilDaten';
+import OneFavorite from '../views/OneFavorite';
 
 /* routes.jsx = Routen meiner Anwendung definieren. 
 Zwischen öffentlichen und privaten Routen unterscheinden.
@@ -30,10 +31,6 @@ const routesPublic = [
       {
         path: '/signup',
         element: <SignUp />,
-      },
-      {
-        path: '/test',
-        element: <TestComponent />,
       },
       // Default Route:
       {
@@ -71,8 +68,8 @@ const routesPrivate = [
         element: <MyMap />,
       },
       {
-        path: '/test',
-        element: <TestComponent />,
+        path: 'favorite/:id',
+        element: <OneFavorite />,
       },
       // Default Route:
       {

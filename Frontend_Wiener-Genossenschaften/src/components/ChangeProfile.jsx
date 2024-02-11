@@ -9,7 +9,6 @@ import useStore from '../stores/useStore';
 import { useState } from 'react';
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
-import InfoSnackbar from './Snackbar';
 
 const ChangeProfile = () => {
   // global-States aus dem useStore holen
@@ -19,8 +18,6 @@ const ChangeProfile = () => {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    oldPassword: '',
-    newPassword: '',
   });
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -49,10 +46,24 @@ const ChangeProfile = () => {
 
   return (
     <>
+      {/* Snackbar für Fehlermeldung und Erfolgsmeldung */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={error ? 'error' : 'success'}
+          sx={{ width: '100%' }}
+        >
+          {error ? errorMessage : 'Profildaten erfolgreich geändert'}
+        </Alert>
+      </Snackbar>
       <Typography component="h1" variant="h4">
         Profildaten
       </Typography>
-      <InfoSnackbar></InfoSnackbar>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
@@ -96,26 +107,6 @@ const ChangeProfile = () => {
             />
           </Grid>
         </Grid>
-        {/* Snackbar für Fehlermeldung */}
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={6000}
-          onClose={handleCloseSnackbar}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        >
-          <Alert
-            onClose={handleCloseSnackbar}
-            severity="error"
-            sx={{ width: '100%' }}
-          >
-            {errorMessage}
-          </Alert>
-        </Snackbar>
-        {/* Conditional Rendering: Alerts */}
-        {success && (
-          <Alert severity="success">Profildaten erfolgreich geändert</Alert>
-        )}
-        {errorMessage && <p>{errorMessage}</p>}
         <Button
           type="submit"
           fullWidth

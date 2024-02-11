@@ -67,9 +67,8 @@ const LayoutPrivate = () => {
           {/* Footer */}
           <Grid
             item
-            pt={8}
-            pb={8}
-            px={4}
+            py={8}
+            px={2}
             sx={{
               backgroundColor: (t) => t.palette.primary.dark,
               display: { xs: 'none', md: 'block' },
