@@ -48,10 +48,12 @@ const createProject = async (req, res, next) => {
 
   try {
     // Überprüfen, ob das Projekt bereits in der Datenbank vorhanden ist
-    const existingProject = await Project.findOne({ name: validatedData.name });
+    // Eindeutige Identifizierung für Projekte um mehrfach-Speicherung in DB zu verhindern
+    const existingProject = await Project.findOne({
+      website: validatedData.website,
+    });
     if (existingProject) {
       return next(new HttpError('Projekt ist bereits angelegt', 422));
-      // TODO Eindeutige Identifizierung für Projekte finden um mehrfach-Speicherung in DB zu verhindern
     }
 
     // Projekt in DB speichern:

@@ -2,7 +2,6 @@ import * as React from 'react';
 import WatchList from '../components/WatchList';
 import { Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
-
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
@@ -18,8 +17,12 @@ const Favorites = () => {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h4">
-          Merkliste
+        <Typography
+          component="h1"
+          variant="h4"
+          sx={{ fontFamily: 'quicksand', fontWeight: 600 }}
+        >
+          MERKLISTE
         </Typography>
         <Typography
           variant="h7"

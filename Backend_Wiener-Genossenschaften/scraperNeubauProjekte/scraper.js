@@ -1,24 +1,26 @@
-import * as fs from 'node:fs';
 import * as cheerio from 'cheerio';
 import dataProject from './dataProject.js';
-import { Project } from '../models/projects.js';
 
 const URL = 'https://www.wbv-gpa.at/wohnungen/neue-projekte/';
 const baseURL = 'https://www.wbv-gpa.at/projekt/';
 const data = [];
 
+// Hauptfunktion zum Extrahieren von Links und Daten
 export default async function extractProjects(url) {
   try {
+    // HTTP-Anfrage, um die HTML-Seite zu erhalten
     const response = await fetch(url);
-    const html = await response.text();
-    const $ = cheerio.load(html);
+    const html = await response.text(); //gesamtes HTML der Seite
+    const $ = cheerio.load(html); // Cheerio verwenden zum Parsen der HTML-Seite
 
     const promises = [];
 
+    // Elemente aus dem HTML selektieren
+    // $=Cheerio-Object: Alle die mit <a[href] + baseURL beginnen
     $('a[href^="' + baseURL + '"]').each(async (index, element) => {
       const link = $(element);
       const href = link.attr('href');
-
+      // ==> dataProject() returned gescrapte Daten von der 'Projekt-Seite'
       const promise = dataProject(href).then((scrapedObject) => {
         const {
           name,
@@ -49,29 +51,13 @@ export default async function extractProjects(url) {
       promises.push(promise);
     });
 
+    // Warten bis alle Promises aufgelöst sind
     await Promise.all(promises);
 
-    // const jsonString = JSON.stringify(data, null, 2);
-    // fs.writeFileSync('projects2.json', jsonString);
+    // Alle Daten sind jetzt in der 'data'-Variable gesammel
+    // console.log('data in scraper.js:', data);
 
-    // Daten in die MongoDB schreiben
-    try {
-      // Iteriere durch die gesammelten Daten und speichere sie in der MongoDB
-      for (const result of data) {
-        const project = await Project.create(result);
-        console.log(
-          'Projekt erfolgreich in MongoDB gespeichert:',
-          project.name
-        );
-      }
-    } catch (err) {
-      console.error(
-        'Fehler beim Speichern der extrahierten Daten in MongoDB:',
-        err
-      );
-    }
-
-    console.log('File created successfully.');
+    return data; // Rückgabe der gesammelten Projekte
   } catch (error) {
     console.log(error);
   }

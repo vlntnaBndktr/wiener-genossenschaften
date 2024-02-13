@@ -2,8 +2,6 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -40,21 +38,19 @@ const SignUp = () => {
 
     // TODO: Passwort prüfen!
     // signin-Funktion aus dem useStore aufrufen + aktuelle Werte übergeben
-    console.log('button geklickt!');
     signup(
       formData.firstName,
       formData.lastName,
       formData.email,
       formData.password
     );
-    console.log('formData:', formData);
+    // console.log('formData:', formData);
   };
 
   const navigate = useNavigate();
 
   // wenn sich newUser ändert und newUser gültig ist, dann Weiterleitung auf Login-Seite
   useEffect(() => {
-    console.log('newUser wurde geändert', newUser);
     if (newUser) {
       navigate('/login');
     }
@@ -74,7 +70,15 @@ const SignUp = () => {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <AppRegistrationIcon />
         </Avatar>
-        <Typography component="h1" variant="h4">
+        <Typography
+          component="h1"
+          variant="h4"
+          sx={{
+            fontFamily: 'quicksand',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+          }}
+        >
           Registrierung
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>

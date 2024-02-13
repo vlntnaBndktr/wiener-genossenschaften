@@ -7,8 +7,30 @@ import router from './routes/router.js';
 import HttpError from './common/http-errors.js';
 
 //SCRAPER:
-import extractProjects from './scraperNeubauProjekte/scraper.js';
-import extractFlats from './scraperFreieWohnungen/scraper.js';
+import cron from 'node-cron';
+import { startScraper, stopScraper } from './controllers/scraper.js';
+
+//Zeitpunkt fürs Scrapen einstellen mit node-cron
+cron.schedule(
+  '20 10 * * *',
+  async () => {
+    console.log('Scraping-Vorgang läuft um 7:00 AM');
+    try {
+      const projectsURL = 'https://www.wbv-gpa.at/wohnungen/neue-projekte/';
+      await extractProjects(projectsURL);
+
+      const flatsURL = 'https://www.wbv-gpa.at/wohnungen/';
+      await extractFlats(flatsURL);
+
+      console.log('Scraping-Vorgang erfogreich beendet');
+    } catch (error) {
+      console.error('Fehler beim Scraping-Vorgang:', error);
+    }
+  },
+  {
+    timezone: 'Europe/Vienna',
+  }
+);
 
 dotenv.config();
 
@@ -75,16 +97,10 @@ mongoose
     console.log('MongoDB verbunden');
     app.listen(PORT, () => {
       console.log('Express Server läuft unter http://localhost:' + PORT);
+      // Starte den Scraper erst nachdem der Server gestartet wurde
+      startScraper();
     });
   })
   .catch((error) => {
     console.log('Verbindung MongoDB nicht möglich!', error);
   });
-
-//SCRAPER Projekte:
-// const URL = 'https://www.wbv-gpa.at/wohnungen/neue-projekte/';
-// await extractProjects(URL);
-
-//SCRAPER freie Wohnungen:
-// const URL = 'https://www.wbv-gpa.at/wohnungen/';
-// await extractFlats(URL);

@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-
 import useStore from '../stores/useStore';
 import { useState } from 'react';
 import Alert from '@mui/material/Alert';
@@ -37,7 +36,7 @@ const ChangeProfile = () => {
     // updateUser-Funktion aus dem useStore aufrufen + aktuelle Werte übergeben
     updateUser(formData.firstName, formData.lastName, formData.email);
     setOpenSnackbar(true); // Snackbar anzeigen
-    console.log(formData);
+    // console.log(formData);
   };
 
   const handleCloseSnackbar = () => {
@@ -61,7 +60,15 @@ const ChangeProfile = () => {
           {error ? errorMessage : 'Profildaten erfolgreich geändert'}
         </Alert>
       </Snackbar>
-      <Typography component="h1" variant="h4">
+      <Typography
+        component="h1"
+        variant="h4"
+        sx={{
+          fontFamily: 'quicksand',
+          fontWeight: 600,
+          textTransform: 'uppercase',
+        }}
+      >
         Profildaten
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>

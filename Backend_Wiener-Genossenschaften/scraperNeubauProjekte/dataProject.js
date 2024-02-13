@@ -1,10 +1,12 @@
 import * as cheerio from 'cheerio';
 
+// Arbeitet innerhalb des href-Links zu einem bestimmten Projekt (zB: https://www.wbv-gpa.at/projekt/puchsbaumgasse-1/)
 export default async function dataProject(href) {
   const response = await fetch(href);
   const html = await response.text();
   const $ = cheerio.load(html);
 
+  // Variablen erstellen für die extrahierten Infos
   let name = '';
   let type = 'NP';
   let description = '';

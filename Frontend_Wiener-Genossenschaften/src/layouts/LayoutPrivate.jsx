@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import useStore from '../stores/useStore';
+import Logo from '../components/Logo';
 
 const LayoutPrivate = () => {
   return (
@@ -43,13 +43,7 @@ const LayoutPrivate = () => {
 
           {/* LOGO  */}
           <Grid item py={4} px={4}>
-            <Box>
-              <img
-                src={'LogoHaus.png'}
-                alt="Logo"
-                style={{ maxWidth: '100%', height: 'auto' }}
-              />
-            </Box>
+            <Logo />
           </Grid>
           {/* LOGO end */}
           <Grid item py={2} px={4}>
@@ -60,7 +54,20 @@ const LayoutPrivate = () => {
               paragraph
             >
               Alle aktuellen Wohnungsangebote und Planungsprojekte
-              gemeinnütziger Bauvereinigungen in Wien.{' '}
+              gemeinnütziger Bauvereinigungen in Wien.
+            </Typography>
+            <Typography
+              component="h1"
+              variant="h5"
+              align="left"
+              color={(t) => t.palette.primary.dark}
+              paragraph
+              sx={{
+                fontFamily: 'quicksand',
+                fontWeight: 600,
+                textTransform: 'uppercase',
+              }}
+            >
               <span style={{ fontWeight: 'bold' }}>Auf einen Blick.</span>
             </Typography>
           </Grid>
@@ -68,7 +75,7 @@ const LayoutPrivate = () => {
           <Grid
             item
             py={8}
-            px={2}
+            px={4}
             sx={{
               backgroundColor: (t) => t.palette.primary.dark,
               display: { xs: 'none', md: 'block' },

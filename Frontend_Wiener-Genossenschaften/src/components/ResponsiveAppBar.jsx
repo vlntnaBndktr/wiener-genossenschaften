@@ -11,8 +11,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import ApartmentRoundedIcon from '@mui/icons-material/ApartmentRounded';
 import AddHomeWorkRoundedIcon from '@mui/icons-material/AddHomeWorkRounded';
 import { ThemeProvider } from '@mui/material/styles';
 import myTheme from '../styles/theme';
@@ -118,7 +116,11 @@ function ResponsiveAppBar() {
                 >
                   <Typography
                     textAlign="center"
-                    sx={{ fontFamily: 'quicksand', fontWeight: 600 }}
+                    sx={{
+                      fontFamily: 'quicksand',
+                      fontWeight: 600,
+                      textTransform: 'uppercase',
+                    }}
                   >
                     Alle Angebote
                   </Typography>
@@ -131,7 +133,11 @@ function ResponsiveAppBar() {
                 >
                   <Typography
                     textAlign="center"
-                    sx={{ fontFamily: 'quicksand', fontWeight: 600 }}
+                    sx={{
+                      fontFamily: 'quicksand',
+                      fontWeight: 600,
+                      textTransform: 'uppercase',
+                    }}
                   >
                     Merkliste
                   </Typography>
@@ -144,7 +150,11 @@ function ResponsiveAppBar() {
                 >
                   <Typography
                     textAlign="center"
-                    sx={{ fontFamily: 'quicksand', fontWeight: 600 }}
+                    sx={{
+                      fontFamily: 'quicksand',
+                      fontWeight: 600,
+                      textTransform: 'uppercase',
+                    }}
                   >
                     Kartenansicht
                   </Typography>

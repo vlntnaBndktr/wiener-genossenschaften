@@ -1,7 +1,5 @@
-import * as fs from 'node:fs';
 import * as cheerio from 'cheerio';
 import dataWohnung from './dataWohnung.js';
-import { Project } from '../models/projects.js';
 
 const URL = 'https://www.wbv-gpa.at/wohnungen/';
 const baseURL = 'https://www.wbv-gpa.at/wohnung/';
@@ -42,28 +40,9 @@ export default async function extractFlats(url) {
     });
 
     await Promise.all(promises);
+    console.log('data in scraper.js für Flats:', data);
 
-    // const jsonString = JSON.stringify(data, null, 2);
-    // fs.writeFileSync('wohnungen.json', jsonString);
-
-    // Daten in die MongoDB schreiben
-    try {
-      // Iteriere durch die gesammelten Daten und speichere sie in der MongoDB
-      for (const result of data) {
-        const project = await Project.create(result);
-        console.log(
-          'Projekt erfolgreich in MongoDB gespeichert:',
-          project.name
-        );
-      }
-    } catch (err) {
-      console.error(
-        'Fehler beim Speichern der extrahierten Daten in MongoDB:',
-        err
-      );
-    }
-
-    console.log('Files created successfully.');
+    return data;
   } catch (error) {
     console.log(error);
   }

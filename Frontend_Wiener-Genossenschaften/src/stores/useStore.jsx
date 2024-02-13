@@ -146,7 +146,7 @@ const useStore = create((set, get) => ({
         // reponse.data = der neue User, Statuscode = 201
         if (response.status === 200) {
           set({ newUser: response.data });
-          console.log('newUser:', response.data);
+          // console.log('newUser:', response.data);
         } else {
           throw new Error('Fehler bei der Registrierung');
         }
@@ -176,7 +176,7 @@ const useStore = create((set, get) => ({
         // reponse.data =
         if (response.status === 200) {
           set({ user: response.data, success: true });
-          console.log('updated User:', response.data);
+          // console.log('updated User:', response.data);
         } else {
           throw new Error('Fehler beim User-Update');
         }
@@ -222,7 +222,7 @@ const useStore = create((set, get) => ({
     // Reset
     set({ loading: true, error: null, success: false });
     // im Token wird die userId geschickt
-    console.log('Token:', get().token);
+    // console.log('Token:', get().token);
     // in req.params wird die _projectId übermittelt
     myfetchAPI({
       url: HOST + '/favorite/' + projectId,
@@ -233,7 +233,6 @@ const useStore = create((set, get) => ({
         // reponse.data =
         if (response.status === 200) {
           set({ user: response.data, success: true });
-          console.log('updated User:', response.data);
         } else {
           throw new Error('Fehler beim anlegen des Favorites');
         }
@@ -251,7 +250,6 @@ const useStore = create((set, get) => ({
     // Reset
     set({ loading: true, error: null, success: false });
     // im Token wird die userId geschickt
-    console.log('Token:', get().token);
     // in req.params wird die projectId übermittelt
     myfetchAPI({
       url: HOST + '/favorite/delete/' + projectId,
@@ -262,7 +260,7 @@ const useStore = create((set, get) => ({
         // reponse.data =
         if (response.status === 200) {
           set({ user: response.data, success: true });
-          console.log('updated User:', response.data);
+          // console.log('updated User:', response.data);
         } else {
           throw new Error('Fehler beim anlegen des Favorites');
         }

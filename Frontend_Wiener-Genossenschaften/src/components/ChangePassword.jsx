@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-
 import useStore from '../stores/useStore';
 import { useState, useEffect } from 'react';
 import Alert from '@mui/material/Alert';
@@ -45,7 +44,7 @@ const ChangePassword = () => {
 
   const handlePasswordSubmit = (event) => {
     event.preventDefault();
-    console.log(password);
+    // console.log(password);
     if (formData.newPassword !== formData.confirmPassword) {
       console.log('Passwörter stimmen nicht überein');
       setWarning(true);
@@ -54,7 +53,7 @@ const ChangePassword = () => {
     }
     changePassword(formData.oldPassword, formData.newPassword);
     setOpenSnackbar(true); // Snackbar anzeigen
-    console.log(formData);
+    // console.log(formData);
   };
 
   const handleCloseSnackbar = () => {
@@ -78,7 +77,16 @@ const ChangePassword = () => {
           {error ? errorMessage : 'Profildaten erfolgreich geändert'}
         </Alert>
       </Snackbar>
-      <Typography component="h1" variant="h4" mt={3}>
+      <Typography
+        component="h1"
+        variant="h4"
+        mt={3}
+        sx={{
+          fontFamily: 'quicksand',
+          fontWeight: 600,
+          textTransform: 'uppercase',
+        }}
+      >
         Passwort ändern
       </Typography>
 

@@ -3,12 +3,9 @@ import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import KeyRoundedIcon from '@mui/icons-material/KeyRounded';
 import Typography from '@mui/material/Typography';
 import useStore from '../stores/useStore';
@@ -86,7 +83,15 @@ const Login = () => {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <KeyRoundedIcon />
         </Avatar>
-        <Typography component="h1" variant="h4">
+        <Typography
+          component="h1"
+          variant="h4"
+          sx={{
+            fontFamily: 'quicksand',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+          }}
+        >
           Login
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>

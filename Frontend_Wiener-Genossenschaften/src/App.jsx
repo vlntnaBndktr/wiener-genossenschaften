@@ -4,7 +4,7 @@ import { routesPublic, routesPrivate } from '../src/routes/routes';
 import { useEffect } from 'react';
 
 const App = () => {
-  // Prüfen ein User vorhanden ist, also user != null
+  // Prüfen ob ein User vorhanden ist, also user != null
   const { user, checkToken } = useStore();
   // console.log('Angemeldeter User:', user);
 

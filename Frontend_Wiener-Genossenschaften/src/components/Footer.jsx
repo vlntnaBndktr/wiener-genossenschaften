@@ -8,7 +8,9 @@ function Copyright() {
   return (
     <Typography variant="body2" color="inherit" align="left">
       {'Copyright © '}
-      <Link href="https://mui.com/">Valentina Benedikter</Link>
+      <Link href="https://github.com/vlntnaBndktr/wiener-genossenschaften">
+        Valentina Benedikter
+      </Link>
       {' | '}
       {new Date().getFullYear()}
       {' | '}Alle Rechte vorbehalten

@@ -8,7 +8,7 @@ import Footer from '../components/Footer';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Logo from '../components/Logo';
 
 const LayoutPublic = () => {
   return (
@@ -20,7 +20,7 @@ const LayoutPublic = () => {
           container
           direction="column"
           justifyContent="space-evenly"
-          alignItems="stretch"
+          alignItems="left"
           xs={12}
           sm={12}
           md={6}
@@ -42,30 +42,77 @@ const LayoutPublic = () => {
 
           {/* LOGO  */}
           <Grid item py={4} px={10}>
-            <Box>
-              <img
-                src={'LogoHaus.png'}
-                alt="Logo"
-                style={{ maxWidth: '100%', height: 'auto' }}
-              />
-            </Box>
+            <Logo />
           </Grid>
           {/* LOGO end */}
-          <Grid item py={2} px={4}>
+          {/* SCHRIFT */}
+          <Grid
+            item
+            py={2}
+            px={4}
+            sx={{
+              display: { xs: 'block', lg: 'none' },
+            }}
+          >
             <Typography
               variant="h5"
               align="left"
-              color="text.secondary"
+              color={(t) => t.palette.primary.dark}
               paragraph
             >
               Alle aktuellen Wohnungsangebote und Planungsprojekte
-              gemeinnütziger Bauvereinigungen in Wien. Auf einen Blick.
+              gemeinnütziger Bauvereinigungen in Wien.
+            </Typography>
+            <Typography
+              component="h1"
+              variant="h5"
+              align="left"
+              color={(t) => t.palette.primary.dark}
+              paragraph
+              sx={{
+                fontFamily: 'quicksand',
+                fontWeight: 600,
+                textTransform: 'uppercase',
+              }}
+            >
+              <span style={{ fontWeight: 'bold' }}>Auf einen Blick.</span>
             </Typography>
           </Grid>
 
           <Grid
             item
-            py={4}
+            py={2}
+            px={10}
+            sx={{ display: { xs: 'none', lg: 'block' } }}
+          >
+            <Typography
+              variant="h4"
+              align="left"
+              color={(t) => t.palette.primary.dark}
+              paragraph
+            >
+              Alle aktuellen Wohnungsangebote und Planungsprojekte
+              gemeinnütziger Bauvereinigungen in Wien.
+            </Typography>
+            <Typography
+              component="h1"
+              variant="h4"
+              align="left"
+              color={(t) => t.palette.primary.dark}
+              paragraph
+              sx={{
+                fontFamily: 'quicksand',
+                fontWeight: 600,
+                textTransform: 'uppercase',
+              }}
+            >
+              <span style={{ fontWeight: 'bold' }}>Auf einen Blick.</span>
+            </Typography>
+          </Grid>
+          {/* SCHRIFT Ende */}
+          <Grid
+            item
+            py={8}
             px={4}
             sx={{
               backgroundColor: (t) => t.palette.primary.dark,
@@ -91,7 +138,7 @@ const LayoutPublic = () => {
           {/* Footer bei xs */}
           <Grid
             item
-            py={4}
+            py={8}
             px={4}
             sx={{
               backgroundColor: (t) => t.palette.primary.dark,

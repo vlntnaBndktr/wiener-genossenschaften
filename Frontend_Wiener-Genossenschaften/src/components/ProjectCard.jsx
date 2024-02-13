@@ -9,11 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import CardHeader from '@mui/material/CardHeader';
 import Avatar from '@mui/material/Avatar';
 import PlaylistAddCircleRoundedIcon from '@mui/icons-material/PlaylistAddCircleRounded';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import AddHomeIcon from '@mui/icons-material/AddHome';
 import useStore from '../stores/useStore';
-import { useState, useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 
 // Empfängt 'project' als Prop von der Elternkomponente CurrentOffers
@@ -37,7 +34,6 @@ const ProjectCard = ({ project }) => {
     if (isFavorite) {
       // Wenn es bereits ein Favorit ist, entferne es
       deleteFavorite(project._id);
-      console.log(project._id);
     } else {
       // Wenn es kein Favorit ist, füge es hinzu
       createFavorite(project._id);
@@ -88,11 +84,6 @@ const ProjectCard = ({ project }) => {
           <Typography fontWeight="bold">{project.location.street}</Typography>
         </CardContent>
         <CardActions>
-          <Avatar
-            alt="Remy Sharp"
-            src="/10.png"
-            sx={{ width: 50, height: 50 }}
-          />
           <Tooltip
             title={
               isFavorite
@@ -105,7 +96,7 @@ const ProjectCard = ({ project }) => {
                 isFavorite ? 'remove from favorites' : 'add to favorites'
               }
               onClick={handleToggleFavorite}
-              sx={{ color: isFavorite ? '#a280ff' : 'inherit' }}
+              sx={{ color: isFavorite ? 'special.light' : 'inherit' }}
             >
               <PlaylistAddCircleRoundedIcon />
             </IconButton>
