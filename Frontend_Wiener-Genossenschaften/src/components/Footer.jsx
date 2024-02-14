@@ -23,7 +23,15 @@ const Footer = () => {
   return (
     <>
       <Grid item sx={{ color: (t) => t.palette.primary.main }}>
-        <Typography variant="h6" align="left">
+        <Typography
+          variant="h5"
+          align="left"
+          sx={{
+            fontFamily: 'quicksand',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+          }}
+        >
           WIENER GENOSSENSCHAFTEN
         </Typography>
         <Typography variant="subtitle1" align="left" component="p">

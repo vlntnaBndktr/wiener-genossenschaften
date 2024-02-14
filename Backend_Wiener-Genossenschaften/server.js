@@ -7,30 +7,7 @@ import router from './routes/router.js';
 import HttpError from './common/http-errors.js';
 
 //SCRAPER:
-import cron from 'node-cron';
-import { startScraper, stopScraper } from './controllers/scraper.js';
-
-//Zeitpunkt fürs Scrapen einstellen mit node-cron
-cron.schedule(
-  '20 10 * * *',
-  async () => {
-    console.log('Scraping-Vorgang läuft um 7:00 AM');
-    try {
-      const projectsURL = 'https://www.wbv-gpa.at/wohnungen/neue-projekte/';
-      await extractProjects(projectsURL);
-
-      const flatsURL = 'https://www.wbv-gpa.at/wohnungen/';
-      await extractFlats(flatsURL);
-
-      console.log('Scraping-Vorgang erfogreich beendet');
-    } catch (error) {
-      console.error('Fehler beim Scraping-Vorgang:', error);
-    }
-  },
-  {
-    timezone: 'Europe/Vienna',
-  }
-);
+import { startScraper } from './controllers/scraper.js';
 
 dotenv.config();
 

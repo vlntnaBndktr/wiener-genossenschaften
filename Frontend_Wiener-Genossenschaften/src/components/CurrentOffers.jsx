@@ -17,13 +17,13 @@ const CurrentOffers = () => {
     getAllProjects();
   }, []);
 
-  // Rückmeldungen an den User:
-  if (loading) {
-    return <p>Lade...</p>;
-  }
-  if (error) {
-    return <p>Fehler beim Laden der Projekte: {error.message}</p>;
-  }
+  //TODO eventuell Rückmeldungen an den User:
+  // if (loading) {
+  //   return <p>Lade...</p>;
+  // }
+  // if (error) {
+  //   return <p>Fehler beim Laden der Projekte: {error.message}</p>;
+  // }
 
   return (
     <>
@@ -51,7 +51,7 @@ const CurrentOffers = () => {
         >
           Alle aktuellen Wohnungsangebote auf einen Blick.
         </Typography>
-        <Stack
+        {/* TODO <Stack
           sx={{ pt: 4 }}
           direction="row"
           spacing={2}
@@ -59,7 +59,7 @@ const CurrentOffers = () => {
         >
           <Button variant="outlined">Neubauprojekte</Button>
           <Button variant="outlined">Freie Wohnungen</Button>
-        </Stack>
+        </Stack> */}
       </Box>
       <Container maxWidth="xl">
         <Grid container spacing={4}>

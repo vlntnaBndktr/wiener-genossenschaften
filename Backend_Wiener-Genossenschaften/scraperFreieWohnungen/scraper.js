@@ -40,7 +40,7 @@ export default async function extractFlats(url) {
     });
 
     await Promise.all(promises);
-    console.log('data in scraper.js für Flats:', data);
+    // console.log('data in scraper.js für Flats:', data);
 
     return data;
   } catch (error) {

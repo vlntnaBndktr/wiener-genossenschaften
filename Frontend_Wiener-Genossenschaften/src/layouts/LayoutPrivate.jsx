@@ -33,12 +33,12 @@ const LayoutPrivate = () => {
           }}
         >
           {/* mini-menu */}
-          <Grid item py={2} px={2} sx={{ display: { md: 'none' } }}>
+          {/* <Grid item py={2} px={2} sx={{ display: { md: 'none' } }}>
             <Stack direction="row-reverse" spacing={2}>
               <Chip label="Logout" clickable variant="filled" />
               <Chip label="Signup" clickable variant="filled" />
             </Stack>
-          </Grid>
+          </Grid> */}
           {/* mini-menu end */}
 
           {/* LOGO  */}

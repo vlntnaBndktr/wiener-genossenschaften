@@ -35,7 +35,7 @@ const LayoutPublic = () => {
           }}
         >
           {/* mini-menu */}
-          <Grid
+          {/* <Grid
             item
             py={2}
             px={2}
@@ -66,7 +66,7 @@ const LayoutPublic = () => {
                 }}
               />
             </Stack>
-          </Grid>
+          </Grid> */}
           {/* mini-menu end */}
 
           {/* LOGO  */}

@@ -33,12 +33,12 @@ const Favorites = () => {
         >
           Meine Neubauprojekte und freien Wohnungen.
         </Typography>
-        <Stack direction="row" spacing={1} mb={4}>
+        {/* TODO <Stack direction="row" spacing={1} mb={4}>
           <Chip label="Sortieren" clickable variant="outlined" />
           <Chip label="Filter" clickable variant="outlined" />
           <Chip label="Suche" clickable variant="outlined" />
           <Chip label="Drucken" clickable variant="outlined" />
-        </Stack>
+        </Stack> */}
         <WatchList />
       </Box>
     </>

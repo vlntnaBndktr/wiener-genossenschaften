@@ -4,15 +4,12 @@ import extractFlats from '../scraperFreieWohnungen/scraper.js';
 import { Project } from '../models/projects.js';
 import { Flat } from '../models/flats.js'; // Stellen Sie sicher, dass Flat korrekt importiert wird
 
-// Deklaration der Aufgabe außerhalb der Funktion, um auf sie zugreifen zu können
-let task;
-
 // Funktion zum Starten des Scrapers
 const startScraper = () => {
-  task = cron.schedule(
-    '0 7 * * *', // Einmal täglich um 7:00 AM ausführen
+  cron.schedule(
+    '10 19 * * *', // Einmal täglich um 06:00 AM ausführen
     async () => {
-      console.log('Scraping-Vorgang läuft täglich um 7:00 AM');
+      console.log('Scraping-Vorgang läuft um 06:00 AM');
       try {
         // Scrape Projekte
         const projectsURL = 'https://www.wbv-gpa.at/wohnungen/neue-projekte/';
@@ -59,14 +56,4 @@ const startScraper = () => {
   );
 };
 
-// Funktion zum Stoppen des Scrapers
-const stopScraper = () => {
-  if (task) {
-    task.stop(); // Stoppt den Scheduler, wenn er vorhanden ist
-    console.log('Scraping-Vorgang gestoppt');
-  } else {
-    console.log('Scraping-Vorgang ist nicht aktiv');
-  }
-};
-
-export { startScraper, stopScraper };
+export { startScraper };
