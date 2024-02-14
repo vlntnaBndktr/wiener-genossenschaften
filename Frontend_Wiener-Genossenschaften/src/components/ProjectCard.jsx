@@ -12,12 +12,14 @@ import PlaylistAddCircleRoundedIcon from '@mui/icons-material/PlaylistAddCircleR
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import useStore from '../stores/useStore';
 import Tooltip from '@mui/material/Tooltip';
+import { useNavigate } from 'react-router-dom';
 
 // Empfängt 'project' als Prop von der Elternkomponente CurrentOffers
 const ProjectCard = ({ project }) => {
   const { user, createFavorite, deleteFavorite } = useStore();
   // Kürze die Beschreibung auf maximal 250 Zeichen
   const shortDescription = project.description.substring(0, 250) + '...';
+  const navigate = useNavigate();
 
   const openExternalWebsite = () => {
     const externalLink = project.website;
@@ -58,7 +60,8 @@ const ProjectCard = ({ project }) => {
             <Avatar
               sx={{
                 bgcolor:
-                  project.type === 'NP' ? 'secondary.main' : 'secondary.dark',
+                  project.type === 'NP' ? 'special.light' : 'special.dark',
+                color: project.type === 'NP' ? 'special.dark' : 'special.light',
               }}
               aria-label="recipe"
             >
@@ -96,12 +99,18 @@ const ProjectCard = ({ project }) => {
                 isFavorite ? 'remove from favorites' : 'add to favorites'
               }
               onClick={handleToggleFavorite}
-              sx={{ color: isFavorite ? 'special.light' : 'inherit' }}
+              sx={{ color: isFavorite ? 'secondary.main' : 'inherit' }}
             >
               <PlaylistAddCircleRoundedIcon />
             </IconButton>
           </Tooltip>
-          <IconButton aria-label="show on map" sx={{ color: 'black' }}>
+          <IconButton
+            aria-label="show on map"
+            sx={{ color: 'inherit' }}
+            onClick={() => {
+              navigate('/map');
+            }}
+          >
             <LocationOnIcon />
           </IconButton>
           <Button size="small" onClick={openExternalWebsite}>

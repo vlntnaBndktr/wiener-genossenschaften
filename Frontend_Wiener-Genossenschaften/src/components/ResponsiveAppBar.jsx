@@ -14,9 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AddHomeWorkRoundedIcon from '@mui/icons-material/AddHomeWorkRounded';
 import { ThemeProvider } from '@mui/material/styles';
 import myTheme from '../styles/theme';
-
 import { useNavigate } from 'react-router-dom';
-
 import useStore from '../stores/useStore';
 
 function ResponsiveAppBar() {
@@ -26,6 +24,7 @@ function ResponsiveAppBar() {
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [openFormDialog, setOpenFormDialog] = React.useState(false); // Zustand für das Dialogfeld
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -267,7 +266,12 @@ function ResponsiveAppBar() {
                 >
                   <Typography textAlign="center">Profil</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem
+                  onClick={() => {
+                    navigate('/help&contact');
+                    handleCloseUserMenu();
+                  }}
+                >
                   <Typography textAlign="center">Hilfe & Kontakt</Typography>
                 </MenuItem>
                 <MenuItem

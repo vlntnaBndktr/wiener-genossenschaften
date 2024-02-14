@@ -9,8 +9,11 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Logo from '../components/Logo';
+import Avatar from '@mui/material/Avatar';
+import { useNavigate } from 'react-router-dom';
 
 const LayoutPublic = () => {
+  const navigate = useNavigate();
   return (
     <ThemeProvider theme={myTheme}>
       <Grid container sx={{ minHeight: '100vh' }}>
@@ -32,10 +35,36 @@ const LayoutPublic = () => {
           }}
         >
           {/* mini-menu */}
-          <Grid item py={2} px={2} sx={{ display: { md: 'none' } }}>
-            <Stack direction="row-reverse" spacing={2}>
-              <Chip label="Login" clickable variant="filled" />
-              <Chip label="Signup" clickable variant="filled" />
+          <Grid
+            item
+            py={2}
+            px={2}
+            sx={{
+              display: { md: 'none' },
+            }}
+          >
+            <Stack direction="column" spacing={2}>
+              <Chip
+                // avatar={<Avatar src="faviconBlack.ico" />}
+                label="Login"
+                sx={{
+                  color: 'black',
+                  backgroundColor: (t) => t.palette.secondary.light,
+                }}
+                onClick={() => {
+                  navigate('/login');
+                }}
+              />
+              <Chip
+                label="Signup"
+                sx={{
+                  color: 'black',
+                  backgroundColor: (t) => t.palette.secondary.light,
+                }}
+                onClick={() => {
+                  navigate('/signup');
+                }}
+              />
             </Stack>
           </Grid>
           {/* mini-menu end */}

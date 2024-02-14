@@ -7,6 +7,7 @@ import Favorites from '../views/Favorites';
 import MyMap from '../views/Map';
 import ProfilDaten from '../views/ProfilDaten';
 import OneFavorite from '../views/OneFavorite';
+import HelpAndContact from '../views/HelpAndContact';
 
 /* routes.jsx = Routen meiner Anwendung definieren. 
 Zwischen öffentlichen und privaten Routen unterscheinden.
@@ -68,6 +69,10 @@ const routesPrivate = [
       {
         path: 'favorite/:id',
         element: <OneFavorite />,
+      },
+      {
+        path: 'help&contact',
+        element: <HelpAndContact />,
       },
       // Default Route:
       {
