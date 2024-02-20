@@ -90,10 +90,6 @@ _Userbereich:_
 
 6. bis 14.2.2024 (Prüfung)
 
-## Questions
-
-- zentrale Fehlerbehandlung?
-- muss ich zusätzlich zu email = unique in der Datenbank noch prüfen ob die email schon existiert??
 
 ## Roadmap
 
