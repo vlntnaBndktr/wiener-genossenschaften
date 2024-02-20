@@ -2,7 +2,7 @@
 
 ## Description
 
-Web-App für Desktop und Mobile Geräte, die Wohnungsangebote von diversen Genossenschaften sammelt, anzeigt und regelmäßig aktualisiert. Kernstück sind der Scraper um die Daten zu sammeln und eine Liste im Mitgliederbereich mit Sortier-/Filterfunktionen und Alarm/Deadlines. Die Liste soll von den Usern angepasst/individualisiert werden können.
+Meta-Plattform für Desktop und Mobile Geräte, die Wohnungsangebote von diversen Genossenschaften sammelt, anzeigt und regelmäßig aktualisiert. Kernstück sind der Scraper um die Daten zu sammeln und eine Liste im Mitgliederbereich mit Sortier-/Filterfunktionen und Alarm/Deadlines. Die Liste soll von den Usern angepasst/individualisiert werden können.
 Durch die Web-App sollen User
 
 - den Überblick während der Wohnungssuche behalten
@@ -89,7 +89,6 @@ _Userbereich:_
 - Re-Login aus Token realiseren
 
 6. bis 14.2.2024 (Prüfung)
-
 
 ## Roadmap
 
@@ -270,8 +269,11 @@ _Userbereich:_
 
 12. Hosting
 
+- https://wiener-genossenschaften.onrender.com/
+
 ## Contributing
 
+Moreno Dore ([more-no](https://github.com/more-no))
 Peter Pruzina (Wifi-Wien)
 
 ## Working hours
@@ -286,4 +288,5 @@ Peter Pruzina (Wifi-Wien)
 - 02.01. 10:30-13:30
 - 03.01. 09:00-11:30 + 12:30-14:00
 - 08.-17.1. ca 20 Arbeitsstunden
-- 18.1-5.2. ca 35 Arbeitsstunden
+- 18.1.-5.2. ca 35 Arbeitsstunden
+- 6.2.-16.2. ca 30 Arbeitsstunden

@@ -7,7 +7,7 @@ import { Flat } from '../models/flats.js'; // Stellen Sie sicher, dass Flat korr
 // Funktion zum Starten des Scrapers
 const startScraper = () => {
   cron.schedule(
-    '0 6 * * *', // Einmal täglich um 06:00 AM ausführen
+    '52 14 * * *', // Einmal täglich um 06:00 AM ausführen
     async () => {
       console.log('Scraping-Vorgang läuft um 06:00 AM');
       try {
