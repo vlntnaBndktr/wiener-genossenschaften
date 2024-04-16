@@ -90,6 +90,10 @@ _Userbereich:_
 
 6. bis 14.2.2024 (Prüfung)
 
+7. bis 22.4.
+
+- .env.production vs .env.development
+
 ## Roadmap
 
 1. Projektbeschreibung
@@ -275,18 +279,3 @@ _Userbereich:_
 
 Moreno Dore ([more-no](https://github.com/more-no))
 Peter Pruzina (Wifi-Wien)
-
-## Working hours
-
-- 21.12. 17:00-19:30
-- 22.12. 11:00-12:30 + 16:20-17:40 + 18.00-19:00
-- 27.12. 11:00-13:30 + 17:00-19:00
-- 28.12. 09:00-14:00
-- 29.12. 09:00-11:30
-- 30.12. 16:30-19:00
-- 31.12. 10:00-13:30
-- 02.01. 10:30-13:30
-- 03.01. 09:00-11:30 + 12:30-14:00
-- 08.-17.1. ca 20 Arbeitsstunden
-- 18.1.-5.2. ca 35 Arbeitsstunden
-- 6.2.-16.2. ca 30 Arbeitsstunden

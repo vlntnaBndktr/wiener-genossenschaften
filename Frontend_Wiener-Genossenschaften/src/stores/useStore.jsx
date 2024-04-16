@@ -1,7 +1,8 @@
 import { create } from 'zustand'; //  State-Management-Tool "zustand"
 import { myfetchAPI } from '../utils/fetch';
-import { HOST } from '../utils/const';
 import { jwtDecode } from 'jwt-decode';
+
+const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
 // initialer Zustand:
 const initialState = {
@@ -44,7 +45,7 @@ const useStore = create((set, get) => ({
     set({ token, decodedToken });
 
     // Stammdaten vom angemeldeten Benutzer holen
-    myfetchAPI({ url: HOST + '/user/' + decodedToken.id })
+    myfetchAPI({ url: apiUrl + '/user/' + decodedToken.id })
       .then((response) => {
         // Stammdaten als "user" speichern
         set({ user: response.data });
@@ -66,7 +67,7 @@ const useStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     // API Aufruf mit vorgefertigter myfetchAPI
-    myfetchAPI({ url: HOST + '/projects' })
+    myfetchAPI({ url: apiUrl + '/projects' })
       .then((response) => {
         // in response.data sind meine Projects
         if (response.status >= 200 && response.status < 300) {
@@ -89,7 +90,7 @@ const useStore = create((set, get) => ({
     set({ loading: true, error: null, user: null });
     // API Aufruf mit vorgefertigter myfetchAPI
     myfetchAPI({
-      url: HOST + '/user/login',
+      url: apiUrl + '/user/login',
       method: 'post',
       data: { email, password },
     })
@@ -107,7 +108,7 @@ const useStore = create((set, get) => ({
           set({ token, decodedToken, email, password });
 
           // Stammdaten vom angemeldeten User holen
-          return myfetchAPI({ url: HOST + '/user/' + decodedToken.id });
+          return myfetchAPI({ url: apiUrl + '/user/' + decodedToken.id });
         } else {
           throw new Error('Fehler beim Login');
         }
@@ -138,7 +139,7 @@ const useStore = create((set, get) => ({
 
     // Neuregistrierung im Backend versuchen
     myfetchAPI({
-      url: HOST + '/user/signup',
+      url: apiUrl + '/user/signup',
       method: 'post',
       data: { firstName, lastName, email, password },
     })
@@ -167,7 +168,7 @@ const useStore = create((set, get) => ({
 
     // Daten ans Backend senden
     myfetchAPI({
-      url: HOST + '/user/update',
+      url: apiUrl + '/user/update',
       method: 'patch',
       data: { firstName, lastName, email },
       token: get().token,
@@ -196,7 +197,7 @@ const useStore = create((set, get) => ({
 
     // Passwort ändern im Backend versuchen
     myfetchAPI({
-      url: HOST + '/user/change-password',
+      url: apiUrl + '/user/change-password',
       method: 'patch',
       data: { oldPassword, newPassword },
       token: get().token,
@@ -225,7 +226,7 @@ const useStore = create((set, get) => ({
     // console.log('Token:', get().token);
     // in req.params wird die _projectId übermittelt
     myfetchAPI({
-      url: HOST + '/favorite/' + projectId,
+      url: apiUrl + '/favorite/' + projectId,
       method: 'post',
       token: get().token,
     })
@@ -252,7 +253,7 @@ const useStore = create((set, get) => ({
     // im Token wird die userId geschickt
     // in req.params wird die projectId übermittelt
     myfetchAPI({
-      url: HOST + '/favorite/delete/' + projectId,
+      url: apiUrl + '/favorite/delete/' + projectId,
       method: 'delete',
       token: get().token,
     })
@@ -281,7 +282,7 @@ const useStore = create((set, get) => ({
     // API Aufruf mit vorgefertigter myfetchAPI
     // Token mit userID wird gebraucht
     myfetchAPI({
-      url: HOST + '/favorites',
+      url: apiUrl + '/favorites',
       token: get().token,
     })
       .then((response) => {
