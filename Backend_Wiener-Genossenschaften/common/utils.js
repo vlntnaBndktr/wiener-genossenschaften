@@ -1,6 +1,7 @@
 import HttpError from './http-errors.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import axios from 'axios';
 
 import { User } from '../models/users.js';
 
@@ -63,4 +64,21 @@ const checkToken = async (req, res, next) => {
   next();
 };
 
-export { getHash, checkPassword, getToken, checkToken };
+const getGeoCoordinates = async (address) => {
+  const response = await axios(
+    'https://nominatim.openstreetmap.org/search?format=json&addressdetails=0&q=' +
+      encodeURIComponent(address)
+  );
+  if (response.data.length === 0) {
+    return {
+      lat: 0,
+      lon: 0,
+    };
+  }
+  return {
+    lat: response.data[0].lat,
+    lon: response.data[0].lon,
+  };
+};
+
+export { getHash, checkPassword, getToken, checkToken, getGeoCoordinates };

@@ -2,6 +2,7 @@ import { validationResult, matchedData, body } from 'express-validator';
 import HttpError from '../common/http-errors.js';
 
 import { Project } from '../models/projects.js';
+import { getGeoCoordinates } from '../common/utils.js';
 
 const projectValidation = [
   body('name')
@@ -56,9 +57,17 @@ const createProject = async (req, res, next) => {
       return next(new HttpError('Projekt ist bereits angelegt', 422));
     }
 
+    // Geo Koordinaten holen
+    const address = validatedData.street;
+    const coordinates = await getGeoCoordinates(address);
+
     // Projekt in DB speichern:
     const newProject = await Project.create({
       ...validatedData,
+      location: {
+        ...validatedData.location,
+        coordinates: coordinates,
+      },
     });
 
     res.send(newProject);

@@ -93,6 +93,8 @@ _Userbereich:_
 7. bis 22.4.
 
 - .env.production vs .env.development
+- Kartenansicht für alle Projekte/Wohnungen
+- Merkliste -> Eintrag bearbeiten
 
 ## Roadmap
 
