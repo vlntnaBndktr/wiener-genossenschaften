@@ -11,11 +11,32 @@ import Typography from '@mui/material/Typography';
 import Logo from '../components/Logo';
 import Avatar from '@mui/material/Avatar';
 import { useNavigate } from 'react-router-dom';
+import EngineeringRoundedIcon from '@mui/icons-material/EngineeringRounded';
+import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
 
 const LayoutPublic = () => {
   const navigate = useNavigate();
   return (
     <ThemeProvider theme={myTheme}>
+      {/* Under Construction */}
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        backgroundColor="yellow"
+        padding={2}
+        sx={{
+          fontFamily: 'quicksand',
+          fontSize: 20,
+          fontWeight: 600,
+          textTransform: 'uppercase',
+        }}
+      >
+        <ConstructionRoundedIcon sx={{ marginRight: 1 }} />
+        UNDER CONSTRUCTION
+        <EngineeringRoundedIcon sx={{ marginLeft: 1 }} />
+      </Grid>
+      {/* Under Construction Ende */}
       <Grid container sx={{ minHeight: '100vh' }}>
         <CssBaseline />
         {/* Left Side: */}

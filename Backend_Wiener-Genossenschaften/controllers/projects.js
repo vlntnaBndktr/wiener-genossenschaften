@@ -58,7 +58,7 @@ const createProject = async (req, res, next) => {
     }
 
     // Geo Koordinaten holen
-    const address = validatedData.street;
+    const address = validatedData.location.street;
     const coordinates = await getGeoCoordinates(address);
 
     // Projekt in DB speichern:

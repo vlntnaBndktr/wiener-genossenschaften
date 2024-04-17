@@ -54,7 +54,7 @@ export default async function extractProjects(url) {
     // Warten bis alle Promises aufgelöst sind
     await Promise.all(promises);
 
-    // Alle Daten sind jetzt in der 'data'-Variable gesammel
+    // Alle Daten sind jetzt in der 'data'-Variable gesammelt
     // console.log('data in scraper.js:', data);
 
     return data; // Rückgabe der gesammelten Projekte

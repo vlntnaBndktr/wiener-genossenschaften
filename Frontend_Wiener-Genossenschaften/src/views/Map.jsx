@@ -1,29 +1,29 @@
 import '../styles/mapStyles.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
+import useStore from '../stores/useStore';
 
 const customIcon = new Icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
-  iconSize: [38, 38], // Icon Größe
+  iconSize: [38, 38],
+});
+
+const specialIcon = new L.Icon({
+  iconUrl: 'location2.png',
+  iconSize: [38, 38],
 });
 
 // Koordinaten für Marker
 const markers = [
   {
-    geocode: [48.17192166206321, 16.391253439574186],
-    popUp: 'Quartier Bienvenue: Alle Generationen herzlich willkommen',
-  },
-  {
-    geocode: [48.17994439584824, 16.34701113957447],
-    popUp: 'Lebenscampus Wolfganggasse',
-  },
-  {
-    geocode: [48.19787689114529, 16.340944354916942],
-    popUp: 'sophie 7: Eine Stadtoase mitten in 1070 Wien',
+    geocode: [48.21241, 16.33386],
+    popUp: 'WIENER GENOSSENSCHAFTEN',
   },
 ];
 
 const MyMap = () => {
+  const { projects } = useStore();
+  console.log('projects in MyMap Komponente:', projects);
   return (
     // MapContainer-Komponente, um die Karte zu erstellen
     <MapContainer
@@ -39,15 +39,24 @@ const MyMap = () => {
       />
       {/* Marker hinzufügen */}
       {markers.map((marker) => (
-        <Marker position={marker.geocode} icon={customIcon}>
+        <Marker position={marker.geocode} icon={specialIcon}>
           {/* Popup der beim Klicken auf den Marker angezeigt wird */}
           <Popup>{marker.popUp}</Popup>
         </Marker>
       ))}
-      {/* Marker für Wien */}
-      {/* <Marker position={[48.20849, 16.37208]}>
-        <Popup>Wien</Popup>
-      </Marker> */}
+      {/* Marker für jedes Projekt erstellen */}
+      {projects.map((project) => (
+        <Marker
+          key={project._id}
+          position={[
+            project.location.coordinates.lat,
+            project.location.coordinates.lon,
+          ]}
+          icon={customIcon}
+        >
+          <Popup>{project.name}</Popup>
+        </Marker>
+      ))}
     </MapContainer>
   );
 };

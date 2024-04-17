@@ -16,7 +16,7 @@ const CurrentOffers = () => {
   useEffect(() => {
     getAllProjects();
   }, []);
-
+  console.log('projects:', projects);
   //TODO eventuell Rückmeldungen an den User:
   // if (loading) {
   //   return <p>Lade...</p>;

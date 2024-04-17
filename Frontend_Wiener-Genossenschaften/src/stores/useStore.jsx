@@ -65,7 +65,7 @@ const useStore = create((set, get) => ({
   getAllProjects: () => {
     // Reset State loading: ein Request wird an den Server gesendet
     set({ loading: true, error: null });
-
+    console.log('Projekte werden gerade abgerufen');
     // API Aufruf mit vorgefertigter myfetchAPI
     myfetchAPI({ url: apiUrl + '/projects' })
       .then((response) => {

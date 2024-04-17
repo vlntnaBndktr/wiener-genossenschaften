@@ -69,6 +69,9 @@ const getGeoCoordinates = async (address) => {
     'https://nominatim.openstreetmap.org/search?format=json&addressdetails=0&q=' +
       encodeURIComponent(address)
   );
+  console.log('address:', address);
+  console.log(response.data.length);
+
   if (response.data.length === 0) {
     return {
       lat: 0,

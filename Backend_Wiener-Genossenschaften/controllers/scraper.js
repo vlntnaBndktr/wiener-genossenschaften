@@ -1,13 +1,14 @@
 import cron from 'node-cron';
 import extractProjects from '../scraperNeubauProjekte/scraper.js';
 import extractFlats from '../scraperFreieWohnungen/scraper.js';
+import { getGeoCoordinates } from '../common/utils.js';
 import { Project } from '../models/projects.js';
 import { Flat } from '../models/flats.js'; // Stellen Sie sicher, dass Flat korrekt importiert wird
 
 // Funktion zum Starten des Scrapers
 const startScraper = () => {
   cron.schedule(
-    '52 14 * * *', // Einmal täglich um 06:00 AM ausführen
+    '07 17 * * *', // Einmal täglich um 06:00 AM ausführen
     async () => {
       console.log('Scraping-Vorgang läuft um 06:00 AM');
       try {
@@ -23,7 +24,20 @@ const startScraper = () => {
             console.log('Projekt bereits vorhanden:', existingProject.name);
           } else {
             // Projekt in DB speichern, wenn es noch nicht vorhanden ist
-            await Project.create(projectData);
+            // await Project.create(projectData);
+
+            // Geo Koordinaten holen
+            const address = projectData.location.street;
+            const coordinates = await getGeoCoordinates(address);
+
+            // Projekt in DB speichern:
+            await Project.create({
+              ...projectData,
+              location: {
+                ...projectData.location,
+                coordinates: coordinates,
+              },
+            });
             console.log('Projekt gespeichert:', projectData.name);
           }
         }
@@ -39,8 +53,17 @@ const startScraper = () => {
           if (existingFlat) {
             console.log('Wohnung bereits vorhanden:', existingFlat.name);
           } else {
+            // Geo Koordinaten holen
+            const address = flatData.location.street;
+            const coordinates = await getGeoCoordinates(address);
             // Wohnung in DB speichern, wenn sie noch nicht vorhanden ist
-            await Flat.create(flatData);
+            await Flat.create({
+              ...flatData,
+              location: {
+                ...flatData.location,
+                coordinates: coordinates,
+              },
+            });
             console.log('Wohnung gespeichert:', flatData.name);
           }
         }
