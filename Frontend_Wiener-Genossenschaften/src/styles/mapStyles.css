@@ -1,8 +1,8 @@
 .leaflet-container {
-  height: 90vh;
+  height: 100vh;
   max-width: 100%;
   border-radius: 2rem;
-  margin: 4rem;
+  margin: 2rem;
 }
 
 .cluster-icon {

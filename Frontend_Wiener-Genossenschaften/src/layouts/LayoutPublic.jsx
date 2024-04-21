@@ -19,22 +19,25 @@ const LayoutPublic = () => {
   return (
     <ThemeProvider theme={myTheme}>
       {/* Under Construction */}
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-        backgroundColor="yellow"
-        padding={2}
-        sx={{
-          fontFamily: 'quicksand',
-          fontSize: 20,
-          fontWeight: 600,
-          textTransform: 'uppercase',
-        }}
-      >
-        <ConstructionRoundedIcon sx={{ marginRight: 1 }} />
-        UNDER CONSTRUCTION
-        <EngineeringRoundedIcon sx={{ marginLeft: 1 }} />
+      <Grid container justifyContent="center" alignItems="center" padding={1}>
+        <ConstructionRoundedIcon />
+        <Typography
+          variant="h5"
+          align="center"
+          color={(t) => t.palette.primary.dark}
+          sx={{
+            fontFamily: 'quicksand',
+            fontSize: 15,
+            fontWeight: 600,
+            textTransform: 'uppercase',
+          }}
+        >
+          This page is still under construction, but we look forward to
+          presenting our complete website to you soon. Please bear with us as we
+          work to finalize the details. During this process, there may be
+          occasional errors or unforeseen issues. We appreciate your patience
+          and understanding.
+        </Typography>
       </Grid>
       {/* Under Construction Ende */}
       <Grid container sx={{ minHeight: '100vh' }}>
@@ -55,41 +58,6 @@ const LayoutPublic = () => {
             flexDirection: 'column',
           }}
         >
-          {/* mini-menu */}
-          {/* <Grid
-            item
-            py={2}
-            px={2}
-            sx={{
-              display: { md: 'none' },
-            }}
-          >
-            <Stack direction="column" spacing={2}>
-              <Chip
-                // avatar={<Avatar src="faviconBlack.ico" />}
-                label="Login"
-                sx={{
-                  color: 'black',
-                  backgroundColor: (t) => t.palette.secondary.light,
-                }}
-                onClick={() => {
-                  navigate('/login');
-                }}
-              />
-              <Chip
-                label="Signup"
-                sx={{
-                  color: 'black',
-                  backgroundColor: (t) => t.palette.secondary.light,
-                }}
-                onClick={() => {
-                  navigate('/signup');
-                }}
-              />
-            </Stack>
-          </Grid> */}
-          {/* mini-menu end */}
-
           {/* LOGO  */}
           <Grid item py={4} px={10}>
             <Logo />

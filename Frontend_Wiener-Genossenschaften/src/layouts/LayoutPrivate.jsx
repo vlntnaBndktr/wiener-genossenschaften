@@ -27,7 +27,7 @@ const LayoutPrivate = () => {
           xl={2}
           sx={{
             backgroundColor: (t) => t.palette.secondary.main,
-            overflow: 'hidden',
+            // overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
           }}
