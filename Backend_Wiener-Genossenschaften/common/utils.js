@@ -59,7 +59,7 @@ const checkToken = async (req, res, next) => {
 
   // steht foundUser für alle nachfolgenden Middlewares oder Routen-Handler-Funktionen zur Verfügung:
   req.foundUser = foundUser;
-  console.log('Token-Check sucessful');
+  console.log('Token-Check successful');
   // mit next weiterschalten (in die nächste Middleware)
   next();
 };

@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function WhatchList() {
   // states und Funktionen aus dem useStore importieren
-  const { favorites, getAllFavorites, getOneFavorite } = useStore();
+  const { favorites, getAllFavorites } = useStore();
   // laden der Projekte einmal beim Mounting
   useEffect(() => {
     getAllFavorites();
@@ -65,7 +65,7 @@ export default function WhatchList() {
                     sx={{ width: 56, height: 56 }}
                     onClick={() => handleAvatarClick(favorite._id)}
                     // diesen Favorite in der Komponente OneFavorite anzeigen (route: '/oneFavorite')
-                  />{' '}
+                  />
                 </Tooltip>
               </TableCell>
               <TableCell component="th" scope="row">

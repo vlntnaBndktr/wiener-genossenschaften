@@ -2,6 +2,7 @@ import '../styles/mapStyles.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import useStore from '../stores/useStore';
+import { useEffect } from 'react';
 
 const customIcon = new Icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
@@ -22,7 +23,11 @@ const markers = [
 ];
 
 const MyMap = () => {
-  const { projects } = useStore();
+  const { projects, getAllProjects } = useStore();
+  // laden der Projekte einmal beim Mounting
+  useEffect(() => {
+    getAllProjects();
+  }, []);
   console.log('projects in MyMap Komponente:', projects);
   return (
     // MapContainer-Komponente, um die Karte zu erstellen

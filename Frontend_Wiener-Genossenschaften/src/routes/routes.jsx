@@ -67,11 +67,11 @@ const routesPrivate = [
         element: <MyMap />,
       },
       {
-        path: 'favorite/:id',
+        path: '/favorite/:id',
         element: <OneFavorite />,
       },
       {
-        path: 'help&contact',
+        path: '/help&contact',
         element: <HelpAndContact />,
       },
       // Default Route:

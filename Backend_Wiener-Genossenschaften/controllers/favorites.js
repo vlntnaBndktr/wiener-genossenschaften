@@ -113,7 +113,7 @@ const updateFavorite = async (req, res, next) => {
     if (!updatedFavorite) {
       return next(new HttpError('Favorite nicht gefunden', 404));
     }
-    console.log(updatedFavorite);
+    console.log('updatedFavorite:', updatedFavorite);
     res.status(200).send('Favorite updated sucessfully');
   } catch (error) {
     console.error('Fehler beim Aktualisieren des Favorites:', error);
@@ -151,7 +151,6 @@ const deleteFavorite = async (req, res, next) => {
     const deletedFavorite = await Favorite.findOneAndDelete({
       _id: authorizedFavorite._id,
     });
-    console.log(deletedFavorite);
 
     // Auch aus dem Array im User-Dokument löschen:
     const updatedUser = await User.findByIdAndUpdate(
@@ -162,7 +161,7 @@ const deleteFavorite = async (req, res, next) => {
       { new: true }
     ).populate('favorites'); //Vor dem zurückschicken populate mit Favorites updatedUser!!!!
     // 'new: true' gibt das aktualisierte Dokument zurück
-
+    console.log('updated User:', updatedUser);
     res.status(200).json(updatedUser);
   } catch (error) {
     console.error('Fehler beim Löschen des Favorites:', error.message);

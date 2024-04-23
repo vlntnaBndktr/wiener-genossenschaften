@@ -95,6 +95,7 @@ _Userbereich:_
 - .env.production vs .env.development
 - Kartenansicht für alle Projekte/Wohnungen
 - Merkliste -> Eintrag bearbeiten
+- Todo: Layout Private schwarzer Block im lg xl anpassen
 
 ## Roadmap
 
