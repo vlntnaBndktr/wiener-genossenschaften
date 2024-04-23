@@ -5,22 +5,30 @@ import useStore from '../stores/useStore';
 
 const OneFavorite = () => {
   // favoriteId aus den URL-Parametern auslesen
-  const { id } = useParams();
+  const { favoriteId, getOneFavorite } = useParams();
   // Daten aus dem Store laden
-  const { favorites } = useStore();
+  const { user } = useStore();
+  // Favorite aus dem User mit passender ID finden
+  const targetFavorite = user.favorites.find((fav) => fav._id === favoriteId);
 
-  // Favorite mit der passenden ID finden
-  const favorite = favorites.find((fav) => fav._id === id);
-
-  console.log('in OneFavorite:', favorites);
-  console.log('übergebene ID:', id);
+  console.log('übergebene ID:', favoriteId);
+  console.log('User:', user);
+  console.log('targetFavorite:', targetFavorite);
   return (
     <>
       <Typography component="h1" variant="h4">
         FAVORIT
       </Typography>
-      {/* Hier kannst du den Inhalt des gefundenen Favoriten rendern */}
-      {favorite._id}
+      <Typography>{targetFavorite._id}</Typography>
+      <Typography>{targetFavorite.alarm}</Typography>
+      <Typography>{targetFavorite.project}</Typography>
+      <Typography>{targetFavorite.registrationDate}</Typography>
+      <Typography>{targetFavorite.registrationExpiryDate}</Typography>
+      <ul>
+        {targetFavorite.notes.map((note) => (
+          <li key={note._id}>{note.text}</li>
+        ))}
+      </ul>
     </>
   );
 };

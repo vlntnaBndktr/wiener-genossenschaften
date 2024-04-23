@@ -67,7 +67,7 @@ const routesPrivate = [
         element: <MyMap />,
       },
       {
-        path: '/favorite/:id',
+        path: '/favorite/:favoriteId',
         element: <OneFavorite />,
       },
       {
