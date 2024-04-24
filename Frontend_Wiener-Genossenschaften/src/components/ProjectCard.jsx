@@ -26,10 +26,11 @@ const ProjectCard = ({ project }) => {
     // Öffne den Link in einem neuen Tab
     window.open(externalLink, '_blank');
   };
-
+  // console.log('project:', project);
+  // console.log('User:', user);
   // Überprüfe, ob das aktuelle Projekt in den Favoriten des Benutzers enthalten ist
   const isFavorite = user.favorites.some(
-    (favorite) => favorite.project === project._id
+    (favorite) => favorite.project._id === project._id
   );
 
   const handleToggleFavorite = () => {

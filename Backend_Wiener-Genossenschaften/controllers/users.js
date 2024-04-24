@@ -23,10 +23,16 @@ const getOneUser = async (req, res, next) => {
   try {
     // userId aus den URL-Parametern holen
     const userId = req.params.userId;
-    const user = await User.findById(userId, '-password').populate(
-      'favorites',
-      '-userId'
-    );
+    // Benutzer anhand der UserId abrufen, das Passwort ausschließen und die Favoriten mit den Projektinformationen populieren
+    const user = await User.findById(userId, '-password').populate({
+      path: 'favorites',
+      select: '-userId', // Das Attribut userId wird nicht ausgewählt
+      populate: {
+        path: 'project',
+        model: 'Project',
+      },
+    });
+
     res.send(user);
   } catch (error) {
     return next(new HttpError('Cant find User', 404));

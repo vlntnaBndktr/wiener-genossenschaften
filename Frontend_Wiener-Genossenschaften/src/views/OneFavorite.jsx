@@ -5,7 +5,7 @@ import useStore from '../stores/useStore';
 
 const OneFavorite = () => {
   // favoriteId aus den URL-Parametern auslesen
-  const { favoriteId, getOneFavorite } = useParams();
+  const { favoriteId } = useParams();
   // Daten aus dem Store laden
   const { user } = useStore();
   // Favorite aus dem User mit passender ID finden
@@ -19,9 +19,9 @@ const OneFavorite = () => {
       <Typography component="h1" variant="h4">
         FAVORIT
       </Typography>
-      <Typography>{targetFavorite._id}</Typography>
+      <Typography>{targetFavorite.project.name}</Typography>
+      <Typography>{user.favorites[0].project.name}</Typography>
       <Typography>{targetFavorite.alarm}</Typography>
-      <Typography>{targetFavorite.project}</Typography>
       <Typography>{targetFavorite.registrationDate}</Typography>
       <Typography>{targetFavorite.registrationExpiryDate}</Typography>
       <ul>

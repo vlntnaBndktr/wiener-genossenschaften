@@ -43,7 +43,6 @@ const createFavorite = async (req, res, next) => {
     // Favorite in DB speichern
     const newFavorite = await Favorite.create({
       userId,
-      projectId,
       project: projectId, // Setze das `project`-Feld
       ...validatedData,
     });
@@ -51,6 +50,9 @@ const createFavorite = async (req, res, next) => {
     if (!newFavorite) {
       return next(new HttpError('Favorite konnte nicht angelegt werden', 500));
     }
+
+    // Nachdem der Favorit erstellt wurde, laden wir die zugehörigen Projektdaten
+    await newFavorite.populate('project');
 
     // Favorite ID im User-Document speichern:
     //Model.findByIdAndUpdate(id, update); mit $push Operator
@@ -60,7 +62,13 @@ const createFavorite = async (req, res, next) => {
         $push: { favorites: newFavorite._id },
       },
       { new: true } // 'new: true' gibt das aktualisierte Dokument zurück
-    ).populate('favorites'); //Vor dem zurückschicken populate mit Favorites updatedUser!!!!
+    ).populate({
+      path: 'favorites',
+      populate: {
+        path: 'project',
+        model: 'Project',
+      },
+    });
 
     console.log('newFavorite:', newFavorite);
     res.status(200).send(updatedUser);
@@ -159,8 +167,13 @@ const deleteFavorite = async (req, res, next) => {
         $pull: { favorites: authorizedFavorite._id },
       },
       { new: true }
-    ).populate('favorites'); //Vor dem zurückschicken populate mit Favorites updatedUser!!!!
-    // 'new: true' gibt das aktualisierte Dokument zurück
+    ).populate({
+      path: 'favorites',
+      populate: {
+        path: 'project',
+        model: 'Project',
+      },
+    }); //Vor dem zurückschicken populate mit Favorites + dem Project !!!!
     console.log('updated User:', updatedUser);
     res.status(200).json(updatedUser);
   } catch (error) {
