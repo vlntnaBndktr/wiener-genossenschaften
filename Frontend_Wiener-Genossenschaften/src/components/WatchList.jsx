@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useStore from '../stores/useStore';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
@@ -19,6 +19,10 @@ import { useNavigate } from 'react-router-dom';
 export default function WhatchList() {
   // states und Funktionen aus dem useStore importieren
   const { favorites, getAllFavorites } = useStore();
+  // states für editing:
+  const [editMode, setEditMode] = useState(false);
+  const [editableItem, setEditableItem] = useState(null);
+  const [editedValues, setEditedValues] = useState({});
   // laden der Projekte einmal beim Mounting
   useEffect(() => {
     getAllFavorites();
@@ -31,8 +35,24 @@ export default function WhatchList() {
     navigate(`/favorite/${favoriteId}`);
   };
 
-  const handleEditMode = (index) => {
-    alert('Edit Mode!');
+  const handleEdit = (favorite) => {
+    setEditableItem(favorite);
+    console.log('favorite im handleEdit:', favorite);
+    setEditMode(true);
+    // evtl Initialwerte für die Zellen die bearbeitet werden
+    setEditedValues({
+      registrationDate: favorite.registrationDate,
+    });
+    console.log('editedValues im handleEdit:', editedValues);
+  };
+
+  console.log('editedValues:', editedValues);
+
+  const handleSave = () => {
+    // Logik zum Speichern in DB mit updateFavorite
+    setEditMode(false);
+    setEditableItem(null);
+    setEditedValues({});
   };
 
   return (
@@ -79,8 +99,21 @@ export default function WhatchList() {
                 {favorite.project.name}
               </TableCell>
               <TableCell>{favorite.project.constructionAssociation}</TableCell>
-              <TableCell align="right" onClick={handleEditMode}>
-                {new Date(favorite.registrationDate).toLocaleDateString()}
+              <TableCell align="right">
+                {editMode && editableItem?._id === favorite._id ? (
+                  <input
+                    type="date"
+                    value={editedValues.registrationDate}
+                    onChange={(e) =>
+                      setEditedValues({
+                        ...editedValues,
+                        registrationDate: e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  new Date(favorite.registrationDate).toLocaleDateString()
+                )}
               </TableCell>
               <TableCell align="right">
                 {favorite.registrationExpiryDate
@@ -107,6 +140,11 @@ export default function WhatchList() {
                 </a>
               </TableCell>
               <TableCell align="right">
+                {!editMode ? (
+                  <EditRoundedIcon onClick={() => handleEdit(favorite)} />
+                ) : (
+                  <button onClick={handleSave}>Speichern</button>
+                )}
                 <DeleteForeverRoundedIcon />
               </TableCell>
             </TableRow>
