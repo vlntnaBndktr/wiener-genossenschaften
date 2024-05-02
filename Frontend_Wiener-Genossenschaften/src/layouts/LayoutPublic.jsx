@@ -48,6 +48,7 @@ const LayoutPublic = () => {
           direction="column"
           justifyContent="space-evenly"
           alignItems="left"
+          item // muss mit xs, sm ... verwendet werden
           xs={12}
           sm={12}
           md={6}
