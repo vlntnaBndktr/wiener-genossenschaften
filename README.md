@@ -97,6 +97,10 @@ _Userbereich:_
 - Merkliste -> Eintrag bearbeiten
 - Todo: Layout Private schwarzer Block im lg xl anpassen
 
+8.
+
+- Pagination
+
 ## Roadmap
 
 1. Projektbeschreibung
