@@ -9,6 +9,8 @@ import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
 import useStore from '../stores/useStore';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import Avatar from '@mui/material/Avatar';
 import AccessAlarmsRoundedIcon from '@mui/icons-material/AccessAlarmsRounded';
 import Tooltip from '@mui/material/Tooltip';
@@ -29,6 +31,10 @@ export default function WhatchList() {
     navigate(`/favorite/${favoriteId}`);
   };
 
+  const handleEditMode = (index) => {
+    alert('Edit Mode!');
+  };
+
   return (
     <TableContainer
       component={Paper}
@@ -43,12 +49,13 @@ export default function WhatchList() {
           <TableRow>
             <TableCell></TableCell>
             <TableCell>Angebot</TableCell>
-            <TableCell align="right">Genossenschaft</TableCell>
+            <TableCell>Genossenschaft</TableCell>
             <TableCell align="right">Vormerkung</TableCell>
             <TableCell align="right">Ablaufdatum</TableCell>
             <TableCell align="right">Alarm</TableCell>
             <TableCell align="right">Notizen</TableCell>
             <TableCell align="right">Website</TableCell>
+            <TableCell align="right">Löschen</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -58,7 +65,7 @@ export default function WhatchList() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                <Tooltip title={'Eintrag bearbeiten'} arrow>
+                <Tooltip title={'Details'} arrow>
                   <Avatar
                     alt="Remy Sharp"
                     src={favorite.project.image}
@@ -71,10 +78,8 @@ export default function WhatchList() {
               <TableCell component="th" scope="row">
                 {favorite.project.name}
               </TableCell>
-              <TableCell align="right">
-                {favorite.project.constructionAssociation}
-              </TableCell>
-              <TableCell align="right">
+              <TableCell>{favorite.project.constructionAssociation}</TableCell>
+              <TableCell align="right" onClick={handleEditMode}>
                 {new Date(favorite.registrationDate).toLocaleDateString()}
               </TableCell>
               <TableCell align="right">
@@ -100,6 +105,9 @@ export default function WhatchList() {
                 >
                   <OpenInNewRoundedIcon />
                 </a>
+              </TableCell>
+              <TableCell align="right">
+                <DeleteForeverRoundedIcon />
               </TableCell>
             </TableRow>
           ))}
