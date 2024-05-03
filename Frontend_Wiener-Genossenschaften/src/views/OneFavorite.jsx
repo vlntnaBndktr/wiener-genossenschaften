@@ -42,12 +42,7 @@ const OneFavorite = () => {
         >
           {targetFavorite.project.name}
         </Typography>
-        <Typography
-          variant="h7"
-          align="center"
-          color="text.secondary"
-          paragraph
-        >
+        <Typography variant="h7" align="center" color="text.secondary">
           {targetFavorite.project.location.street}{' '}
           <IconButton
             aria-label="show on map"

@@ -18,10 +18,10 @@ import { useNavigate } from 'react-router-dom';
 
 export default function WhatchList() {
   // states und Funktionen aus dem useStore importieren
-  const { favorites, getAllFavorites } = useStore();
+  const { favorites, getAllFavorites, updateFavorite } = useStore();
   // states für editing:
   const [editMode, setEditMode] = useState(false);
-  const [editableItem, setEditableItem] = useState(null);
+  const [targetItem, setTargetItem] = useState(null);
   const [editedValues, setEditedValues] = useState({});
   // laden der Projekte einmal beim Mounting
   useEffect(() => {
@@ -31,14 +31,15 @@ export default function WhatchList() {
   const navigate = useNavigate();
 
   const handleAvatarClick = (favoriteId) => {
-    // Hier navigierst du zur Route '/oneFavorite' und übergibst den Favoriten-ID als Parameter
+    // zur Route '/oneFavorite' navigieren und Favoriten-ID als Parameter übergeben
     navigate(`/favorite/${favoriteId}`);
   };
 
   const handleEdit = (favorite) => {
-    setEditableItem(favorite);
-    console.log('favorite im handleEdit:', favorite);
     setEditMode(true);
+    setTargetItem(favorite);
+    console.log('targetItem im handleEdit:', targetItem);
+
     // evtl Initialwerte für die Zellen die bearbeitet werden
     setEditedValues({
       registrationDate: favorite.registrationDate,
@@ -49,10 +50,14 @@ export default function WhatchList() {
   console.log('editedValues:', editedValues);
 
   const handleSave = () => {
+    console.log('editedValues im handleSave:', editedValues);
+    console.log('targetItem:', targetItem);
     // Logik zum Speichern in DB mit updateFavorite
+    updateFavorite(targetItem._id, editedValues);
+    // alles zurücksetzten
     setEditMode(false);
-    setEditableItem(null);
-    setEditedValues({});
+    setTargetItem(null);
+    // setEditedValues({});
   };
 
   return (
@@ -100,13 +105,12 @@ export default function WhatchList() {
               </TableCell>
               <TableCell>{favorite.project.constructionAssociation}</TableCell>
               <TableCell align="right">
-                {editMode && editableItem?._id === favorite._id ? (
+                {editMode && targetItem?._id === favorite._id ? (
                   <input
                     type="date"
                     value={editedValues.registrationDate}
                     onChange={(e) =>
                       setEditedValues({
-                        ...editedValues,
                         registrationDate: e.target.value,
                       })
                     }
@@ -139,6 +143,7 @@ export default function WhatchList() {
                   <OpenInNewRoundedIcon />
                 </a>
               </TableCell>
+              {/* EDIT: */}
               <TableCell align="right">
                 {!editMode ? (
                   <EditRoundedIcon onClick={() => handleEdit(favorite)} />

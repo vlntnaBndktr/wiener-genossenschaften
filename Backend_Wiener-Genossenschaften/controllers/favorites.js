@@ -79,10 +79,11 @@ const createFavorite = async (req, res, next) => {
 };
 
 const updateFavorite = async (req, res, next) => {
+  console.log('req:', req.body);
   // favoriteId kommt aus der URL; userId aus dem Token
   const userId = req.foundUser._id;
   const favoriteId = req.params._id;
-  console.log('userId:', userId);
+  console.log('userId + favoriteId:', userId, '+', favoriteId);
 
   // Nur eigene Favorites können geupdated werden!
   const authorizedFavorite = await Favorite.findOne({
@@ -101,6 +102,7 @@ const updateFavorite = async (req, res, next) => {
   try {
     // neue Daten syntaktisch checken durch updateValidation
     const result = validationResult(req);
+    console.log('result:', result);
     if (!result.isEmpty()) {
       // = result.errors.length > 0
       console.log('result.errors:', result.array());
