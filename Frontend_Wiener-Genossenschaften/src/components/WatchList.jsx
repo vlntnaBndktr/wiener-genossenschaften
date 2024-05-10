@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function WhatchList() {
   // states und Funktionen aus dem useStore importieren
-  const { favorites, getAllFavorites, updateFavorite } = useStore();
+  const { favorites, getAllFavorites, updateFavorite, user } = useStore();
   // states für editing:
   const [editMode, setEditMode] = useState(false);
   const [targetItem, setTargetItem] = useState(null);
@@ -27,6 +27,8 @@ export default function WhatchList() {
   useEffect(() => {
     getAllFavorites();
   }, []);
+
+  console.log('favorites:', favorites);
 
   const navigate = useNavigate();
 
@@ -38,16 +40,16 @@ export default function WhatchList() {
   const handleEdit = (favorite) => {
     setEditMode(true);
     setTargetItem(favorite);
-    console.log('targetItem im handleEdit:', targetItem);
-
-    // evtl Initialwerte für die Zellen die bearbeitet werden
+    console.log('favorite im handleEdit:', favorite);
+    // Initialwerte für die Zellen die bearbeitet werden
     setEditedValues({
       registrationDate: favorite.registrationDate,
     });
-    console.log('editedValues im handleEdit:', editedValues);
+    console.log('editedValues Initialwert:', editedValues);
   };
 
   console.log('editedValues:', editedValues);
+  console.log('user:', user);
 
   const handleSave = () => {
     console.log('editedValues im handleSave:', editedValues);

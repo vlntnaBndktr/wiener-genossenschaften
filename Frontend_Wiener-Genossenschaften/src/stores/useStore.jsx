@@ -321,7 +321,7 @@ const useStore = create((set, get) => ({
       .then((response) => {
         // reponse.data =
         if (response.status === 200) {
-          set({ success: true });
+          set({ favorites: response.data, success: true });
           console.log('response:', response.data);
         } else {
           throw new Error('Fehler beim Favorite-Update');

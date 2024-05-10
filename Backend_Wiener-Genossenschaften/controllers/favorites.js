@@ -119,12 +119,28 @@ const updateFavorite = async (req, res, next) => {
     // Felder in authorizedFavorite ersetzen
     authorizedFavorite.set(validatedData);
     const updatedFavorite = await authorizedFavorite.save(); // Speichere die Änderungen
+    console.log('updatedFavorite:', updatedFavorite);
 
     if (!updatedFavorite) {
       return next(new HttpError('Favorite nicht gefunden', 404));
     }
-    console.log('updatedFavorite:', updatedFavorite);
-    res.status(200).send('Favorite updated sucessfully');
+
+    // Aktualisierte Favoriten speichern + mit Project populaten!
+    const updatedFavorites = await Favorite.find({ userId })
+      .populate('project')
+      .exec();
+
+    // Favoriten im User aktualisieren
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: { favorites: updatedFavorites } }, // Aktualisierte Favoriten setzen
+      { new: true } // Zurückgeben des aktualisierten Benutzerdokuments
+    );
+    if (!updatedUser) {
+      return next(new HttpError('User nicht gefunden', 404));
+    }
+    // aktualisiertes Favorite-Objekt ans Frontend zurückgeben
+    res.status(200).json(updatedFavorites);
   } catch (error) {
     console.error('Fehler beim Aktualisieren des Favorites:', error);
     return next(new HttpError('Internal Server Error', 500));
