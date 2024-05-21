@@ -122,19 +122,31 @@ export default function WhatchList() {
                 )}
               </TableCell>
               <TableCell align="right">
-                {favorite.registrationExpiryDate
-                  ? new Date(
-                      favorite.registrationExpiryDate
-                    ).toLocaleDateString()
-                  : '-'}
+                {editMode && targetItem?._id === favorite._id ? (
+                  <input type="date" />
+                ) : favorite.registrationExpiryDate ? (
+                  new Date(favorite.registrationExpiryDate).toLocaleDateString()
+                ) : (
+                  '-'
+                )}
               </TableCell>
               <TableCell align="right">
-                {favorite.alarm ? <AccessAlarmsRoundedIcon /> : ''}
+                {editMode && targetItem?._id === favorite._id ? (
+                  <input type="date" />
+                ) : favorite.alarm ? (
+                  <AccessAlarmsRoundedIcon />
+                ) : (
+                  '-'
+                )}
               </TableCell>
               <TableCell align="right">
-                {favorite.notes.map((note) => (
-                  <div key={note._id}>{note.text}</div>
-                ))}
+                {editMode && targetItem?._id === favorite._id ? (
+                  <input type="text" />
+                ) : (
+                  favorite.notes.map((note) => (
+                    <div key={note._id}>{note.text}</div>
+                  ))
+                )}
               </TableCell>
               <TableCell align="right">
                 <a

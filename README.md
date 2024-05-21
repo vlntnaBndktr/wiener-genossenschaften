@@ -94,11 +94,11 @@ _Userbereich:_
 
 - .env.production vs .env.development
 - Kartenansicht für alle Projekte/Wohnungen
-- Merkliste -> Eintrag bearbeiten
+
+8. bis 17.5.
+
+- Merkliste -> Eintrag bearbeiten (evtl von Favorites auf User abändern)
 - Todo: Layout Private schwarzer Block im lg xl anpassen
-
-8.
-
 - Pagination
 
 ## Roadmap
