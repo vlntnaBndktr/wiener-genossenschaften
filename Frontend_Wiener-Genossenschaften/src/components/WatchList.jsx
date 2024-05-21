@@ -11,6 +11,7 @@ import useStore from '../stores/useStore';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import SaveIcon from '@mui/icons-material/Save';
 import Avatar from '@mui/material/Avatar';
 import AccessAlarmsRoundedIcon from '@mui/icons-material/AccessAlarmsRounded';
 import Tooltip from '@mui/material/Tooltip';
@@ -141,7 +142,7 @@ export default function WhatchList() {
               </TableCell>
               <TableCell align="right">
                 {editMode && targetItem?._id === favorite._id ? (
-                  <input type="text" />
+                  <textarea id="notes" />
                 ) : (
                   favorite.notes.map((note) => (
                     <div key={note._id}>{note.text}</div>
@@ -162,7 +163,7 @@ export default function WhatchList() {
                 {!editMode ? (
                   <EditRoundedIcon onClick={() => handleEdit(favorite)} />
                 ) : (
-                  <button onClick={handleSave}>Speichern</button>
+                  <SaveIcon color="info" onClick={handleSave} />
                 )}
                 <DeleteForeverRoundedIcon />
               </TableCell>
