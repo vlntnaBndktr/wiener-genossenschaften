@@ -29,8 +29,6 @@ export default function WhatchList() {
     getAllFavorites();
   }, []);
 
-  console.log('favorites:', favorites);
-
   const navigate = useNavigate();
 
   const handleAvatarClick = (favoriteId) => {
@@ -45,12 +43,25 @@ export default function WhatchList() {
     // Initialwerte für die Zellen die bearbeitet werden
     setEditedValues({
       registrationDate: favorite.registrationDate,
+      registrationExpiryDate: favorite.registrationExpiryDate,
+      alarm: favorite.alarm,
+      notes: favorite.notes.map((note) => note.text).join('\n'),
     });
-    console.log('editedValues Initialwert:', editedValues);
   };
 
   console.log('editedValues:', editedValues);
   console.log('user:', user);
+
+  const handleChange = (key, value) => {
+    setEditedValues((prevValues) => ({
+      ...prevValues,
+      [key]: value,
+    }));
+  };
+
+  const handleDelete = (favoriteId) => {
+    deleteFavorite(favoriteId);
+  };
 
   const handleSave = () => {
     console.log('editedValues im handleSave:', editedValues);
@@ -60,7 +71,7 @@ export default function WhatchList() {
     // alles zurücksetzten
     setEditMode(false);
     setTargetItem(null);
-    // setEditedValues({});
+    setEditedValues({});
   };
 
   return (
@@ -111,11 +122,13 @@ export default function WhatchList() {
                 {editMode && targetItem?._id === favorite._id ? (
                   <input
                     type="date"
-                    value={editedValues.registrationDate}
+                    value={
+                      new Date(editedValues.registrationDate)
+                        .toISOString()
+                        .split('T')[0]
+                    }
                     onChange={(e) =>
-                      setEditedValues({
-                        registrationDate: e.target.value,
-                      })
+                      handleChange('registrationDate', e.target.value)
                     }
                   />
                 ) : (
@@ -124,7 +137,17 @@ export default function WhatchList() {
               </TableCell>
               <TableCell align="right">
                 {editMode && targetItem?._id === favorite._id ? (
-                  <input type="date" />
+                  <input
+                    type="date"
+                    value={
+                      new Date(editedValues.registrationExpiryDate)
+                        .toISOString()
+                        .split('T')[0]
+                    }
+                    onChange={(e) =>
+                      handleChange('registrationExpiryDate', e.target.value)
+                    }
+                  />
                 ) : favorite.registrationExpiryDate ? (
                   new Date(favorite.registrationExpiryDate).toLocaleDateString()
                 ) : (
@@ -133,7 +156,11 @@ export default function WhatchList() {
               </TableCell>
               <TableCell align="right">
                 {editMode && targetItem?._id === favorite._id ? (
-                  <input type="date" />
+                  <input
+                    type="checkbox"
+                    checked={editedValues.alarm}
+                    onChange={(e) => handleChange('alarm', e.target.checked)}
+                  />
                 ) : favorite.alarm ? (
                   <AccessAlarmsRoundedIcon />
                 ) : (
@@ -142,7 +169,11 @@ export default function WhatchList() {
               </TableCell>
               <TableCell align="right">
                 {editMode && targetItem?._id === favorite._id ? (
-                  <textarea id="notes" />
+                  <textarea
+                    id="notes"
+                    value={editedValues.notes}
+                    onChange={(e) => handleChange('notes', e.target.value)}
+                  />
                 ) : (
                   favorite.notes.map((note) => (
                     <div key={note._id}>{note.text}</div>
