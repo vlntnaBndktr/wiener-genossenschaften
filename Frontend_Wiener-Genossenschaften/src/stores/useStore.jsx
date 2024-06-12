@@ -302,26 +302,31 @@ const useStore = create((set, get) => ({
         set({ loading: false }); // Request an den Server abgeschlossen (egal ob Sucess oder Error)
       });
   },
-  updateFavorite: (favoriteId, editedValues) => {
+  updateFavorite: (favoriteId, formattedValues) => {
     // bekommt Daten aus einer Maske über Parameter
     set({ loading: true, error: null, success: false });
     console.log(
-      'in updateFavorite: favoriteID + editedValues:',
+      'in updateFavorite: favoriteID + formattedValues:',
       favoriteId,
-      editedValues
+      formattedValues
     );
 
     // Daten ans Backend senden
     myfetchAPI({
       url: apiUrl + '/favorite/update/' + favoriteId,
       method: 'patch',
-      data: { registrationDate: editedValues.registrationDate },
+      data: formattedValues,
       token: get().token,
     })
       .then((response) => {
         // reponse.data =
         if (response.status === 200) {
-          set({ favorites: response.data, success: true });
+          const updatedUser = response.data.user;
+          set({
+            user: updatedUser,
+            favorites: updatedUser.favorites,
+            success: true,
+          });
           console.log('response:', response.data);
         } else {
           throw new Error('Fehler beim Favorite-Update');

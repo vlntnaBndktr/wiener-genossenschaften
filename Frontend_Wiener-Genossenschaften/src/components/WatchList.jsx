@@ -17,17 +17,24 @@ import AccessAlarmsRoundedIcon from '@mui/icons-material/AccessAlarmsRounded';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
 
+//TODO: Alarm - API anpassen oder Datum schicken
+
 export default function WhatchList() {
   // states und Funktionen aus dem useStore importieren
   const { favorites, getAllFavorites, updateFavorite, user } = useStore();
   // states für editing:
   const [editMode, setEditMode] = useState(false);
   const [targetItem, setTargetItem] = useState(null);
-  const [editedValues, setEditedValues] = useState({});
-  // laden der Projekte einmal beim Mounting
+  const [editedValues, setEditedValues] = useState({
+    registrationDate: '',
+    registrationExpiryDate: '',
+    alarm: false,
+    notes: '',
+  }); // Die Struktur von editedValues beim Bearbeiten eines Favoriten initialisieren
+
   useEffect(() => {
     getAllFavorites();
-  }, []);
+  }, []); // laden der Projekte einmal beim Mounting
 
   const navigate = useNavigate();
 
@@ -44,8 +51,8 @@ export default function WhatchList() {
     setEditedValues({
       registrationDate: favorite.registrationDate,
       registrationExpiryDate: favorite.registrationExpiryDate,
-      alarm: favorite.alarm,
-      notes: favorite.notes.map((note) => note.text).join('\n'),
+      alarm: favorite.alarm || false,
+      notes: favorite.notes || '',
     });
   };
 
@@ -71,7 +78,12 @@ export default function WhatchList() {
     // alles zurücksetzten
     setEditMode(false);
     setTargetItem(null);
-    setEditedValues({});
+    setEditedValues({
+      registrationDate: '',
+      registrationExpiryDate: '',
+      alarm: false,
+      notes: '',
+    });
   };
 
   return (
@@ -175,9 +187,7 @@ export default function WhatchList() {
                     onChange={(e) => handleChange('notes', e.target.value)}
                   />
                 ) : (
-                  favorite.notes.map((note) => (
-                    <div key={note._id}>{note.text}</div>
-                  ))
+                  favorite.notes
                 )}
               </TableCell>
               <TableCell align="right">

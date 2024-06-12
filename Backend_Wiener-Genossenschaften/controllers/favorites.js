@@ -7,9 +7,8 @@ import { User } from '../models/users.js';
 const favoriteValidation = [
   body('registrationDate').optional().isISO8601().toDate(),
   body('registrationExpiryDate').optional().isISO8601().toDate(),
-  body('alarm').optional().isISO8601().toDate(),
-  body('notes.*.text').optional().isString(),
-  body('notes.*.timestamp').optional().isISO8601().toDate(),
+  body('alarm').optional().isBoolean(),
+  body('notes').optional().isString(),
 ];
 
 const createFavorite = async (req, res, next) => {
@@ -131,16 +130,19 @@ const updateFavorite = async (req, res, next) => {
       .exec();
 
     // Favoriten im User aktualisieren
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { $set: { favorites: updatedFavorites } }, // Aktualisierte Favoriten setzen
-      { new: true } // Zurückgeben des aktualisierten Benutzerdokuments
-    );
+    const updatedUser = await User.findById(userId).populate({
+      path: 'favorites',
+      populate: {
+        path: 'project',
+        model: 'Project',
+      },
+    });
     if (!updatedUser) {
       return next(new HttpError('User nicht gefunden', 404));
     }
-    // aktualisiertes Favorite-Objekt ans Frontend zurückgeben
-    res.status(200).json(updatedFavorites);
+    console.log('updatedUser:', updatedUser);
+    // aktualisiertes Favorite-Objekte ans Frontend zurückgeben
+    res.status(200).json({ user: updatedUser });
   } catch (error) {
     console.error('Fehler beim Aktualisieren des Favorites:', error);
     return next(new HttpError('Internal Server Error', 500));
