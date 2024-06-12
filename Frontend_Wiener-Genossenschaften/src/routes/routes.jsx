@@ -8,6 +8,7 @@ import MyMap from '../views/Map';
 import TargetMap from '../views/TargetMap';
 import ProfilDaten from '../views/ProfilDaten';
 import OneFavorite from '../views/OneFavorite';
+import OneProject from '../views/OneProject';
 import HelpAndContact from '../views/HelpAndContact';
 
 /* routes.jsx = Routen meiner Anwendung definieren. 
@@ -70,6 +71,10 @@ const routesPrivate = [
       {
         path: 'targetMap/:projectId',
         element: <TargetMap />,
+      },
+      {
+        path: '/project/:projectId',
+        element: <OneProject />,
       },
       {
         path: '/favorite/:favoriteId',

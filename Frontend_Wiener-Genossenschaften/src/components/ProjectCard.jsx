@@ -13,6 +13,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import useStore from '../stores/useStore';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 // Empfängt 'project' als Prop von der Elternkomponente CurrentOffers
 const ProjectCard = ({ project }) => {
@@ -20,6 +21,10 @@ const ProjectCard = ({ project }) => {
   // Kürze die Beschreibung auf maximal 250 Zeichen
   const shortDescription = project.description.substring(0, 250) + '...';
   const navigate = useNavigate();
+
+  const openTargetProject = (projectId) => {
+    navigate(`/project/${projectId}`);
+  };
 
   const handleMapClick = (projectId) => {
     // zur Route '/oneFavorite' navigieren und Favoriten-ID als Parameter übergeben
@@ -84,6 +89,7 @@ const ProjectCard = ({ project }) => {
             pt: '56.25%',
           }}
           image={project.image}
+          onClick={() => openTargetProject(project._id)}
         />
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h5" component="h2">
