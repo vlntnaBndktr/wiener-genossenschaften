@@ -75,12 +75,7 @@ const OneFavorite = () => {
             subheader={targetFavorite.project.moveIn}
           />
         </Typography>
-
-        <ul>
-          {targetFavorite.notes.map((note) => (
-            <li key={note._id}>{note.text}</li>
-          ))}
-        </ul>
+        {targetFavorite.notes}
         <FavoriteCard targetFavorite={targetFavorite} />
       </Box>
     </>

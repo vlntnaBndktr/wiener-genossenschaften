@@ -21,6 +21,11 @@ const ProjectCard = ({ project }) => {
   const shortDescription = project.description.substring(0, 250) + '...';
   const navigate = useNavigate();
 
+  const handleMapClick = (projectId) => {
+    // zur Route '/oneFavorite' navigieren und Favoriten-ID als Parameter übergeben
+    navigate(`/targetMap/${projectId}`);
+  };
+
   const openExternalWebsite = () => {
     const externalLink = project.website;
     // Öffne den Link in einem neuen Tab
@@ -108,9 +113,7 @@ const ProjectCard = ({ project }) => {
           <IconButton
             aria-label="show on map"
             sx={{ color: 'inherit' }}
-            onClick={() => {
-              navigate('/map');
-            }}
+            onClick={() => handleMapClick(project._id)}
           >
             <LocationOnIcon />
           </IconButton>

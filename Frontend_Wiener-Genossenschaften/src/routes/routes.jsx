@@ -5,6 +5,7 @@ import SignUp from '../views/SignUp';
 import User from '../views/User';
 import Favorites from '../views/Favorites';
 import MyMap from '../views/Map';
+import TargetMap from '../views/TargetMap';
 import ProfilDaten from '../views/ProfilDaten';
 import OneFavorite from '../views/OneFavorite';
 import HelpAndContact from '../views/HelpAndContact';
@@ -65,6 +66,10 @@ const routesPrivate = [
       {
         path: '/map',
         element: <MyMap />,
+      },
+      {
+        path: 'targetMap/:projectId',
+        element: <TargetMap />,
       },
       {
         path: '/favorite/:favoriteId',
