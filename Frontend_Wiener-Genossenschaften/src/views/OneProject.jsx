@@ -12,9 +12,10 @@ import IconButton from '@mui/material/IconButton';
 import CardHeader from '@mui/material/CardHeader';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import { useState, useEffect } from 'react';
-import ProjectCard from '../components/ProjectCard';
+import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { useNavigate } from 'react-router-dom';
 
 const OneProject = () => {
   // projectId aus den URL-Parametern auslesen
@@ -28,9 +29,19 @@ const OneProject = () => {
 
   // targetProject in Projects finden:
   const targetProject = projects.find((proj) => proj._id === projectId);
-  // console.log('targetProject:', targetProject.name);
+  console.log('targetProject:', targetProject.name);
 
-  console.log('targetProject:', targetProject);
+  const navigate = useNavigate();
+  const handleMapClick = (projectId) => {
+    // zur Route '/oneFavorite' navigieren und Favoriten-ID als Parameter übergeben
+    navigate(`/targetMap/${projectId}`);
+  };
+
+  const openExternalWebsite = () => {
+    const externalLink = targetProject.website;
+    // Öffne den Link in einem neuen Tab
+    window.open(externalLink, '_blank');
+  };
 
   return (
     <>
@@ -46,22 +57,30 @@ const OneProject = () => {
         <Typography
           component="h1"
           variant="h4"
+          align="center"
           sx={{ fontFamily: 'quicksand', fontWeight: 600 }}
         >
           {targetProject.name}
         </Typography>
-        <Typography variant="h7" align="center" color="text.secondary">
+
+        <Typography
+          variant="h6"
+          align="center"
+          color="text.secondary"
+          fontWeight="bold"
+        >
           {targetProject.location.street}{' '}
-          <IconButton
-            aria-label="show on map"
-            sx={{ color: 'inherit' }}
-            onClick={() => {
-              navigate('/map');
-            }}
-          >
-            <LocationOnIcon />
-          </IconButton>
+          <Tooltip title="Auf der Karte anzeigen">
+            <IconButton
+              aria-label="show on map"
+              sx={{ color: 'primary.dark' }}
+              onClick={() => handleMapClick(targetProject._id)}
+            >
+              <LocationOnIcon />
+            </IconButton>
+          </Tooltip>
         </Typography>
+
         {/* {targetProject.notes} */}
         <Card
           sx={{
@@ -102,7 +121,6 @@ const OneProject = () => {
               pt: '56.25%',
             }}
             image={targetProject.image}
-            onClick={() => openTargetProject(project._id)}
           />
           <CardContent sx={{ flexGrow: 1 }}>
             <Typography gutterBottom variant="h5" component="h2">
@@ -111,19 +129,28 @@ const OneProject = () => {
             <Typography sx={{ mb: 1.5 }}>
               {targetProject.description}
             </Typography>
-            <Typography fontWeight="bold">
-              {targetProject.location.street}
-            </Typography>
           </CardContent>
           <CardActions>
-            <IconButton
-              aria-label="show on map"
-              sx={{ color: 'inherit' }}
-              // onClick={() => handleMapClick(targetProject._id)}
+            <Tooltip
+              title={`Direkt zur Website der ${targetProject.constructionAssociation}`}
             >
-              <LocationOnIcon />
-            </IconButton>
-            <Button size="small">Zur Website</Button>
+              <Button
+                size="medium"
+                variant="text"
+                disableElevation
+                sx={{
+                  color: 'special.dark',
+                }}
+                onClick={openExternalWebsite}
+              >
+                <OpenInNewIcon
+                  sx={{
+                    marginRight: 1,
+                  }}
+                />
+                Zur Genossenschaft
+              </Button>
+            </Tooltip>
           </CardActions>
         </Card>
       </Box>
