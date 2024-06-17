@@ -65,19 +65,20 @@ const useStore = create((set, get) => ({
   getAllProjects: () => {
     // Reset State loading: ein Request wird an den Server gesendet
     set({ loading: true, error: null });
-    console.log('Projekte werden gerade abgerufen');
+
     // API Aufruf mit vorgefertigter myfetchAPI
     myfetchAPI({ url: apiUrl + '/projects' })
       .then((response) => {
         // in response.data sind meine Projects
         if (response.status >= 200 && response.status < 300) {
           set({ projects: response.data });
+          console.log('projects im Store abgerufen:', response.data);
         } else {
           throw new Error('Fehler beim Abrufen der Projekte');
         }
       })
       .catch((error) => {
-        console.error('im catch-Block: ', error.response);
+        console.error('im getAllProjects catch-Block: ', error);
         set({ error }); // = set({ error: error })
       })
       .finally(() => {

@@ -23,8 +23,14 @@ import { IconButton } from '@mui/material';
 
 export default function WhatchList() {
   // states und Funktionen aus dem useStore importieren
-  const { favorites, getAllFavorites, updateFavorite, deleteFavorite, user } =
-    useStore();
+  const {
+    favorites,
+    getAllFavorites,
+    updateFavorite,
+    deleteFavorite,
+    getAllProjects,
+    user,
+  } = useStore();
   // states für editing:
   const [editMode, setEditMode] = useState(false);
   const [targetItem, setTargetItem] = useState(null);
@@ -40,6 +46,10 @@ export default function WhatchList() {
   useEffect(() => {
     getAllFavorites();
   }, []); // laden der Projekte einmal beim Mounting
+
+  useEffect(() => {
+    getAllProjects();
+  }, []);
 
   const navigate = useNavigate();
 

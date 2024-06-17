@@ -24,9 +24,13 @@ const OneProject = () => {
   const { projectId } = useParams();
   console.log('übergebene ID:', projectId);
 
-  const { projects, user, createFavorite, deleteFavorite } = useStore();
+  const { projects, getAllProjects, user, createFavorite, deleteFavorite } =
+    useStore();
 
-  console.log('projects:', projects);
+  useEffect(() => {
+    getAllProjects();
+  }, []);
+
   // targetProject in Projects finden:
   const targetProject = projects.find((proj) => proj._id === projectId);
 
