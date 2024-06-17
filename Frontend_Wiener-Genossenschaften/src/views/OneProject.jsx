@@ -9,6 +9,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
+import PlaylistAddCircleRoundedIcon from '@mui/icons-material/PlaylistAddCircleRounded';
 import CardHeader from '@mui/material/CardHeader';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -16,20 +17,31 @@ import { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useNavigate } from 'react-router-dom';
+import ConfirmationModal from './ConfirmationModal';
 
 const OneProject = () => {
   // projectId aus den URL-Parametern auslesen
   const { projectId } = useParams();
-  // console.log('übergebene ID:', projectId);
-  const { projects, getAllProjects } = useStore();
-  // laden der Projekte einmal beim Mounting
-  useEffect(() => {
-    getAllProjects();
-  }, []);
+  console.log('übergebene ID:', projectId);
 
+  const { projects, user, createFavorite, deleteFavorite } = useStore();
+
+  console.log('projects:', projects);
   // targetProject in Projects finden:
   const targetProject = projects.find((proj) => proj._id === projectId);
-  console.log('targetProject:', targetProject.name);
+
+  const isFavorite = user.favorites.some(
+    (favorite) => favorite.project._id === targetProject._id
+  );
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      // Wenn es bereits ein Favorit ist, entferne es
+      deleteFavorite(targetProject._id);
+    } else {
+      // Wenn es kein Favorit ist, füge es hinzu
+      createFavorite(targetProject._id);
+    }
+  };
 
   const navigate = useNavigate();
   const handleMapClick = (projectId) => {
@@ -131,6 +143,23 @@ const OneProject = () => {
             </Typography>
           </CardContent>
           <CardActions>
+            <Tooltip
+              title={
+                isFavorite
+                  ? 'Aus der Merkliste löschen'
+                  : 'Zur Merkliste hinzufügen'
+              }
+            >
+              <IconButton
+                aria-label={
+                  isFavorite ? 'remove from favorites' : 'add to favorites'
+                }
+                onClick={handleToggleFavorite}
+                sx={{ color: isFavorite ? 'secondary.main' : 'inherit' }}
+              >
+                <PlaylistAddCircleRoundedIcon />
+              </IconButton>
+            </Tooltip>
             <Tooltip
               title={`Direkt zur Website der ${targetProject.constructionAssociation}`}
             >

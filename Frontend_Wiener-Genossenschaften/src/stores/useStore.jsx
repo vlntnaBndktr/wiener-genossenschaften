@@ -260,8 +260,17 @@ const useStore = create((set, get) => ({
       .then((response) => {
         // reponse.data =
         if (response.status === 200) {
-          set({ user: response.data, success: true });
-          // console.log('updated User:', response.data);
+          const updatedUser = response.data;
+
+          // Extrahiere die Favoriten aus dem aktualisierten Benutzerobjekt
+          const updatedFavorites = updatedUser.favorites;
+
+          // Setze den Benutzer und die Favoriten im Zustand
+          set({
+            user: updatedUser,
+            favorites: updatedFavorites,
+            success: true,
+          });
         } else {
           throw new Error('Fehler beim anlegen des Favorites');
         }

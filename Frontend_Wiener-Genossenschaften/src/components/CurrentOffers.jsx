@@ -11,12 +11,12 @@ import ProjectCard from './ProjectCard';
 
 const CurrentOffers = () => {
   // states und Funktionen aus dem useStore importieren
-  const { projects, loading, error, getAllProjects } = useStore();
+  const { projects, getAllProjects } = useStore();
   // laden der Projekte einmal beim Mounting
   useEffect(() => {
     getAllProjects();
   }, []);
-  // console.log('projects:', projects);
+  console.log('projects:', projects);
   //TODO eventuell Rückmeldungen an den User:
   // if (loading) {
   //   return <p>Lade...</p>;

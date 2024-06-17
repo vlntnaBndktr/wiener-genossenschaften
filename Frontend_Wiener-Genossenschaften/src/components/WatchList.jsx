@@ -10,18 +10,21 @@ import { useState, useEffect } from 'react';
 import useStore from '../stores/useStore';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import SaveIcon from '@mui/icons-material/Save';
 import Avatar from '@mui/material/Avatar';
 import AccessAlarmsRoundedIcon from '@mui/icons-material/AccessAlarmsRounded';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import ConfirmationModal from '../views/ConfirmationModal';
+import { IconButton } from '@mui/material';
 
 //TODO: Alarm - API anpassen oder Datum schicken
 
 export default function WhatchList() {
   // states und Funktionen aus dem useStore importieren
-  const { favorites, getAllFavorites, updateFavorite, user } = useStore();
+  const { favorites, getAllFavorites, updateFavorite, deleteFavorite, user } =
+    useStore();
   // states für editing:
   const [editMode, setEditMode] = useState(false);
   const [targetItem, setTargetItem] = useState(null);
@@ -31,6 +34,8 @@ export default function WhatchList() {
     alarm: false,
     notes: '',
   }); // Die Struktur von editedValues beim Bearbeiten eines Favoriten initialisieren
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedFavorite, setSelectedFavorite] = useState(null);
 
   useEffect(() => {
     getAllFavorites();
@@ -38,9 +43,9 @@ export default function WhatchList() {
 
   const navigate = useNavigate();
 
-  const handleAvatarClick = (favoriteId) => {
+  const openTargetProject = (projectId) => {
     // zur Route '/oneFavorite' navigieren und Favoriten-ID als Parameter übergeben
-    navigate(`/favorite/${favoriteId}`);
+    navigate(`/project/${projectId}`);
   };
 
   const handleEdit = (favorite) => {
@@ -66,10 +71,6 @@ export default function WhatchList() {
     }));
   };
 
-  const handleDelete = (favoriteId) => {
-    deleteFavorite(favoriteId);
-  };
-
   const handleSave = () => {
     console.log('editedValues im handleSave:', editedValues);
     console.log('targetItem:', targetItem);
@@ -84,6 +85,25 @@ export default function WhatchList() {
       alarm: false,
       notes: '',
     });
+  };
+
+  const handleOpenModal = (favorite) => {
+    console.log('dieser Favorite soll gelöscht werden: ', favorite.project._id);
+    // deleteFavorite(favorite.project._id);
+    setSelectedFavorite(favorite);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedFavorite(null);
+  };
+
+  const handleDelete = () => {
+    if (selectedFavorite) {
+      deleteFavorite(selectedFavorite.project._id);
+      handleCloseModal();
+    }
   };
 
   return (
@@ -121,7 +141,7 @@ export default function WhatchList() {
                     alt="Remy Sharp"
                     src={favorite.project.image}
                     sx={{ width: 56, height: 56 }}
-                    onClick={() => handleAvatarClick(favorite._id)}
+                    onClick={() => openTargetProject(favorite.project._id)}
                     // diesen Favorite in der Komponente OneFavorite anzeigen (route: '/oneFavorite')
                   />
                 </Tooltip>
@@ -201,17 +221,31 @@ export default function WhatchList() {
               </TableCell>
               {/* EDIT: */}
               <TableCell align="right">
-                {!editMode ? (
-                  <EditRoundedIcon onClick={() => handleEdit(favorite)} />
-                ) : (
-                  <SaveIcon color="info" onClick={handleSave} />
-                )}
-                <DeleteForeverRoundedIcon />
+                <IconButton>
+                  {!editMode ? (
+                    <EditRoundedIcon onClick={() => handleEdit(favorite)} />
+                  ) : (
+                    <SaveIcon color="info" onClick={handleSave} />
+                  )}
+                </IconButton>
+                <IconButton onClick={() => handleOpenModal(favorite)}>
+                  <DeleteForeverRoundedIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      {/* Modal Komponente außerhalb der Schleife: wenn ein Favorit selektiert ist dann Modalfenster öffnen */}
+      {selectedFavorite && (
+        <ConfirmationModal
+          open={openModal}
+          onClose={handleCloseModal}
+          onConfirm={handleDelete}
+          title="Sind Sie sicher?"
+          description="Wenn Sie den Favoriten aus der Merkliste entfernen, werden alle Notizen und persönlichen Einträge dazu gelöscht."
+        />
+      )}
     </TableContainer>
   );
 }

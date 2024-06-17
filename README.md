@@ -100,6 +100,7 @@ _Userbereich:_
 - Merkliste -> Eintrag bearbeiten (evtl von Favorites auf User abändern)
 - Todo: Layout Private schwarzer Block im lg xl anpassen
 - Pagination
+- Todo: direkt nach Login -> Klick auf Merkliste und dann auf IconBild: Error
 
 ## Roadmap
 
