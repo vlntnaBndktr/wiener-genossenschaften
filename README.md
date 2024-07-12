@@ -2,13 +2,14 @@
 
 ## Description
 
-Meta-Plattform für Desktop und Mobile Geräte, die Wohnungsangebote von diversen Genossenschaften sammelt, anzeigt und regelmäßig aktualisiert. Kernstück sind der Scraper um die Daten zu sammeln und eine Liste im Mitgliederbereich mit Sortier-/Filterfunktionen und Alarm/Deadlines. Die Liste soll von den Usern angepasst/individualisiert werden können.
+Meta-Plattform für Desktop und Mobile Geräte, die Wohnungsangebote von diversen Genossenschaften sammelt, anzeigt und regelmäßig aktualisiert. Kernstück sind der Web-Scraper, eine Liste im Mitgliederbereich um seine Anmeldungen zu verwalten und die Authentication. Die Liste soll von den Usern angepasst/individualisiert werden können. Da ich zuerst eine datenschutzrechtliche Übereinkunft bezüglich der Verwendung von Informationen und Bildern mit allen Genossenschaften treffen möchte, ist der Scraper momentan nur für die WBV-GPA aktiv.
+
 Durch die Web-App sollen User
 
 - den Überblick während der Wohnungssuche behalten
 - wichtige Fristen nicht versäumen
 - neue Angebote nicht übersehen
-- eine zentrale Informationsstelle bieten
+- eine zentrale Informationsstelle zur Verfügung haben
 
 ## Funktionen
 
@@ -273,7 +274,6 @@ _Userbereich:_
 - Funktionen die noch implementiert werden sollen beschreiben:
   - Role Management: Admin Role
   - unlock User nach Registrierung
-  -
 
 15. Rechtliches:
 
